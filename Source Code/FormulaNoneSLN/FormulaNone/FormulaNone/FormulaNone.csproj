@@ -68,7 +68,7 @@
   <ItemGroup>
     <Compile Include="ControlManager\ControlBase.cs" />
     <Compile Include="ControlManager\ControlManager.cs" />
-    <Compile Include="ControlManager\FilmStripSelector.cs" />
+    <Compile Include="Controls\FilmStripSelector.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScreenManager\GameScreen.cs" />

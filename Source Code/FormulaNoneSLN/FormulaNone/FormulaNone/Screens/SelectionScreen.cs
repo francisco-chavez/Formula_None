@@ -19,6 +19,7 @@ namespace Unv.FormulaNone.Screens
 		private List<Texture2D>					m_raceTracks;
 		private Dictionary<string, Texture2D>	m_carImages;
 		private ContentManager					m_content;
+		private ControlManager					m_uiControls;
 		#endregion
 
 
@@ -39,6 +40,13 @@ namespace Unv.FormulaNone.Screens
 			if (m_content == null)
 				m_content = new ContentManager(Game.Services, "Content/Images");
 
+			if (m_uiControls == null)
+				m_uiControls = new ControlManager();
+			else
+				m_uiControls.Clear();
+
+
+
 			string[] filepaths = null;
 			
 			// Load car images
@@ -49,15 +57,10 @@ namespace Unv.FormulaNone.Screens
 				Texture2D image		= m_content.Load<Texture2D>(string.Format("Cars/{0}", imageName));
 				image.Tag = imageName;
 
-				if (!m_carImages.ContainsKey(imageName))
+				if (m_carImages.ContainsKey(imageName))
+					m_carImages[imageName] = image;
+				else
 					m_carImages.Add(imageName, image);
-
-				/// Yes, this is a bit redundent the first time it get's called,
-				/// and it should only be called once. I'm also aware that I could
-				/// have used an if else statement to get rid of this rdundentcy. 
-				/// This looks nicer (when there's no comment here).
-				/// -FCT
-				m_carImages[imageName] = image;
 			}
 
 			base.LoadContent();

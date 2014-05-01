@@ -7,5 +7,6 @@ namespace Unv.FormulaNone
 {
 	public abstract class ControlBase
 	{
+		public abstract void Clear();
 	}
 }
