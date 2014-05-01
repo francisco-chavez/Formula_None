@@ -12,7 +12,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 #endregion
 
-namespace FormulaNone
+namespace Unv.FormulaNone
 {
 	/// <summary>
 	/// Sample showing how to manage different game states, with transitions

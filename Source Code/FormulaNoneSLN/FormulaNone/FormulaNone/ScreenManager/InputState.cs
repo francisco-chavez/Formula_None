@@ -14,7 +14,7 @@ using Microsoft.Xna.Framework.Input.Touch;
 using System.Collections.Generic;
 #endregion
 
-namespace FormulaNone
+namespace Unv.FormulaNone
 {
 	/// <summary>
 	/// Helper for reading input from keyboard, gamepad, and touch input. This class 

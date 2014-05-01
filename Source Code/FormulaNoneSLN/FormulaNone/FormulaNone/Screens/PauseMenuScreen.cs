@@ -11,7 +11,7 @@
 using Microsoft.Xna.Framework;
 #endregion
 
-namespace FormulaNone
+namespace Unv.FormulaNone
 {
 	/// <summary>
 	/// The pause menu comes up over the top of the game,
