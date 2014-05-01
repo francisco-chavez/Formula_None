@@ -51,6 +51,8 @@ namespace Unv.FormulaNone
 
 		#region Properties
 		public static RaceGame Instance { get; private set; }
+
+		public Texture2D DefaultBackground { get; private set; }
 		#endregion
 
 
@@ -101,6 +103,8 @@ namespace Unv.FormulaNone
 			{
 				Content.Load<object>(asset);
 			}
+
+			DefaultBackground = Content.Load<Texture2D>("Images/Backgrounds/DefaultBackground");
 		}
 
 
