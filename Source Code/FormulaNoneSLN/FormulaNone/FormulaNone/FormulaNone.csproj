@@ -68,6 +68,7 @@
   <ItemGroup>
     <Compile Include="ControlManager\ControlBase.cs" />
     <Compile Include="ControlManager\ControlManager.cs" />
+    <Compile Include="ControlManager\SelectionChangedEventArgs.cs" />
     <Compile Include="Controls\FilmStripSelector.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
