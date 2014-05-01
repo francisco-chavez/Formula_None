@@ -38,6 +38,11 @@ namespace Unv.FormulaNone
 	public abstract class GameScreen
 	{
 		#region Properties
+		/// <summary>
+		/// Returns a reference to the instance of the game this
+		/// screen is being played on.
+		/// </summary>
+		public RaceGame Game { get { return RaceGame.Instance; } }
 
 
 		/// <summary>

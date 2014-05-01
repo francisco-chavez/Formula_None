@@ -5,11 +5,20 @@
 // Microsoft XNA Community Game Platform
 // Copyright (C) Microsoft Corporation. All rights reserved.
 //-----------------------------------------------------------------------------
+
+
+//-----------------------------------------------------------------------------
+// A few things have been changed or added for the 
+// sake of this game
+// -FCT
+//-----------------------------------------------------------------------------
 #endregion
 
 #region Using Statements
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+
+using Unv.FormulaNone.Screens;
 #endregion
 
 namespace Unv.FormulaNone
@@ -20,7 +29,8 @@ namespace Unv.FormulaNone
 	/// menu. This main game class is extremely simple: all the interesting
 	/// stuff happens in the ScreenManager component.
 	/// </summary>
-	public class GameStateManagementGame : Microsoft.Xna.Framework.Game
+	public class RaceGame 
+		: Microsoft.Xna.Framework.Game
 	{
 		#region Fields
 
@@ -38,19 +48,39 @@ namespace Unv.FormulaNone
 
 		#endregion
 
+
+		#region Properties
+		public static RaceGame Instance { get; private set; }
+		#endregion
+
+
 		#region Initialization
 
 
 		/// <summary>
 		/// The main game constructor.
 		/// </summary>
-		public GameStateManagementGame()
+		public RaceGame()
 		{
+			/// I know that the proper way to do this is to set this
+			/// constructor private and use the static constructor
+			/// to set this property. Yet, there is only one copy of 
+			/// the game class running (making it safe), and doing it
+			/// this way requires less changes to the code I'm using
+			/// as my base.
+			/// -FCT
+			Instance = this;
+
 			Content.RootDirectory = "Content";
 
+			/// I'm setting the game to 720p because that feels like 
+			/// a safe image resolution these days. I know that a 
+			/// variable resolution would be better, but this will do 
+			/// for now.
+			/// -FCT
 			graphics = new GraphicsDeviceManager(this);
-			graphics.PreferredBackBufferWidth = 853;
-			graphics.PreferredBackBufferHeight = 480;
+			graphics.PreferredBackBufferWidth = 1280;
+			graphics.PreferredBackBufferHeight = 720;
 
 			// Create the screen manager component.
 			screenManager = new ScreenManager(this);
@@ -58,8 +88,7 @@ namespace Unv.FormulaNone
 			Components.Add(screenManager);
 
 			// Activate the first screens.
-			screenManager.AddScreen(new BackgroundScreen(), null);
-			screenManager.AddScreen(new MainMenuScreen(), null);
+			screenManager.AddScreen(new SplashScreen(), null);
 		}
 
 
@@ -105,7 +134,7 @@ namespace Unv.FormulaNone
 	{
 		static void Main()
 		{
-			using (GameStateManagementGame game = new GameStateManagementGame())
+			using (RaceGame game = new RaceGame())
 			{
 				game.Run();
 			}
