@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="32"
+   height="48"
+   id="svg2993"
+   version="1.1"
+   inkscape:version="0.48.4 r9939"
+   inkscape:export-filename="D:\GitHub\Formula_None\Game Content\Game Images\Cars\BlankCar.png"
+   inkscape:export-xdpi="90"
+   inkscape:export-ydpi="90"
+   sodipodi:docname="CarBlank.svg">
+  <defs
+     id="defs2995" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="10.476893"
+     inkscape:cx="7.6543239"
+     inkscape:cy="28.86047"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="951"
+     inkscape:window-height="861"
+     inkscape:window-x="633"
+     inkscape:window-y="0"
+     inkscape:window-maximized="0" />
+  <metadata
+     id="metadata2998">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-1004.3622)">
+    <rect
+       style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.45748186;stroke-miterlimit:0;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect2985-74"
+       width="5.5425181"
+       height="7.5425181"
+       x="26.228741"
+       y="1011.5909"
+       ry="0"
+       inkscape:export-filename="D:\SVN\Formula None\trunk\content\GameImages\BlankCar.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.45748186;stroke-miterlimit:0;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect2985"
+       width="5.5425181"
+       height="7.5425181"
+       x="0.22874093"
+       y="1011.5909"
+       ry="0"
+       inkscape:export-filename="D:\SVN\Formula None\trunk\content\GameImages\BlankCar.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.53842306;stroke-miterlimit:0;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect2985-7"
+       width="6.4615769"
+       height="8.9615774"
+       x="0.26921153"
+       y="1043.1315"
+       ry="0"
+       inkscape:export-filename="D:\SVN\Formula None\trunk\content\GameImages\BlankCar.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.53842306;stroke-miterlimit:0;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect2985-7-1"
+       width="6.4615769"
+       height="8.9615774"
+       x="25.269211"
+       y="1043.1315"
+       ry="0"
+       inkscape:export-filename="D:\SVN\Formula None\trunk\content\GameImages\BlankCar.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       transform="matrix(2.4258338,0,0,1.7217864,-23.100612,987.91155)"
+       style="fill:#c8c8c8;fill-opacity:1;stroke:#000000;stroke-width:0.09932896;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+       d="m 22.58772,23.493422 c 0,1.899993 0.04151,3.471237 -0.285857,4.759357 -0.327365,1.28812 -1.0236,2.293117 -1.608957,3.060614 -1.170713,1.534995 -2.788037,2.119993 -4.574484,2.119993 -1.786447,0 -3.403772,-0.584998 -4.574485,-2.119993 -0.585356,-0.767497 -1.281592,-1.772494 -1.6089563,-3.060614 -0.3273643,-1.28812 -0.2858575,-2.859364 -0.2858575,-4.759357 0,-3.799986 0.145718,-7.383224 1.3164308,-9.873469 1.170713,-2.490245 3.366421,-3.8874968 5.152868,-3.8874968 1.786447,0 3.982155,1.3972518 5.152867,3.8874968 1.170713,2.490245 1.316431,6.073483 1.316431,9.873469 z"
+       id="path3019"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="sssssssssss" />
+    <path
+       style="fill:#c8c8c8;fill-opacity:1;stroke:#000000;stroke-width:0.21489522;stroke-miterlimit:4;stroke-opacity:1;stroke-dashoffset:0"
+       d="m 9.0537246,1039.4697 6.9462764,0 6.946276,0 c 7.524292,6.3958 -0.450266,-0.3529 6.946276,5.8926 l 0,5.8925 -3.473138,0 -3.473138,0 -3.473138,0 -3.473138,0 -3.473138,0 -3.4731384,0 -3.473138,0 -3.473139,0 0,-5.8925 c 7.372109,-6.2788 -0.518074,0.4887 6.946277,-5.8926 z"
+       id="rect3832"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccccccccccccc" />
+    <path
+       style="fill:#7d7d7d;fill-opacity:1;stroke:#000000;stroke-width:0.24313669;stroke-miterlimit:4;stroke-opacity:1;stroke-dashoffset:0"
+       d="m 21.877977,1028.9022 c 0,2.7279 0.358426,8.9734 -1.721753,8.9604 -4.036908,-0.025 -2.533397,0 -4.15668,0 -1.623283,0 0.09778,-0.025 -4.156679,0 -2.0801838,0.012 -1.721753,-6.2325 -1.721753,-8.9604 0,-5.4557 2.631864,-9.8784 5.878432,-9.8784 3.246568,0 5.878433,4.4227 5.878433,9.8784 z"
+       id="path3835"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="sssssss" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.40000001;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       d="M 0.75,14.686 10,3 l 6,-1 6,1 9.25,11.686"
+       id="path4406"
+       inkscape:connector-curvature="0"
+       transform="translate(0,1004.3622)"
+       sodipodi:nodetypes="ccccc" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.36658037;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       d="m 5.5281604,1013.1385 0,19.6891 -3.4032404,5.7383"
+       id="path3838"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccc" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.36658946;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       d="m 26.471295,1013.1385 0,19.6891 3.403411,5.7383"
+       id="path3838-1"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccc" />
+  </g>
+</svg>
