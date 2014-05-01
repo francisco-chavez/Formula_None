@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="1280"
+   height="720"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="TitlePageBackground.svg"
+   inkscape:export-filename="D:\GitHub\Formula_None\Game Content\Game Images\BackgroundImages\TitlePageBackground.png"
+   inkscape:export-xdpi="90"
+   inkscape:export-ydpi="90">
+  <defs
+     id="defs4" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.58"
+     inkscape:cx="438.99571"
+     inkscape:cy="244.13793"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1525"
+     inkscape:window-height="877"
+     inkscape:window-x="67"
+     inkscape:window-y="116"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-332.36218)">
+    <rect
+       style="fill:#008000;fill-opacity:1;stroke:#000000;stroke-width:0.34986714000000002;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect2987"
+       width="1279.6501"
+       height="719.65015"
+       x="0.17493357"
+       y="332.53711" />
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot2989"
+       style="font-size:72px;font-style:oblique;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Wasco Sans;-inkscape-font-specification:Wasco Sans Bold Oblique"
+       transform="translate(114.89253,279.81587)"><flowRegion
+         id="flowRegion2991"><rect
+           id="rect2993"
+           width="548.27576"
+           height="172.41377"
+           x="250"
+           y="273.44827"
+           style="font-size:72px;font-style:oblique;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;text-anchor:middle;font-family:Wasco Sans;-inkscape-font-specification:Wasco Sans Bold Oblique" /></flowRegion><flowPara
+         id="flowPara2995">Formula None </flowPara><flowPara
+         id="flowPara3005">Go Kart Racing</flowPara></flowRoot>    <flowRoot
+       xml:space="preserve"
+       id="flowRoot2997"
+       style="fill:black;stroke:none;stroke-opacity:1;stroke-width:1px;stroke-linejoin:miter;stroke-linecap:butt;fill-opacity:1;font-family:Sans;font-style:normal;font-weight:normal;font-size:4px;line-height:125%;letter-spacing:0px;word-spacing:0px"><flowRegion
+         id="flowRegion2999"><rect
+           id="rect3001"
+           width="115.51724"
+           height="12.068966"
+           x="231.03448"
+           y="497.58621" /></flowRegion><flowPara
+         id="flowPara3003"></flowPara></flowRoot>  </g>
+</svg>
