@@ -25,7 +25,7 @@ namespace Unv.FormulaNone.Controls
 
 		#region Properties
 		public int		Margins					{ get; set; }
-		public int		Paddings				{ get; set; }
+		public int		Padding					{ get; set; }
 		public int		BorderThickness			{ get; set; }
 		public Color	ItemBackground			{ get; set; }
 
@@ -96,9 +96,9 @@ namespace Unv.FormulaNone.Controls
 		{
 			m_contentItems	= new List<ListItem>();
 
-			Margins				= 4;
-			Paddings			= 4;
-			BorderThickness		= 8;
+			Margins				= 5;
+			Padding				= 5;
+			BorderThickness		= 10;
 			ItemBackground		= Color.DarkGreen;
 
 			BorderColor			= Color.Green;
@@ -130,10 +130,10 @@ namespace Unv.FormulaNone.Controls
 						borderRec.Height - BorderThickness * 2);
 				Rectangle displayRect =
 					new Rectangle(
-						displayBackgroundRect.X + Paddings,
-						displayBackgroundRect.Y + Paddings,
-						displayBackgroundRect.Width - Paddings * 2,
-						displayBackgroundRect.Height - Paddings * 2);
+						displayBackgroundRect.X + Padding,
+						displayBackgroundRect.Y + Padding,
+						displayBackgroundRect.Width - Padding * 2,
+						displayBackgroundRect.Height - Padding * 2);
 
 				spriteBatch.Draw(blank, borderRec, borderColor);
 				spriteBatch.Draw(blank, displayBackgroundRect, displayAreaColor);
@@ -280,7 +280,25 @@ namespace Unv.FormulaNone.Controls
 			{
 				Vector2 center = drawArea.Position() + drawArea.Size() / 2;
 
-				spriteBatch.Draw(DisplayItem, center, null, lighting, DisplayRotation, new Vector2(DisplayItem.Width, DisplayItem.Height) / 2, 1f, SpriteEffects.None, 0f);
+				var drawSize = drawArea.Size();
+				var itemSize = DisplayItem.Size();
+				float scaleX = drawSize.X / itemSize.X;
+				float scaleY = drawSize.Y / itemSize.Y;
+
+				float scaleToUse = Math.Max(scaleX, scaleY);
+				if (itemSize.X * scaleToUse > drawSize.X || itemSize.Y * scaleToUse > drawSize.Y)
+					scaleToUse = Math.Min(scaleX, scaleY);
+
+				spriteBatch.Draw(
+					DisplayItem, 
+					center, 
+					null, 
+					lighting, 
+					DisplayRotation, 
+					itemSize / 2, 
+					scaleToUse, 
+					SpriteEffects.None, 
+					0f);
 			}
 
 			public override void Clear()

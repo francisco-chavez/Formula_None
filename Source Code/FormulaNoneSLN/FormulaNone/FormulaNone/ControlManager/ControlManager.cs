@@ -18,8 +18,8 @@ namespace Unv.FormulaNone
 
 
 		#region Properties
-		public Rectangle DrawArea { get; set; }
-		public GameScreen Screen { get; private set; }
+		public Rectangle	DrawArea	{ get; set; }
+		public GameScreen	Screen		{ get; private set; }
 		#endregion
 
 

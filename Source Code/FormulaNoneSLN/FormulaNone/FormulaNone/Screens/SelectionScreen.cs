@@ -104,6 +104,7 @@ namespace Unv.FormulaNone.Screens
 			m_raceCarSelector.SelectionChanged		+= RaceCarSelector_SelectionChanged;
 			m_raceCarSelector.ItemWidth				= 200;
 			m_raceCarSelector.ItemHeight			= 200;
+			m_raceCarSelector.Padding				= 20;
 			m_raceCarSelector.MustHaveItemSelected	= true;
 			foreach (var carImageData in m_carImages)
 				m_raceCarSelector.AddItem(carImageData.Key, carImageData.Value, -MathHelper.PiOver2);
