@@ -11,14 +11,17 @@ namespace Unv.FormulaNone
 {
 	public abstract class ControlBase
 	{
-		protected internal ControlManager ControlManager { get; private set; }
+		public virtual		int				MaxHeight		{ get; set; }
+		protected internal	ControlManager	ControlManager	{ get; private set; }
+
 
 		public ControlBase(ControlManager controlManager)
 		{
 			if (controlManager == null)
 				throw new ArgumentNullException("All controls require a contorl manager.");
 
-			ControlManager = controlManager;
+			ControlManager	= controlManager;
+			MaxHeight		= 150;
 		}
 
 		public abstract void Draw(SpriteBatch spriteBatch, Rectangle drawArea);

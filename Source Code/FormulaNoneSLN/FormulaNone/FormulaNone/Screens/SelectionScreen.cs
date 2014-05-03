@@ -66,6 +66,16 @@ namespace Unv.FormulaNone.Screens
 			base.LoadContent();
 		}
 
+		public override void UnloadContent()
+		{
+			if (m_content != null)
+				m_content.Unload();
+			if (m_uiControlManager != null)
+				m_uiControlManager.Clear();
+
+			base.UnloadContent();
+		}
+
 		private void SetUpUIControls()
 		{
 			// Manager Setup
@@ -74,10 +84,10 @@ namespace Unv.FormulaNone.Screens
 			else
 				m_uiControlManager.Clear();
 
-			Vector2 viewArea = new Vector2(Game.Window.ClientBounds.Width, Game.Window.ClientBounds.Height);
-			Vector2 safeViewStart = viewArea * 0.1f;
-			Vector2 safeViewEnd = viewArea * 0.9f;
-			Vector2 safeViewSize =  safeViewEnd - safeViewStart;
+			Vector2 viewArea		= Game.Window.ClientBounds.Size(); 
+			Vector2 safeViewStart	= viewArea * 0.1f;
+			Vector2 safeViewEnd		= viewArea * 0.9f;
+			Vector2 safeViewSize	=  safeViewEnd - safeViewStart;
 			m_uiControlManager.DrawArea =
 				new Rectangle(
 					(int) safeViewStart.X,
@@ -88,10 +98,10 @@ namespace Unv.FormulaNone.Screens
 
 			// Set up the race cars selector
 			m_raceCarSelector = new FilmStripSelector(m_uiControlManager);
+			m_raceCarSelector.ItemWidth = 200;
+			m_raceCarSelector.ItemHeight = 200;
 			foreach (var carImageData in m_carImages)
-			{
 				m_raceCarSelector.AddItem(carImageData.Key, carImageData.Value, -MathHelper.PiOver2);
-			}
 			m_uiControlManager.AddControl(m_raceCarSelector);
 		}
 		#endregion

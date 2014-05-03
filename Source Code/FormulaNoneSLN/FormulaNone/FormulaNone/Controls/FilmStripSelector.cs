@@ -33,6 +33,12 @@ namespace Unv.FormulaNone.Controls
 		public int		ItemWidth				{ get; set; }
 		public int		ItemHeight				{ get; set; }
 
+		public override int MaxHeight
+		{
+			get { return ItemHeight; }
+			set { ItemHeight = value; }
+		}
+
 		public int SelectedIndex
 		{
 			get { return m_selectedIndex; }
@@ -72,7 +78,6 @@ namespace Unv.FormulaNone.Controls
 
 			BorderColor			= Color.Green;
 			SelectedBorderColor = Color.Gold;
-			ItemHeight			= 100;
 			ItemWidth			= 100;
 		}
 		#endregion
@@ -81,12 +86,13 @@ namespace Unv.FormulaNone.Controls
 		#region Methods
 		public override void Draw(SpriteBatch spriteBatch, Rectangle drawArea)
 		{
-			float colorAlpha	= this.ControlManager.Screen.TransitionAlpha;
-			Texture2D blank		= RaceGame.Instance.WhiteTexture2D;
-			Vector2 position	= new Vector2(drawArea.X, drawArea.Y);
+			float colorAlpha		= this.ControlManager.Screen.TransitionAlpha;
+			Texture2D blank			= RaceGame.Instance.WhiteTexture2D;
+			Vector2 position		= drawArea.Position();
 
-			Color borderColor = new Color(BorderColor.ToVector3() * colorAlpha);
-			Color displayAreaColor = new Color(ItemBackground.ToVector3() * colorAlpha);
+			Color borderColor		= new Color(BorderColor.ToVector3() * colorAlpha);
+			Color displayAreaColor	= new Color(ItemBackground.ToVector3() * colorAlpha);
+			Color whiteLighting		= new Color(colorAlpha, colorAlpha, colorAlpha);
 			
 			foreach(var container in m_contentItems)
 			{
@@ -97,12 +103,18 @@ namespace Unv.FormulaNone.Controls
 						borderRec.Y + BorderThickness, 
 						borderRec.Width - BorderThickness * 2,
 						borderRec.Height - BorderThickness * 2);
+				Rectangle displayRect =
+					new Rectangle(
+						displayBackgroundRect.X + Paddings,
+						displayBackgroundRect.Y + Paddings,
+						displayBackgroundRect.Width - Paddings * 2,
+						displayBackgroundRect.Height - Paddings * 2);
 
 				spriteBatch.Draw(blank, borderRec, borderColor);
 				spriteBatch.Draw(blank, displayBackgroundRect, displayAreaColor);
+				container.Draw(spriteBatch, displayRect, whiteLighting);
 
 				position.X += ItemWidth + Margins;
-				//container.Draw();
 			}
 		}
 
@@ -147,7 +159,10 @@ namespace Unv.FormulaNone.Controls
 
 		public override void Clear()
 		{
-			throw new NotImplementedException();
+			foreach (var containter in m_contentItems)
+				containter.Clear();
+
+			m_contentItems.Clear();
 		}
 
 		public void OnSelectionChanged(int oldIndex, int newIndex)
@@ -196,7 +211,8 @@ namespace Unv.FormulaNone.Controls
 		{
 			public string Value	{ get; set; }
 
-			public abstract void Draw();
+			public abstract void Draw(SpriteBatch spriteBatch, Rectangle drawArea, Color lighting);
+			public abstract void Clear();
 		}
 
 		private class TextListItem
@@ -204,7 +220,12 @@ namespace Unv.FormulaNone.Controls
 		{
 			public string DisplayItem { get; set; }
 
-			public override void Draw()
+			public override void Draw(SpriteBatch spriteBatch, Rectangle drawArea, Color lighting)
+			{
+				throw new NotImplementedException();
+			}
+
+			public override void Clear()
 			{
 				throw new NotImplementedException();
 			}
@@ -216,9 +237,18 @@ namespace Unv.FormulaNone.Controls
 			public Texture2D	DisplayItem		{ get; set; }
 			public float		DisplayRotation { get; set; }
 
-			public override void Draw()
+
+			public override void Draw(SpriteBatch spriteBatch, Rectangle drawArea, Color lighting)
 			{
-				throw new NotImplementedException();
+				Vector2 center = drawArea.Position() + drawArea.Size() / 2;
+
+				spriteBatch.Draw(DisplayItem, center, null, lighting, DisplayRotation, new Vector2(DisplayItem.Width, DisplayItem.Height) / 2, 1f, SpriteEffects.None, 0f);
+			}
+
+			public override void Clear()
+			{
+				this.DisplayItem	= null;
+				this.Value			= null;
 			}
 		}
 		#endregion
