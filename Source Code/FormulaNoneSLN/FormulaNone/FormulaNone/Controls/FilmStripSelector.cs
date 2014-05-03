@@ -75,6 +75,21 @@ namespace Unv.FormulaNone.Controls
 
 
 		#region Methods
+		public override void Draw(Rectangle drawArea)
+		{
+			throw new NotImplementedException();
+		}
+
+		public override void Update(GameTime gameTime)
+		{
+			throw new NotImplementedException();
+		}
+
+		public override void HandleInput(InputState input)
+		{
+			throw new NotImplementedException();
+		}
+
 		public void AddItem(string value, Texture2D display)
 		{
 			if (string.IsNullOrWhiteSpace(value) || display == null)
