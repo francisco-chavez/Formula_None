@@ -8,13 +8,8 @@ namespace Unv.FormulaNone
 	public class SelectionChangedEventArgs
 		: EventArgs
 	{
-		public object OldValue { get; private set; }
-		public object NewValue { get; private set; }
-
-		public SelectionChangedEventArgs(object oldValue, object newValue)
+		public SelectionChangedEventArgs()
 		{
-			OldValue = oldValue;
-			NewValue = NewValue;
 		}
 	}
 

@@ -68,6 +68,9 @@ namespace Unv.FormulaNone.Screens
 
 		public override void UnloadContent()
 		{
+			// We don't want the clear out to change our selections.
+			m_raceCarSelector.SelectionChanged -= RaceCarSelector_SelectionChanged;
+
 			if (m_content != null)
 				m_content.Unload();
 			if (m_uiControlManager != null)
@@ -98,8 +101,10 @@ namespace Unv.FormulaNone.Screens
 
 			// Set up the race cars selector
 			m_raceCarSelector = new FilmStripSelector(m_uiControlManager);
-			m_raceCarSelector.ItemWidth = 200;
-			m_raceCarSelector.ItemHeight = 200;
+			m_raceCarSelector.SelectionChanged		+= RaceCarSelector_SelectionChanged;
+			m_raceCarSelector.ItemWidth				= 200;
+			m_raceCarSelector.ItemHeight			= 200;
+			m_raceCarSelector.MustHaveItemSelected	= true;
 			foreach (var carImageData in m_carImages)
 				m_raceCarSelector.AddItem(carImageData.Key, carImageData.Value, -MathHelper.PiOver2);
 			m_uiControlManager.AddControl(m_raceCarSelector);
@@ -107,7 +112,15 @@ namespace Unv.FormulaNone.Screens
 		#endregion
 
 
-		#region Draw & Update
+		#region Event Handlers
+		void RaceCarSelector_SelectionChanged(ControlBase source, SelectionChangedEventArgs e)
+		{
+			SelectedCar = m_raceCarSelector.SelectedValue;
+		}
+		#endregion
+
+
+		#region Methods
 		public override void Draw(GameTime gameTime)
 		{
 			var spriteBatch		= ScreenManager.SpriteBatch;

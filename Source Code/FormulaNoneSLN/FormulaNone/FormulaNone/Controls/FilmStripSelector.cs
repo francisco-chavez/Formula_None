@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Graphics;
 
 
@@ -44,16 +45,40 @@ namespace Unv.FormulaNone.Controls
 			get { return m_selectedIndex; }
 			set
 			{
+				if (m_selectedIndex == value)
+					return;
+
+				if (m_contentItems.Count == 0)
+					return;
+
 				int startingValue = m_selectedIndex;
 
-				m_selectedIndex = Math.Max(value, -1);
+				m_selectedIndex = Math.Max(value, MustHaveItemSelected ? 0 : -1);
 				m_selectedIndex = Math.Min(m_selectedIndex, m_contentItems.Count - 1);
 
 				if (startingValue != m_selectedIndex)
-					OnSelectionChanged(startingValue, m_selectedIndex);
+					OnSelectionChanged();
 			}
 		}
 		private int m_selectedIndex = -1;
+
+		public bool MustHaveItemSelected
+		{
+			get { return m_mustHaveItemSelected; }
+			set
+			{
+				if (m_mustHaveItemSelected == value)
+					return;
+
+				m_mustHaveItemSelected = value;
+
+				if (m_contentItems.Count == 0)
+					return;
+
+				SelectedIndex = Math.Max(SelectedIndex, value ? 0 : -1);
+			}
+		}
+		private bool m_mustHaveItemSelected = false;
 
 		public string SelectedValue
 		{
@@ -125,7 +150,15 @@ namespace Unv.FormulaNone.Controls
 
 		public override void HandleInput(InputState input)
 		{
-			//throw new NotImplementedException();
+			PlayerIndex? controllingPlayer = this.ControlManager.Screen.ControllingPlayer;
+			PlayerIndex playerIndex;
+
+			if (input.IsNewButtonPress(Buttons.LeftThumbstickLeft, controllingPlayer, out playerIndex) ||
+				input.IsNewButtonPress(Buttons.DPadLeft, controllingPlayer, out playerIndex))
+				SelectedIndex--;
+			else if (input.IsNewButtonPress(Buttons.LeftThumbstickRight, controllingPlayer, out playerIndex) ||
+					 input.IsNewButtonPress(Buttons.DPadRight, controllingPlayer, out playerIndex))
+				SelectedIndex++;
 		}
 
 		public void AddItem(string value, Texture2D display, float displayRotation)
@@ -139,6 +172,9 @@ namespace Unv.FormulaNone.Controls
 				Value			= value,
 				DisplayRotation = displayRotation
 			};
+
+			if (MustHaveItemSelected && SelectedIndex == -1)
+				SelectedIndex = 0;
 
 			m_contentItems.Add(container);
 		}
@@ -154,6 +190,9 @@ namespace Unv.FormulaNone.Controls
 				Value = value
 			};
 
+			if (MustHaveItemSelected && SelectedIndex == -1)
+				SelectedIndex = 0;
+
 			m_contentItems.Add(container);
 		}
 
@@ -163,17 +202,16 @@ namespace Unv.FormulaNone.Controls
 				containter.Clear();
 
 			m_contentItems.Clear();
+			int oldIndex = m_selectedIndex;
+			m_selectedIndex = -1;
+			if (oldIndex != m_selectedIndex)
+				OnSelectionChanged();
 		}
 
-		public void OnSelectionChanged(int oldIndex, int newIndex)
+		public void OnSelectionChanged()
 		{
 			if (SelectionChanged != null)
-			{
-				string oldValue = oldIndex != -1 ? m_contentItems[oldIndex].Value : null;
-				string newValue = newIndex != -1 ? m_contentItems[newIndex].Value : null;
-
-				SelectionChanged(this, new SelectionChangedEventArgs(oldValue, newValue));
-			}
+				SelectionChanged(this, new SelectionChangedEventArgs());
 		}
 		#endregion
 

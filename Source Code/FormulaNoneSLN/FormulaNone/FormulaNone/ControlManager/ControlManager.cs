@@ -64,7 +64,10 @@ namespace Unv.FormulaNone
 
 		public void Clear()
 		{
-			throw new NotImplementedException();
+			foreach (var control in m_controls)
+				control.Clear();
+
+			m_controls.Clear();
 		}
 		#endregion
 	}
