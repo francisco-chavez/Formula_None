@@ -19,12 +19,15 @@ namespace Unv.FormulaNone
 
 		#region Properties
 		public Rectangle DrawArea { get; set; }
+		public GameScreen Screen { get; private set; }
 		#endregion
 
 
 		#region Initialization
-		public ControlManager()
+		public ControlManager(GameScreen owningScreen)
 		{
+			Screen = owningScreen;
+
 			m_controls = new List<ControlBase>();
 
 			DrawArea = new Rectangle(50, 50, 200, 100);
@@ -33,10 +36,10 @@ namespace Unv.FormulaNone
 
 
 		#region Methods
-		public void Draw()
+		public void Draw(SpriteBatch spriteBatch)
 		{
 			foreach (var control in m_controls)
-				control.Draw(DrawArea);
+				control.Draw(spriteBatch, DrawArea);
 		}
 
 		public void Update(GameTime gameTime)

@@ -30,6 +30,8 @@ namespace Unv.FormulaNone.Controls
 
 		public Color	BorderColor				{ get; set; }
 		public Color	SelectedBorderColor		{ get; set; }
+		public int		ItemWidth				{ get; set; }
+		public int		ItemHeight				{ get; set; }
 
 		public int SelectedIndex
 		{
@@ -66,39 +68,64 @@ namespace Unv.FormulaNone.Controls
 			Margins				= 4;
 			Paddings			= 4;
 			BorderThickness		= 8;
-			ItemBackground		= Color.Gray;
+			ItemBackground		= Color.DarkGreen;
 
 			BorderColor			= Color.Green;
 			SelectedBorderColor = Color.Gold;
+			ItemHeight			= 100;
+			ItemWidth			= 100;
 		}
 		#endregion
 
 
 		#region Methods
-		public override void Draw(Rectangle drawArea)
+		public override void Draw(SpriteBatch spriteBatch, Rectangle drawArea)
 		{
-			throw new NotImplementedException();
+			float colorAlpha	= this.ControlManager.Screen.TransitionAlpha;
+			Texture2D blank		= RaceGame.Instance.WhiteTexture2D;
+			Vector2 position	= new Vector2(drawArea.X, drawArea.Y);
+
+			Color borderColor = new Color(BorderColor.ToVector3() * colorAlpha);
+			Color displayAreaColor = new Color(ItemBackground.ToVector3() * colorAlpha);
+			
+			foreach(var container in m_contentItems)
+			{
+				Rectangle borderRec = new Rectangle((int) position.X, (int) position.Y, ItemWidth, ItemHeight);
+				Rectangle displayBackgroundRect = 
+					new Rectangle(
+						borderRec.X + BorderThickness,
+						borderRec.Y + BorderThickness, 
+						borderRec.Width - BorderThickness * 2,
+						borderRec.Height - BorderThickness * 2);
+
+				spriteBatch.Draw(blank, borderRec, borderColor);
+				spriteBatch.Draw(blank, displayBackgroundRect, displayAreaColor);
+
+				position.X += ItemWidth + Margins;
+				//container.Draw();
+			}
 		}
 
 		public override void Update(GameTime gameTime)
 		{
-			throw new NotImplementedException();
+			//throw new NotImplementedException();
 		}
 
 		public override void HandleInput(InputState input)
 		{
-			throw new NotImplementedException();
+			//throw new NotImplementedException();
 		}
 
-		public void AddItem(string value, Texture2D display)
+		public void AddItem(string value, Texture2D display, float displayRotation)
 		{
 			if (string.IsNullOrWhiteSpace(value) || display == null)
 				throw new ArgumentNullException();
 
 			var container = new ImageListItem()
 			{
-				DisplayItem = display,
-				Value		= value
+				DisplayItem		= display,
+				Value			= value,
+				DisplayRotation = displayRotation
 			};
 
 			m_contentItems.Add(container);
@@ -186,7 +213,8 @@ namespace Unv.FormulaNone.Controls
 		private class ImageListItem
 			: ListItem
 		{
-			public Texture2D DisplayItem { get; set; }
+			public Texture2D	DisplayItem		{ get; set; }
+			public float		DisplayRotation { get; set; }
 
 			public override void Draw()
 			{

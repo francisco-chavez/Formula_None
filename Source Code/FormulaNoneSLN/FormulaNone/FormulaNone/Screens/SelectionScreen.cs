@@ -61,22 +61,38 @@ namespace Unv.FormulaNone.Screens
 					m_carImages.Add(imageName, image);
 			}
 
+			SetUpUIControls();
+
 			base.LoadContent();
 		}
 
 		private void SetUpUIControls()
 		{
+			// Manager Setup
 			if (m_uiControlManager == null)
-				m_uiControlManager = new ControlManager();
+				m_uiControlManager = new ControlManager(this);
 			else
 				m_uiControlManager.Clear();
+
+			Vector2 viewArea = new Vector2(Game.Window.ClientBounds.Width, Game.Window.ClientBounds.Height);
+			Vector2 safeViewStart = viewArea * 0.1f;
+			Vector2 safeViewEnd = viewArea * 0.9f;
+			Vector2 safeViewSize =  safeViewEnd - safeViewStart;
+			m_uiControlManager.DrawArea =
+				new Rectangle(
+					(int) safeViewStart.X,
+					(int) safeViewStart.Y,
+					(int) safeViewSize.X,
+					(int) safeViewSize.Y);
+
 
 			// Set up the race cars selector
 			m_raceCarSelector = new FilmStripSelector(m_uiControlManager);
 			foreach (var carImageData in m_carImages)
 			{
-				m_raceCarSelector.AddItem(carImageData.Key, carImageData.Value);
+				m_raceCarSelector.AddItem(carImageData.Key, carImageData.Value, -MathHelper.PiOver2);
 			}
+			m_uiControlManager.AddControl(m_raceCarSelector);
 		}
 		#endregion
 
@@ -95,8 +111,25 @@ namespace Unv.FormulaNone.Screens
 				new Rectangle(0, 0, clientBounds.Width, clientBounds.Height),
 				drawColor);
 
+			m_uiControlManager.Draw(spriteBatch);
+
 			spriteBatch.End();
+
 			base.Draw(gameTime);
+		}
+
+		public override void Update(GameTime gameTime, bool otherScreenHasFocus, bool coveredByOtherScreen)
+		{
+			m_uiControlManager.Update(gameTime);
+
+			base.Update(gameTime, otherScreenHasFocus, false);
+		}
+
+		public override void HandleInput(InputState input)
+		{
+			m_uiControlManager.HandleInput(input);
+
+			base.HandleInput(input);
 		}
 		#endregion
 	}

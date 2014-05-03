@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 
 namespace Unv.FormulaNone
@@ -20,7 +21,7 @@ namespace Unv.FormulaNone
 			ControlManager = controlManager;
 		}
 
-		public abstract void Draw(Rectangle drawArea);
+		public abstract void Draw(SpriteBatch spriteBatch, Rectangle drawArea);
 		public abstract void Update(GameTime gameTime);
 		public abstract void HandleInput(InputState input);
 		public abstract void Clear();
