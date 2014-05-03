@@ -19,11 +19,18 @@ namespace Unv.FormulaNone.Controls
 
 		#region Attributes
 		private List<ListItem> m_contentItems;
-		private ControlManager m_manager;
 		#endregion
 
 
 		#region Properties
+		public int		Margins					{ get; set; }
+		public int		Paddings				{ get; set; }
+		public int		BorderThickness			{ get; set; }
+		public Color	ItemBackground			{ get; set; }
+
+		public Color	BorderColor				{ get; set; }
+		public Color	SelectedBorderColor		{ get; set; }
+
 		public int SelectedIndex
 		{
 			get { return m_selectedIndex; }
@@ -52,9 +59,17 @@ namespace Unv.FormulaNone.Controls
 
 		#region Initialization
 		public FilmStripSelector(ControlManager manager)
+			: base(manager)
 		{
-			m_manager		= manager;
 			m_contentItems	= new List<ListItem>();
+
+			Margins				= 4;
+			Paddings			= 4;
+			BorderThickness		= 8;
+			ItemBackground		= Color.Gray;
+
+			BorderColor			= Color.Green;
+			SelectedBorderColor = Color.Gold;
 		}
 		#endregion
 

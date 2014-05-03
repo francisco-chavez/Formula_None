@@ -9,6 +9,8 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
+using Unv.FormulaNone.Controls;
+
 
 namespace Unv.FormulaNone.Screens
 {
@@ -19,7 +21,9 @@ namespace Unv.FormulaNone.Screens
 		private List<Texture2D>					m_raceTracks;
 		private Dictionary<string, Texture2D>	m_carImages;
 		private ContentManager					m_content;
-		private ControlManager					m_uiControls;
+		private ControlManager					m_uiControlManager;
+
+		private FilmStripSelector				m_raceCarSelector;
 		#endregion
 
 
@@ -40,12 +44,6 @@ namespace Unv.FormulaNone.Screens
 			if (m_content == null)
 				m_content = new ContentManager(Game.Services, "Content/Images");
 
-			if (m_uiControls == null)
-				m_uiControls = new ControlManager();
-			else
-				m_uiControls.Clear();
-
-
 
 			string[] filepaths = null;
 			
@@ -64,6 +62,21 @@ namespace Unv.FormulaNone.Screens
 			}
 
 			base.LoadContent();
+		}
+
+		private void SetUpUIControls()
+		{
+			if (m_uiControlManager == null)
+				m_uiControlManager = new ControlManager();
+			else
+				m_uiControlManager.Clear();
+
+			// Set up the race cars selector
+			m_raceCarSelector = new FilmStripSelector(m_uiControlManager);
+			foreach (var carImageData in m_carImages)
+			{
+				m_raceCarSelector.AddItem(carImageData.Key, carImageData.Value);
+			}
 		}
 		#endregion
 
