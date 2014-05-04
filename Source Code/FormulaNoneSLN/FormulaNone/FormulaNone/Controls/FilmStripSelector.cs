@@ -25,7 +25,7 @@ namespace Unv.FormulaNone.Controls
 
 
 		#region Properties
-		public	int			Margins					{ get; set; }
+		public	int			Margin					{ get; set; }
 		public	int			Padding					{ get; set; }
 		public	int			BorderThickness			{ get; set; }
 		public	Color		ItemBackground			{ get; set; }
@@ -101,7 +101,7 @@ namespace Unv.FormulaNone.Controls
 		{
 			m_contentItems		= new List<ListItem>();
 
-			Margins					= 5;
+			Margin					= 5;
 			Padding					= 5;
 			BorderThickness			= 10;
 			ItemBackground			= Color.DarkGreen;
@@ -119,13 +119,33 @@ namespace Unv.FormulaNone.Controls
 		#region Methods
 		public override void Draw(SpriteBatch spriteBatch, Rectangle drawArea)
 		{
+			const int margingMult = 3;
+
+			Vector2		position			= drawArea.Position();
+
+			Vector2		leftPointerPosition = position;
+						leftPointerPosition.Y += (ItemHeight - ShiftLeftIndicator.Height) / 2f;
+			Vector2		rightPointerPosition = leftPointerPosition;
+
+						rightPointerPosition.X += drawArea.Width - ShiftLeftIndicator.Width;
+
+			
+			spriteBatch.Draw(ShiftLeftIndicator, leftPointerPosition, SelectedBorderColor);
+			spriteBatch.Draw(ShiftLeftIndicator, rightPointerPosition, null, SelectedBorderColor, 0f, Vector2.Zero, 1f, SpriteEffects.FlipHorizontally, 0f);
+
+
+			Rectangle	safeDrawArea		= drawArea;
+						safeDrawArea.Width	-= ShiftLeftIndicator.Width * 2;
+						safeDrawArea.Width	-= Margin * margingMult * 2;
+
+						position.X			+= ShiftLeftIndicator.Width + Margin * margingMult;
 			float		colorAlpha			= this.ControlManager.Screen.TransitionAlpha;
 			Texture2D	blank				= RaceGame.Instance.WhiteTexture2D;
-			Vector2		position			= drawArea.Position();
 
 			Color		borderColor;
 			Color		displayAreaColor	= new Color(ItemBackground.ToVector3() * colorAlpha);
 			Color		whiteLighting		= new Color(colorAlpha, colorAlpha, colorAlpha);
+
 			
 			for (int i = 0; i < m_contentItems.Count; i++)
 			{
@@ -167,7 +187,7 @@ namespace Unv.FormulaNone.Controls
 				spriteBatch.Draw(blank, displayBackgroundRect, displayAreaColor);
 				container.DrawDisplayItem(spriteBatch, displayRect, whiteLighting);
 
-				position.X += ItemWidth + Margins;
+				position.X += ItemWidth + Margin;
 			}
 		}
 

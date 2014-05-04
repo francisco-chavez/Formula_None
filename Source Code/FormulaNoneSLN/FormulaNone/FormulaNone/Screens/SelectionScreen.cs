@@ -23,6 +23,8 @@ namespace Unv.FormulaNone.Screens
 		private ContentManager					m_content;
 		private ControlManager					m_uiControlManager;
 
+		private Texture2D						m_leftPointerImage;
+
 		private FilmStripSelector				m_raceCarSelector;
 		#endregion
 
@@ -61,6 +63,8 @@ namespace Unv.FormulaNone.Screens
 					m_carImages.Add(imageName, image);
 			}
 
+			m_leftPointerImage = m_content.Load<Texture2D>("UI/LeftPointer01_40x40");
+
 			SetUpUIControls();
 
 			base.LoadContent();
@@ -90,7 +94,7 @@ namespace Unv.FormulaNone.Screens
 			Vector2 viewArea		= Game.Window.ClientBounds.Size(); 
 			Vector2 safeViewStart	= viewArea * 0.1f;
 			Vector2 safeViewEnd		= viewArea * 0.9f;
-			Vector2 safeViewSize	=  safeViewEnd - safeViewStart;
+			Vector2 safeViewSize	= safeViewEnd - safeViewStart;
 			m_uiControlManager.DrawArea =
 				new Rectangle(
 					(int) safeViewStart.X,
@@ -106,6 +110,7 @@ namespace Unv.FormulaNone.Screens
 			m_raceCarSelector.ItemHeight			= 200;
 			m_raceCarSelector.Padding				= 20;
 			m_raceCarSelector.MustHaveItemSelected	= true;
+			m_raceCarSelector.ShiftLeftIndicator	= m_leftPointerImage;
 			foreach (var carImageData in m_carImages)
 				m_raceCarSelector.AddItem(carImageData.Key, carImageData.Value, -MathHelper.PiOver2);
 			m_uiControlManager.AddControl(m_raceCarSelector);
