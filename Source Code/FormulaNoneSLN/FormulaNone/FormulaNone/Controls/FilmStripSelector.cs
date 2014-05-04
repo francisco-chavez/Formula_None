@@ -55,14 +55,15 @@ namespace Unv.FormulaNone.Controls
 				if (m_contentItems.Count == 0)
 					return;
 
-				m_msPerThisCycle = 0;
 				int startingValue = m_selectedIndex;
 
 				m_selectedIndex = Math.Max(value, MustHaveItemSelected ? 0 : -1);
 				m_selectedIndex = Math.Min(m_selectedIndex, m_contentItems.Count - 1);
 
 				if (startingValue != m_selectedIndex)
+				{
 					OnSelectionChanged();
+				}
 			}
 		}
 		private int m_selectedIndex = -1;
@@ -99,7 +100,7 @@ namespace Unv.FormulaNone.Controls
 		public FilmStripSelector(ControlManager manager)
 			: base(manager)
 		{
-			m_contentItems		= new List<ListItem>();
+			m_contentItems			= new List<ListItem>();
 
 			Margin					= 5;
 			Padding					= 5;
@@ -135,15 +136,16 @@ namespace Unv.FormulaNone.Controls
 			Color		displayAreaColor	= new Color(ItemBackground.ToVector3() * colorAlpha);
 			Color		whiteLighting		= new Color(colorAlpha, colorAlpha, colorAlpha);
 
+			int firstIndexToDraw;
+			int lastIndexToDraw;
+
+			FindItemIndicesToDraw(safeDrawArea, out firstIndexToDraw, out lastIndexToDraw);
 			
-			for (int i = 0; i < m_contentItems.Count; i++)
+			for (int i = 0; i + firstIndexToDraw <= lastIndexToDraw; i++)
 			{
-				var container = m_contentItems[i];
+				var container = m_contentItems[i + firstIndexToDraw];
 
-				if (position.X + ItemWidth > safeDrawArea.Right)
-					break;
-
-				if (SelectedIndex == i)
+				if (SelectedIndex == i + firstIndexToDraw)
 				{
 					float x = MathHelper.TwoPi / MSSecondsPerGlowCycle;
 					float tx = m_msPerThisCycle * x;
@@ -234,6 +236,35 @@ namespace Unv.FormulaNone.Controls
 				0f);
 		}
 
+		private void FindItemIndicesToDraw(Rectangle safeDrawArea, out int startingIndex, out int endindIndex)
+		{
+			// Find the number of items that can be drawn in the safe area.
+			int maxItemCountFound = 0;
+
+			for (int i = 0; i < m_contentItems.Count; i++)
+			{
+				int width = ItemWidth * (i + 1) + Margin * i;
+
+				if (width <= safeDrawArea.Width)
+					maxItemCountFound = i + 1;
+				else
+					break;
+			}
+			
+			// Find a starting index that would draw the selected item while keeping
+			// that starting index as close as posable to index 0.
+			if (SelectedIndex < maxItemCountFound)
+			{
+				startingIndex = 0;
+				endindIndex = maxItemCountFound - 1;
+			}
+			else
+			{
+				startingIndex = SelectedIndex - maxItemCountFound + 1;
+				endindIndex = SelectedIndex;
+			}
+		}
+
 		public override void Update(GameTime gameTime)
 		{
 			m_msPerThisCycle += gameTime.ElapsedGameTime.Milliseconds;
@@ -304,6 +335,8 @@ namespace Unv.FormulaNone.Controls
 
 		public void OnSelectionChanged()
 		{
+			m_msPerThisCycle = 0;
+
 			if (SelectionChanged != null)
 				SelectionChanged(this, new SelectionChangedEventArgs());
 		}
