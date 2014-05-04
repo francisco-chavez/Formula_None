@@ -11,8 +11,9 @@ namespace Unv.FormulaNone
 {
 	public abstract class ControlBase
 	{
-		public virtual		int				MaxHeight		{ get; set; }
-		protected internal	ControlManager	ControlManager	{ get; private set; }
+		public virtual		int				MaxHeight			{ get; set; }
+		protected internal	ControlManager	ControlManager		{ get; set; }
+		public				bool			IsCurrentControl	{ get; set; }
 
 
 		public ControlBase(ControlManager controlManager)

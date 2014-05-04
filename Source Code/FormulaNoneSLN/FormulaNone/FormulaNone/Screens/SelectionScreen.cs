@@ -31,8 +31,9 @@ namespace Unv.FormulaNone.Screens
 
 
 		#region Properties
-		public static string SelectedCar	{ get; private set; }
-		public static string SelectedTrack	{ get; private set; }
+		public static string		SelectedCar		{ get; private set; }
+		public static string		SelectedTrack	{ get; private set; }
+		public static List<string>	CarTypes		{ get; private set; }
 		#endregion
 
 
@@ -66,6 +67,7 @@ namespace Unv.FormulaNone.Screens
 				else
 					m_carImages.Add(imageName, image);
 			}
+			CarTypes = new List<string>(m_carImages.Keys);
 
 			// Load race track images
 			filepaths = Directory.GetFiles("./Content/Images/RaceTracks/", "*.xnb", SearchOption.TopDirectoryOnly);

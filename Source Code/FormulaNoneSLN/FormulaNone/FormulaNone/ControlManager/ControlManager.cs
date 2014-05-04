@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Unv.FormulaNone
 {
-	public class ControlManager
+	public sealed class ControlManager
 	{
 		#region Attributes
 		private List<ControlBase> m_controls;
@@ -20,6 +20,17 @@ namespace Unv.FormulaNone
 		#region Properties
 		public Rectangle	DrawArea	{ get; set; }
 		public GameScreen	Screen		{ get; private set; }
+
+		public int SelectedIndex
+		{
+			get { return m_selectedIndex; }
+			set
+			{
+				m_selectedIndex = Math.Max(0, value);
+				m_selectedIndex = Math.Min(m_selectedIndex, m_controls.Count - 1);
+			}
+		}
+		private int m_selectedIndex = -1;
 		#endregion
 
 
@@ -57,8 +68,11 @@ namespace Unv.FormulaNone
 
 		public void HandleInput(InputState input)
 		{
-			foreach (var control in m_controls)
-				control.HandleInput(input);
+			for (int i = 0; i < m_controls.Count; i++)
+			{
+				if (i == SelectedIndex)
+					m_controls[i].HandleInput(input);
+			}
 		}
 
 		public void AddControl(ControlBase control)
@@ -67,6 +81,8 @@ namespace Unv.FormulaNone
 				throw new ArgumentException("The given control is owned by a different Control Manager.");
 
 			m_controls.Add(control);
+			if (SelectedIndex == -1)
+				SelectedIndex = 0;
 		}
 
 		public void Clear()
