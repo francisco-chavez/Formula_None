@@ -123,17 +123,6 @@ namespace Unv.FormulaNone.Controls
 
 			Vector2		position			= drawArea.Position();
 
-			Vector2		leftPointerPosition = position;
-						leftPointerPosition.Y += (ItemHeight - ShiftLeftIndicator.Height) / 2f;
-			Vector2		rightPointerPosition = leftPointerPosition;
-
-						rightPointerPosition.X += drawArea.Width - ShiftLeftIndicator.Width;
-
-			
-			spriteBatch.Draw(ShiftLeftIndicator, leftPointerPosition, SelectedBorderColor);
-			spriteBatch.Draw(ShiftLeftIndicator, rightPointerPosition, null, SelectedBorderColor, 0f, Vector2.Zero, 1f, SpriteEffects.FlipHorizontally, 0f);
-
-
 			Rectangle	safeDrawArea		= drawArea;
 						safeDrawArea.Width	-= ShiftLeftIndicator.Width * 2;
 						safeDrawArea.Width	-= Margin * margingMult * 2;
@@ -150,6 +139,9 @@ namespace Unv.FormulaNone.Controls
 			for (int i = 0; i < m_contentItems.Count; i++)
 			{
 				var container = m_contentItems[i];
+
+				if (position.X + ItemWidth > safeDrawArea.Right)
+					break;
 
 				if (SelectedIndex == i)
 				{
@@ -189,6 +181,57 @@ namespace Unv.FormulaNone.Controls
 
 				position.X += ItemWidth + Margin;
 			}
+
+			DrawIndicators(spriteBatch, drawArea);
+		}
+
+		private void DrawIndicators(SpriteBatch spriteBatch, Rectangle drawArea)
+		{
+			Vector2 leftPointerPosition;
+			Vector2 rightPointerPosition;
+
+			bool	canIncrementIndex;
+			bool	canDecrementIndex;
+
+			float	colorAlpha				= ControlManager.Screen.TransitionAlpha;
+			Vector3 leftColorVector;
+			Vector3 rightColorVector;
+
+
+			leftPointerPosition = drawArea.Position();
+			leftPointerPosition.Y += (ItemHeight - ShiftLeftIndicator.Height) / 2f;
+
+			rightPointerPosition = leftPointerPosition;
+			rightPointerPosition.X += drawArea.Width - ShiftLeftIndicator.Width;
+
+			canIncrementIndex = SelectedIndex < m_contentItems.Count - 1;
+			canDecrementIndex = true;
+
+			if (SelectedIndex <= 0)
+			{
+				if (SelectedIndex == -1)
+					canDecrementIndex = false;
+				if (MustHaveItemSelected && SelectedIndex == 0)
+					canDecrementIndex = false;
+			}
+
+			leftColorVector = (canDecrementIndex ? SelectedBorderColor : Color.Gray).ToVector3();
+			rightColorVector = (canIncrementIndex ? SelectedBorderColor : Color.Gray).ToVector3();
+
+			spriteBatch.Draw(
+				ShiftLeftIndicator,
+				leftPointerPosition,
+				new Color(leftColorVector * colorAlpha));
+			spriteBatch.Draw(
+				ShiftLeftIndicator,
+				rightPointerPosition,
+				null,
+				new Color(rightColorVector * colorAlpha),
+				0f,
+				Vector2.Zero,
+				1f,
+				SpriteEffects.FlipHorizontally,
+				0f);
 		}
 
 		public override void Update(GameTime gameTime)
