@@ -48,6 +48,8 @@ namespace Unv.FormulaNone.Screens
 			if (m_content == null)
 				m_content = new ContentManager(Game.Services, "Content/Images");
 
+			m_raceTracks.Clear();
+			m_leftPointerImage = m_content.Load<Texture2D>("UI/LeftPointer01_40x40");
 
 			string[] filepaths = null;
 			
@@ -65,7 +67,17 @@ namespace Unv.FormulaNone.Screens
 					m_carImages.Add(imageName, image);
 			}
 
-			m_leftPointerImage = m_content.Load<Texture2D>("UI/LeftPointer01_40x40");
+			// Load race track images
+			filepaths = Directory.GetFiles("./Content/Images/RaceTracks/", "*.xnb", SearchOption.TopDirectoryOnly);
+			foreach (var path in filepaths)
+			{
+				string imageName = Path.GetFileNameWithoutExtension(path);
+				Texture2D image = m_content.Load<Texture2D>(string.Format("RaceTracks/{0}", imageName));
+				image.Tag = imageName;
+
+				m_raceTracks.Add(image);
+			}
+
 
 			SetUpUIControls();
 
@@ -78,6 +90,7 @@ namespace Unv.FormulaNone.Screens
 			m_raceCarSelector.SelectionChanged -= RaceCarSelector_SelectionChanged;
 			m_raceTrackSelector.SelectionChanged -= RaceTrackSelector_SelectionChanged;
 
+			m_raceTracks.Clear();
 			if (m_uiControlManager != null)
 				m_uiControlManager.Clear();
 			if (m_content != null)
