@@ -27,6 +27,11 @@ namespace Unv.FormulaNone.Screens
 
 		private FilmStripSelector				m_raceCarSelector;
 		private FilmStripSelector				m_raceTrackSelector;
+		private FilmStripSelector				m_actionSelector;
+
+		private SpriteFont						m_titleFont;
+		private string							m_titleText				= "Make Your Selections";
+		private Vector2							m_titleLocation;
 		#endregion
 
 
@@ -51,6 +56,7 @@ namespace Unv.FormulaNone.Screens
 
 			m_raceTracks.Clear();
 			m_leftPointerImage = m_content.Load<Texture2D>("UI/LeftPointer01_40x40");
+			m_titleFont = m_content.Load<SpriteFont>("../Fonts/PageTitleFont");
 
 			string[] filepaths = null;
 			
@@ -109,16 +115,25 @@ namespace Unv.FormulaNone.Screens
 			else
 				m_uiControlManager.Clear();
 
-			Vector2 viewArea		= Game.Window.ClientBounds.Size(); 
-			Vector2 safeViewStart	= viewArea * 0.1f;
-			Vector2 safeViewEnd		= viewArea * 0.9f;
-			Vector2 safeViewSize	= safeViewEnd - safeViewStart;
+			Vector2		viewArea		= Game.Window.ClientBounds.Size(); 
+			Vector2		safeViewStart	= viewArea * 0.1f;
+			Vector2		safeViewEnd		= viewArea * 0.9f;
+			Vector2		safeViewSize	= safeViewEnd - safeViewStart;
+			Rectangle	safeViewArea	= new Rectangle(
+											(int) safeViewStart.X,
+											(int) safeViewStart.Y,
+											(int) safeViewSize.X,
+											(int) safeViewSize.Y);
+			Vector2 titleSize = m_titleFont.MeasureString(m_titleText);
+			m_titleLocation = safeViewArea.Position();
+			m_titleLocation.X += (safeViewArea.Width - titleSize.X) / 2f;
+
 			m_uiControlManager.DrawArea =
 				new Rectangle(
 					(int) safeViewStart.X,
-					(int) safeViewStart.Y,
+					(int) (safeViewStart.Y + titleSize.Y + 10),
 					(int) safeViewSize.X,
-					(int) safeViewSize.Y);
+					(int) (safeViewSize.Y - (titleSize.Y + 10)));
 
 
 			// Set up race track selector
@@ -145,6 +160,20 @@ namespace Unv.FormulaNone.Screens
 			foreach (var carImageData in m_carImages)
 				m_raceCarSelector.AddItem(carImageData.Key, carImageData.Value, -MathHelper.PiOver2);
 			m_uiControlManager.AddControl(m_raceCarSelector);
+
+
+			// Set up player action selector
+			m_actionSelector = new FilmStripSelector(m_uiControlManager);
+			m_actionSelector.ItemWidth = 125;
+			m_actionSelector.ItemHeight = 50;
+			m_actionSelector.Padding = 13;
+			m_actionSelector.MustHaveItemSelected = true;
+
+			m_actionSelector.AddItem("Play", "Start Racing");
+			m_actionSelector.AddItem("Exit", "Exit Game");
+			m_actionSelector.AddItem("Credits", "Play Credits");
+
+			m_uiControlManager.AddControl(m_actionSelector);
 		}
 		#endregion
 

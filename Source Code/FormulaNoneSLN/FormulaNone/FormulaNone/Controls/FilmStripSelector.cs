@@ -236,16 +236,25 @@ namespace Unv.FormulaNone.Controls
 			canIncrementIndex = SelectedIndex < m_contentItems.Count - 1;
 			canDecrementIndex = true;
 
-			if (SelectedIndex <= 0)
+			if (!this.IsCurrentControl)
 			{
-				if (SelectedIndex == -1)
-					canDecrementIndex = false;
-				if (MustHaveItemSelected && SelectedIndex == 0)
-					canDecrementIndex = false;
+				leftColorVector = Color.Gray.ToVector3();
+				rightColorVector = Color.Gray.ToVector3();
 			}
+			else
+			{
 
-			leftColorVector = (canDecrementIndex ? SelectedBorderColor : Color.Gray).ToVector3();
-			rightColorVector = (canIncrementIndex ? SelectedBorderColor : Color.Gray).ToVector3();
+				if (SelectedIndex <= 0)
+				{
+					if (SelectedIndex == -1)
+						canDecrementIndex = false;
+					if (MustHaveItemSelected && SelectedIndex == 0)
+						canDecrementIndex = false;
+				}
+
+				leftColorVector = (canDecrementIndex ? SelectedBorderColor : Color.Gray).ToVector3();
+				rightColorVector = (canIncrementIndex ? SelectedBorderColor : Color.Gray).ToVector3();
+			}
 
 			spriteBatch.Draw(
 				ShiftLeftIndicator,
