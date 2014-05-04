@@ -14,36 +14,37 @@ namespace Unv.FormulaNone.Controls
 		: ControlBase
 	{
 		#region Events
-		public event SelectionChangedHandler SelectionChanged;
+		public	event SelectionChangedHandler SelectionChanged;
 		#endregion
 
 
 		#region Attributes
-		private List<ListItem>	m_contentItems;
+		private	List<ListItem>	m_contentItems;
 		private int				m_msPerThisCycle = 0;
 		#endregion
 
 
 		#region Properties
-		public int		Margins					{ get; set; }
-		public int		Padding					{ get; set; }
-		public int		BorderThickness			{ get; set; }
-		public Color	ItemBackground			{ get; set; }
+		public	int			Margins					{ get; set; }
+		public	int			Padding					{ get; set; }
+		public	int			BorderThickness			{ get; set; }
+		public	Color		ItemBackground			{ get; set; }
 
-		public Color	BorderColor				{ get; set; }
-		public Color	SelectedBorderColor		{ get; set; }
-		public int		ItemWidth				{ get; set; }
-		public int		ItemHeight				{ get; set; }
+		public	Color		BorderColor				{ get; set; }
+		public	Color		SelectedBorderColor		{ get; set; }
+		public	int			ItemWidth				{ get; set; }
+		public	int			ItemHeight				{ get; set; }
 
-		public int		MSSecondsPerGlowCycle	{ get; set; }
+		public	int			MSSecondsPerGlowCycle	{ get; set; }
+		public	Texture2D	ShiftLeftIndicator		{ get; set; }
 
-		public override int MaxHeight
+		public	override int MaxHeight
 		{
 			get { return ItemHeight; }
 			set { ItemHeight = value; }
 		}
 
-		public int SelectedIndex
+		public	int SelectedIndex
 		{
 			get { return m_selectedIndex; }
 			set
@@ -66,7 +67,7 @@ namespace Unv.FormulaNone.Controls
 		}
 		private int m_selectedIndex = -1;
 
-		public bool MustHaveItemSelected
+		public	bool MustHaveItemSelected
 		{
 			get { return m_mustHaveItemSelected; }
 			set
@@ -98,7 +99,7 @@ namespace Unv.FormulaNone.Controls
 		public FilmStripSelector(ControlManager manager)
 			: base(manager)
 		{
-			m_contentItems	= new List<ListItem>();
+			m_contentItems		= new List<ListItem>();
 
 			Margins					= 5;
 			Padding					= 5;
@@ -164,7 +165,7 @@ namespace Unv.FormulaNone.Controls
 
 				spriteBatch.Draw(blank, borderRec, borderColor);
 				spriteBatch.Draw(blank, displayBackgroundRect, displayAreaColor);
-				container.Draw(spriteBatch, displayRect, whiteLighting);
+				container.DrawDisplayItem(spriteBatch, displayRect, whiteLighting);
 
 				position.X += ItemWidth + Margins;
 			}
@@ -279,7 +280,7 @@ namespace Unv.FormulaNone.Controls
 		{
 			public string Value	{ get; set; }
 
-			public abstract void Draw(SpriteBatch spriteBatch, Rectangle drawArea, Color lighting);
+			public abstract void DrawDisplayItem(SpriteBatch spriteBatch, Rectangle drawArea, Color lighting);
 			public abstract void Clear();
 		}
 
@@ -288,7 +289,7 @@ namespace Unv.FormulaNone.Controls
 		{
 			public string DisplayItem { get; set; }
 
-			public override void Draw(SpriteBatch spriteBatch, Rectangle drawArea, Color lighting)
+			public override void DrawDisplayItem(SpriteBatch spriteBatch, Rectangle drawArea, Color lighting)
 			{
 				throw new NotImplementedException();
 			}
@@ -306,7 +307,7 @@ namespace Unv.FormulaNone.Controls
 			public float		DisplayRotation { get; set; }
 
 
-			public override void Draw(SpriteBatch spriteBatch, Rectangle drawArea, Color lighting)
+			public override void DrawDisplayItem(SpriteBatch spriteBatch, Rectangle drawArea, Color lighting)
 			{
 				Vector2 center = drawArea.Position() + drawArea.Size() / 2;
 
