@@ -26,11 +26,13 @@ namespace Unv.FormulaNone.Screens
 		private Texture2D						m_leftPointerImage;
 
 		private FilmStripSelector				m_raceCarSelector;
+		private FilmStripSelector				m_raceTrackSelector;
 		#endregion
 
 
 		#region Properties
-		public static string SelectedCar { get; private set; }
+		public static string SelectedCar	{ get; private set; }
+		public static string SelectedTrack	{ get; private set; }
 		#endregion
 
 
@@ -74,11 +76,12 @@ namespace Unv.FormulaNone.Screens
 		{
 			// We don't want the clear out to change our selections.
 			m_raceCarSelector.SelectionChanged -= RaceCarSelector_SelectionChanged;
+			m_raceTrackSelector.SelectionChanged -= RaceTrackSelector_SelectionChanged;
 
-			if (m_content != null)
-				m_content.Unload();
 			if (m_uiControlManager != null)
 				m_uiControlManager.Clear();
+			if (m_content != null)
+				m_content.Unload();
 
 			base.UnloadContent();
 		}
@@ -103,12 +106,25 @@ namespace Unv.FormulaNone.Screens
 					(int) safeViewSize.Y);
 
 
+			// Set up race track selector
+			m_raceTrackSelector = new FilmStripSelector(m_uiControlManager);
+			m_raceTrackSelector.SelectionChanged	+= RaceTrackSelector_SelectionChanged;
+			m_raceTrackSelector.ItemWidth			= 125;
+			m_raceTrackSelector.ItemHeight			= 125;
+			m_raceTrackSelector.Padding				= 13;
+			m_raceTrackSelector.MustHaveItemSelected = true;
+			m_raceTrackSelector.ShiftLeftIndicator	= m_leftPointerImage;
+			foreach (var trackImage in m_raceTracks)
+				m_raceTrackSelector.AddItem(trackImage.Tag.ToString(), trackImage);
+			m_uiControlManager.AddControl(m_raceTrackSelector);
+
+
 			// Set up the race cars selector
 			m_raceCarSelector = new FilmStripSelector(m_uiControlManager);
 			m_raceCarSelector.SelectionChanged		+= RaceCarSelector_SelectionChanged;
-			m_raceCarSelector.ItemWidth				= 200;
-			m_raceCarSelector.ItemHeight			= 200;
-			m_raceCarSelector.Padding				= 20;
+			m_raceCarSelector.ItemWidth				= 125;
+			m_raceCarSelector.ItemHeight			= 125;
+			m_raceCarSelector.Padding				= 13;
 			m_raceCarSelector.MustHaveItemSelected	= true;
 			m_raceCarSelector.ShiftLeftIndicator	= m_leftPointerImage;
 			foreach (var carImageData in m_carImages)
@@ -122,6 +138,11 @@ namespace Unv.FormulaNone.Screens
 		void RaceCarSelector_SelectionChanged(ControlBase source, SelectionChangedEventArgs e)
 		{
 			SelectedCar = m_raceCarSelector.SelectedValue;
+		}
+
+		void RaceTrackSelector_SelectionChanged(ControlBase source, SelectionChangedEventArgs e)
+		{
+			SelectedTrack = m_raceTrackSelector.SelectedValue;
 		}
 		#endregion
 

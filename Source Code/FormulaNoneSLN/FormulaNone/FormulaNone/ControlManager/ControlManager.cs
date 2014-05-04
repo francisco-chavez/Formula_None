@@ -38,8 +38,15 @@ namespace Unv.FormulaNone
 		#region Methods
 		public void Draw(SpriteBatch spriteBatch)
 		{
+			var drawArea = DrawArea;
+
 			foreach (var control in m_controls)
-				control.Draw(spriteBatch, DrawArea);
+			{
+				control.Draw(spriteBatch, drawArea);
+
+				drawArea.Y += control.MaxHeight + 4;
+				drawArea.Height -= control.MaxHeight + 4;
+			}
 		}
 
 		public void Update(GameTime gameTime)

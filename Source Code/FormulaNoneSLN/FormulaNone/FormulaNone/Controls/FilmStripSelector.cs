@@ -299,7 +299,7 @@ namespace Unv.FormulaNone.Controls
 		}
 
 
-		public void AddItem(string value, Texture2D display, float displayRotation)
+		public void AddItem(string value, Texture2D display, float displayRotation = 0f)
 		{
 			if (string.IsNullOrWhiteSpace(value) || display == null)
 				throw new ArgumentNullException();
