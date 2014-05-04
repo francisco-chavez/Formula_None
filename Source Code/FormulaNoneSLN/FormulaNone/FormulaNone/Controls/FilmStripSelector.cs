@@ -44,6 +44,16 @@ namespace Unv.FormulaNone.Controls
 			set { ItemHeight = value; }
 		}
 
+		public override bool IsCurrentControl
+		{
+			get { return base.IsCurrentControl; }
+			set
+			{
+				base.IsCurrentControl = value;
+				m_msPerThisCycle = 0;
+			}
+		}
+
 		public	int SelectedIndex
 		{
 			get { return m_selectedIndex; }
@@ -180,14 +190,21 @@ namespace Unv.FormulaNone.Controls
 
 			if (SelectedIndex == itemIndex)
 			{
-				float x = MathHelper.TwoPi / MSSecondsPerGlowCycle;
-				float tx = m_msPerThisCycle * x;
+				if (IsCurrentControl)
+				{
+					float x = MathHelper.TwoPi / MSSecondsPerGlowCycle;
+					float tx = m_msPerThisCycle * x;
 
-				float glowPercent =  ((float) Math.Cos(tx) + 1f) / 2f;
+					float glowPercent =  ((float) Math.Cos(tx) + 1f) / 2f;
 
-				colorVector = 
-					(SelectedBorderColor.ToVector3() * glowPercent) +
-					(BorderColor.ToVector3() * (1f - glowPercent));
+					colorVector =
+						(SelectedBorderColor.ToVector3() * glowPercent) +
+						(BorderColor.ToVector3() * (1f - glowPercent));
+				}
+				else
+				{
+					colorVector = SelectedBorderColor.ToVector3();
+				}
 			}
 			else
 			{

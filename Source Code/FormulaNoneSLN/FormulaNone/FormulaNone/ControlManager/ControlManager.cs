@@ -26,8 +26,17 @@ namespace Unv.FormulaNone
 			get { return m_selectedIndex; }
 			set
 			{
+				int oldIndex = m_selectedIndex;
+
 				m_selectedIndex = Math.Max(0, value);
 				m_selectedIndex = Math.Min(m_selectedIndex, m_controls.Count - 1);
+
+				if (oldIndex != m_selectedIndex)
+				{
+					m_controls[m_selectedIndex].IsCurrentControl = true;
+					if (oldIndex != -1)
+						m_controls[oldIndex].IsCurrentControl = false;
+				}
 			}
 		}
 		private int m_selectedIndex = -1;
@@ -68,10 +77,26 @@ namespace Unv.FormulaNone
 
 		public void HandleInput(InputState input)
 		{
-			for (int i = 0; i < m_controls.Count; i++)
+			PlayerIndex? controllingPlayer = Screen.ControllingPlayer;
+			PlayerIndex playerIndex;
+
+			if (input.IsNewButtonPress(Buttons.DPadUp, controllingPlayer, out playerIndex) ||
+				input.IsNewButtonPress(Buttons.LeftThumbstickUp, controllingPlayer, out playerIndex))
 			{
-				if (i == SelectedIndex)
-					m_controls[i].HandleInput(input);
+				SelectedIndex--;
+			}
+			else if (input.IsNewButtonPress(Buttons.DPadDown, controllingPlayer, out playerIndex) ||
+					 input.IsNewButtonPress(Buttons.LeftThumbstickDown, controllingPlayer, out playerIndex))
+			{
+				SelectedIndex++;
+			}
+			else
+			{
+				for (int i = 0; i < m_controls.Count; i++)
+				{
+					if (i == SelectedIndex)
+						m_controls[i].HandleInput(input);
+				}
 			}
 		}
 

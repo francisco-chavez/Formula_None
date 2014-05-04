@@ -13,7 +13,7 @@ namespace Unv.FormulaNone
 	{
 		public virtual		int				MaxHeight			{ get; set; }
 		protected internal	ControlManager	ControlManager		{ get; set; }
-		public				bool			IsCurrentControl	{ get; set; }
+		public virtual		bool			IsCurrentControl	{ get; set; }
 
 
 		public ControlBase(ControlManager controlManager)
