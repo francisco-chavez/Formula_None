@@ -19,7 +19,8 @@ namespace Unv.FormulaNone.Controls
 
 
 		#region Attributes
-		private List<ListItem> m_contentItems;
+		private List<ListItem>	m_contentItems;
+		private int				m_msPerThisCycle = 0;
 		#endregion
 
 
@@ -33,6 +34,8 @@ namespace Unv.FormulaNone.Controls
 		public Color	SelectedBorderColor		{ get; set; }
 		public int		ItemWidth				{ get; set; }
 		public int		ItemHeight				{ get; set; }
+
+		public int		MSSecondsPerGlowCycle	{ get; set; }
 
 		public override int MaxHeight
 		{
@@ -51,6 +54,7 @@ namespace Unv.FormulaNone.Controls
 				if (m_contentItems.Count == 0)
 					return;
 
+				m_msPerThisCycle = 0;
 				int startingValue = m_selectedIndex;
 
 				m_selectedIndex = Math.Max(value, MustHaveItemSelected ? 0 : -1);
@@ -96,14 +100,17 @@ namespace Unv.FormulaNone.Controls
 		{
 			m_contentItems	= new List<ListItem>();
 
-			Margins				= 5;
-			Padding				= 5;
-			BorderThickness		= 10;
-			ItemBackground		= Color.DarkGreen;
+			Margins					= 5;
+			Padding					= 5;
+			BorderThickness			= 10;
+			ItemBackground			= Color.DarkGreen;
 
-			BorderColor			= Color.Green;
-			SelectedBorderColor = Color.Gold;
-			ItemWidth			= 100;
+			BorderColor				= Color.Green;
+			SelectedBorderColor		= Color.Gold;
+			ItemWidth				= 100;
+			ItemHeight				= 100;
+
+			MSSecondsPerGlowCycle	= 1350;
 		}
 		#endregion
 
@@ -111,16 +118,36 @@ namespace Unv.FormulaNone.Controls
 		#region Methods
 		public override void Draw(SpriteBatch spriteBatch, Rectangle drawArea)
 		{
-			float colorAlpha		= this.ControlManager.Screen.TransitionAlpha;
-			Texture2D blank			= RaceGame.Instance.WhiteTexture2D;
-			Vector2 position		= drawArea.Position();
+			float		colorAlpha			= this.ControlManager.Screen.TransitionAlpha;
+			Texture2D	blank				= RaceGame.Instance.WhiteTexture2D;
+			Vector2		position			= drawArea.Position();
 
-			Color borderColor		= new Color(BorderColor.ToVector3() * colorAlpha);
-			Color displayAreaColor	= new Color(ItemBackground.ToVector3() * colorAlpha);
-			Color whiteLighting		= new Color(colorAlpha, colorAlpha, colorAlpha);
+			Color		borderColor;
+			Color		displayAreaColor	= new Color(ItemBackground.ToVector3() * colorAlpha);
+			Color		whiteLighting		= new Color(colorAlpha, colorAlpha, colorAlpha);
 			
-			foreach(var container in m_contentItems)
+			for (int i = 0; i < m_contentItems.Count; i++)
 			{
+				var container = m_contentItems[i];
+
+				if (SelectedIndex == i)
+				{
+					float x = MathHelper.TwoPi / MSSecondsPerGlowCycle;
+					float tx = m_msPerThisCycle * x;
+
+					float glowPercent =  ((float) Math.Cos(tx) + 1f) / 2f;
+
+					Vector3 colorV = 
+						(SelectedBorderColor.ToVector3() * glowPercent) + 
+						(BorderColor.ToVector3() * (1f - glowPercent));
+
+					borderColor = new Color(colorV * colorAlpha);
+				}
+				else
+				{
+					borderColor = new Color(BorderColor.ToVector3() * colorAlpha);
+				}
+
 				Rectangle borderRec = new Rectangle((int) position.X, (int) position.Y, ItemWidth, ItemHeight);
 				Rectangle displayBackgroundRect = 
 					new Rectangle(
@@ -145,7 +172,10 @@ namespace Unv.FormulaNone.Controls
 
 		public override void Update(GameTime gameTime)
 		{
-			//throw new NotImplementedException();
+			m_msPerThisCycle += gameTime.ElapsedGameTime.Milliseconds;
+
+			if (m_msPerThisCycle > MSSecondsPerGlowCycle)
+				m_msPerThisCycle -= MSSecondsPerGlowCycle;
 		}
 
 		public override void HandleInput(InputState input)
@@ -285,6 +315,10 @@ namespace Unv.FormulaNone.Controls
 				float scaleX = drawSize.X / itemSize.X;
 				float scaleY = drawSize.Y / itemSize.Y;
 
+				// We want the image to be as large as posible, while keeping it 
+				// within the draw area. So, we start with the larger of the two 
+				// scale/aspect ratios, and if it turns out to be to large, we 
+				// use the smaller one.
 				float scaleToUse = Math.Max(scaleX, scaleY);
 				if (itemSize.X * scaleToUse > drawSize.X || itemSize.Y * scaleToUse > drawSize.Y)
 					scaleToUse = Math.Min(scaleX, scaleY);

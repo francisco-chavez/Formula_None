@@ -144,14 +144,16 @@ namespace Unv.FormulaNone.Screens
 
 		public override void Update(GameTime gameTime, bool otherScreenHasFocus, bool coveredByOtherScreen)
 		{
-			m_uiControlManager.Update(gameTime);
+			if (this.IsActive)
+				m_uiControlManager.Update(gameTime);
 
 			base.Update(gameTime, otherScreenHasFocus, false);
 		}
 
 		public override void HandleInput(InputState input)
 		{
-			m_uiControlManager.HandleInput(input);
+			if (this.IsActive)
+				m_uiControlManager.HandleInput(input);
 
 			base.HandleInput(input);
 		}
