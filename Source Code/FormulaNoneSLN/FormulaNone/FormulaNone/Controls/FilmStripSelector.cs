@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Unv.FormulaNone.Controls
 {
-	public class FilmStripSelector
+	public sealed class FilmStripSelector
 		: ControlBase
 	{
 		#region Events
@@ -61,9 +61,7 @@ namespace Unv.FormulaNone.Controls
 				m_selectedIndex = Math.Min(m_selectedIndex, m_contentItems.Count - 1);
 
 				if (startingValue != m_selectedIndex)
-				{
 					OnSelectionChanged();
-				}
 			}
 		}
 		private int m_selectedIndex = -1;
@@ -86,7 +84,7 @@ namespace Unv.FormulaNone.Controls
 		}
 		private bool m_mustHaveItemSelected = false;
 
-		public string SelectedValue
+		public	string SelectedValue
 		{
 			get
 			{
@@ -141,27 +139,16 @@ namespace Unv.FormulaNone.Controls
 
 			FindItemIndicesToDraw(safeDrawArea, out firstIndexToDraw, out lastIndexToDraw);
 			
-			for (int i = 0; i + firstIndexToDraw <= lastIndexToDraw; i++)
+			int itemCount		= lastIndexToDraw - firstIndexToDraw + 1;
+			int drawnItemsWidth = (ItemWidth * itemCount) + (Margin * (itemCount - 1));
+			drawArea.Width -= (safeDrawArea.Width - drawnItemsWidth);
+
+			for (int i = 0; i < itemCount; i++)
 			{
-				var container = m_contentItems[i + firstIndexToDraw];
+				int itemIndex = i + firstIndexToDraw;
+				var container = m_contentItems[itemIndex];
 
-				if (SelectedIndex == i + firstIndexToDraw)
-				{
-					float x = MathHelper.TwoPi / MSSecondsPerGlowCycle;
-					float tx = m_msPerThisCycle * x;
-
-					float glowPercent =  ((float) Math.Cos(tx) + 1f) / 2f;
-
-					Vector3 colorV = 
-						(SelectedBorderColor.ToVector3() * glowPercent) + 
-						(BorderColor.ToVector3() * (1f - glowPercent));
-
-					borderColor = new Color(colorV * colorAlpha);
-				}
-				else
-				{
-					borderColor = new Color(BorderColor.ToVector3() * colorAlpha);
-				}
+				borderColor = FindBorderColor(colorAlpha, itemIndex);
 
 				Rectangle borderRec = new Rectangle((int) position.X, (int) position.Y, ItemWidth, ItemHeight);
 				Rectangle displayBackgroundRect = 
@@ -185,6 +172,29 @@ namespace Unv.FormulaNone.Controls
 			}
 
 			DrawIndicators(spriteBatch, drawArea);
+		}
+
+		private Color FindBorderColor(float colorAlpha, int itemIndex)
+		{
+			Vector3 colorVector;
+
+			if (SelectedIndex == itemIndex)
+			{
+				float x = MathHelper.TwoPi / MSSecondsPerGlowCycle;
+				float tx = m_msPerThisCycle * x;
+
+				float glowPercent =  ((float) Math.Cos(tx) + 1f) / 2f;
+
+				colorVector = 
+					(SelectedBorderColor.ToVector3() * glowPercent) +
+					(BorderColor.ToVector3() * (1f - glowPercent));
+			}
+			else
+			{
+				colorVector = BorderColor.ToVector3();
+			}
+
+			return new Color(colorVector * colorAlpha);
 		}
 
 		private void DrawIndicators(SpriteBatch spriteBatch, Rectangle drawArea)
@@ -265,6 +275,7 @@ namespace Unv.FormulaNone.Controls
 			}
 		}
 
+
 		public override void Update(GameTime gameTime)
 		{
 			m_msPerThisCycle += gameTime.ElapsedGameTime.Milliseconds;
@@ -272,6 +283,7 @@ namespace Unv.FormulaNone.Controls
 			if (m_msPerThisCycle > MSSecondsPerGlowCycle)
 				m_msPerThisCycle -= MSSecondsPerGlowCycle;
 		}
+
 
 		public override void HandleInput(InputState input)
 		{
@@ -285,6 +297,7 @@ namespace Unv.FormulaNone.Controls
 					 input.IsNewButtonPress(Buttons.DPadRight, controllingPlayer, out playerIndex))
 				SelectedIndex++;
 		}
+
 
 		public void AddItem(string value, Texture2D display, float displayRotation)
 		{
@@ -333,7 +346,8 @@ namespace Unv.FormulaNone.Controls
 				OnSelectionChanged();
 		}
 
-		public void OnSelectionChanged()
+
+		private void OnSelectionChanged()
 		{
 			m_msPerThisCycle = 0;
 
