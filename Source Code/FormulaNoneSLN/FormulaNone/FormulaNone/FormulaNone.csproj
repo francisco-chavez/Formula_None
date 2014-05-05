@@ -91,6 +91,7 @@
     <Compile Include="Texture2DExt.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Credits.txt" />
     <Content Include="Game.ico" />
     <Content Include="GameThumbnail.png" />
   </ItemGroup>

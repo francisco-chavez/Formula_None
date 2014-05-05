@@ -50,6 +50,9 @@ namespace Unv.FormulaNone.Screens
 		{
 			m_carImages = new ListDictionary();
 			m_raceTracks = new List<Texture2D>(4);
+
+			TransitionOffTime = TimeSpan.FromSeconds(0.4);
+			TransitionOnTime = TimeSpan.FromSeconds(0.5);
 		}
 
 		public override void LoadContent()

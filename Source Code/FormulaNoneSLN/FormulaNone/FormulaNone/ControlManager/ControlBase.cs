@@ -25,6 +25,7 @@ namespace Unv.FormulaNone
 			MaxHeight		= 150;
 		}
 
+
 		public abstract void Draw(SpriteBatch spriteBatch, Rectangle drawArea);
 		public abstract void Update(GameTime gameTime);
 		public abstract void HandleInput(InputState input);
