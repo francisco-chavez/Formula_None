@@ -250,7 +250,46 @@ namespace Unv.FormulaNone.Screens
 		public override void HandleInput(InputState input)
 		{
 			if (this.IsActive)
-				m_uiControlManager.HandleInput(input);
+			{
+				PlayerIndex playerIndex;
+
+				if (input.IsNewButtonPress(Buttons.A, this.ControllingPlayer, out playerIndex) ||
+					input.IsNewButtonPress(Buttons.Start, this.ControllingPlayer, out playerIndex))
+				{
+					if (m_uiControlManager.CurrentControl == m_actionSelector)
+					{
+						switch (m_actionSelector.SelectedValue)
+						{
+						case "Play":
+							LoadingScreen.Load(
+								this.ScreenManager,
+								true,
+								playerIndex,
+								new RacingScreen());
+							break;
+
+						case "Exit":
+							break;
+
+						case "Credits":
+							this.ScreenManager.AddScreen(new CreditsScreen(), playerIndex);
+							break;
+						}
+					}
+					else
+					{
+						LoadingScreen.Load(
+							this.ScreenManager,
+							true,
+							playerIndex,
+							new RacingScreen());
+					}
+				}
+				else
+				{
+					m_uiControlManager.HandleInput(input);
+				}
+			}
 
 			base.HandleInput(input);
 		}
