@@ -32,8 +32,8 @@ namespace Unv.FormulaNone.Screens
 		#region Initialization
 		public CreditsScreen()
 		{
-			this.TransitionOffTime = TimeSpan.FromSeconds(0.3);
-			this.TransitionOnTime = TimeSpan.FromSeconds(0.3);
+			this.TransitionOffTime = TimeSpan.FromSeconds(0.6);
+			this.TransitionOnTime = TimeSpan.FromSeconds(0.6);
 		}
 
 		public override void LoadContent()
@@ -110,6 +110,10 @@ namespace Unv.FormulaNone.Screens
 			{
 				m_creditPositionOffset.Y -= 
 					(float) gameTime.ElapsedGameTime.TotalSeconds * m_creditsFont.LineSpacing * 1.25f;
+
+				int spaceCovered = (m_credits.Count - 1) * m_creditsFont.LineSpacing;
+				if (m_creditPositionOffset.Y + spaceCovered + m_titleFont.LineSpacing < m_drawArea.Y)
+					this.ExitScreen();
 			}
 		}
 
@@ -128,10 +132,17 @@ namespace Unv.FormulaNone.Screens
 
 		public override void Draw(GameTime gameTime)
 		{
+			// I normally include the TransitionAlpha into a Color's constructor
+			// to keep the Color's Alpha state from changings. Yet, this screen
+			// is being drawn ontop of an other screen, so I don't want things
+			// to turn black when I transition on/off of this screen. Because of
+			// this, I'm multiplying the Color's by TransitionAlpha to make them
+			// translucent during the transitions.
+			// -FCT
 			var spriteBatch			= ScreenManager.SpriteBatch;
 			var canvas				= Game.WhiteTexture2D;
 			var colorAlpha			= TransitionAlpha;
-			var backgroundLighting	= new Color(colorAlpha * 0f, colorAlpha * 0.1f, colorAlpha * 0f);
+			var backgroundLighting	= new Color(0f, 0.1f, 0f) * colorAlpha;
 
 			spriteBatch.Begin();
 
@@ -140,43 +151,60 @@ namespace Unv.FormulaNone.Screens
 				new Rectangle(0, 0, Game.Window.ClientBounds.Width, Game.Window.ClientBounds.Height),
 				backgroundLighting);
 
+			Color textColor = new Color(0f, 0.6f, 0f) * colorAlpha;
 
-			Color textColor = new Color(0f, 0.6f * TransitionAlpha, 0f);
-
-			float freeSpaceX = m_drawArea.Width - (m_maxNameWidth + m_maxTitleWidth);
-			float titleOffsetX = freeSpaceX / 4;
-			float nameOffsetX = (freeSpaceX + m_maxTitleWidth) - titleOffsetX;
-
-			for (int i = 0; i < m_credits.Count; i++)
+			// The items in this block of code can ruin the look of the screen transitions.
+			// For instance, the last few lines of the credits are still in the drawing area
+			// when we transition off, and the the alpha transparencies they will show back
+			// up as we exit the screen. The extra block behind the title will reduce the
+			// transparency in that area by about half because it's overlapping another block
+			// with that's using the exact same Color and Texture2D.
+			if (this.ScreenState == FormulaNone.ScreenState.Active)
 			{
-				Vector2 titlePosition;
-				Vector2 namePosition;
+				float freeSpaceX = m_drawArea.Width - (m_maxNameWidth + m_maxTitleWidth);
+				float titleOffsetX = freeSpaceX / 4;
+				float nameOffsetX = (freeSpaceX + m_maxTitleWidth) - titleOffsetX;
 
-				titlePosition = m_creditPositionOffset;
-				titlePosition.X += titleOffsetX;
-				titlePosition.Y += i * m_creditsFont.LineSpacing;
+				for (int i = 0; i < m_credits.Count; i++)
+				{
+					Vector2 titlePosition;
+					Vector2 namePosition;
 
-				namePosition = m_creditPositionOffset;
-				namePosition.X += nameOffsetX;
-				namePosition.Y = titlePosition.Y;
+					titlePosition = m_creditPositionOffset;
+					titlePosition.X += titleOffsetX;
+					titlePosition.Y += i * m_creditsFont.LineSpacing;
 
-				spriteBatch.DrawString(
-					m_creditsFont,
-					m_credits[i].Item1,
-					titlePosition,
-					textColor);
+					// Don't draw text that can't be seen
+					if (titlePosition.Y < m_drawArea.Y || Game.Window.ClientBounds.Height < titlePosition.Y)
+						continue;
 
-				spriteBatch.DrawString(
-					m_creditsFont,
-					m_credits[i].Item2,
-					namePosition,
-					textColor);
+					namePosition = m_creditPositionOffset;
+					namePosition.X += nameOffsetX;
+					namePosition.Y = titlePosition.Y;
+
+					spriteBatch.DrawString(
+						m_creditsFont,
+						m_credits[i].Item1,
+						titlePosition,
+						textColor);
+
+					spriteBatch.DrawString(
+						m_creditsFont,
+						m_credits[i].Item2,
+						namePosition,
+						textColor);
+				}
+
+				// This hides the text in the title area
+				spriteBatch.Draw(
+					canvas,
+					new Rectangle(
+						0, 
+						0, 
+						Game.Window.ClientBounds.Width, 
+						m_drawArea.Y + m_titleFont.LineSpacing + 2 * m_creditsFont.LineSpacing / 3),
+					backgroundLighting);
 			}
-
-			spriteBatch.Draw(
-				canvas,
-				new Rectangle(0, 0, Game.Window.ClientBounds.Width, m_drawArea.X + m_titleFont.LineSpacing + 8),
-				backgroundLighting);
 
 
 			spriteBatch.DrawString(
@@ -186,6 +214,7 @@ namespace Unv.FormulaNone.Screens
 				textColor);
 
 			spriteBatch.End();
+
 
 			base.Draw(gameTime);
 		}
