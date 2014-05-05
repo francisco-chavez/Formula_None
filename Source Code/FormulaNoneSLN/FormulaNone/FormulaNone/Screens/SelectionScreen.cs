@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -19,7 +20,7 @@ namespace Unv.FormulaNone.Screens
 	{
 		#region Attributes
 		private List<Texture2D>					m_raceTracks;
-		private Dictionary<string, Texture2D>	m_carImages;
+		private ListDictionary					m_carImages;
 		private ContentManager					m_content;
 		private ControlManager					m_uiControlManager;
 
@@ -28,6 +29,8 @@ namespace Unv.FormulaNone.Screens
 		private FilmStripSelector				m_raceCarSelector;
 		private FilmStripSelector				m_raceTrackSelector;
 		private FilmStripSelector				m_actionSelector;
+
+		private SpriteFont						m_uiFont;
 
 		private SpriteFont						m_titleFont;
 		private string							m_titleText				= "Make Your Selections";
@@ -45,7 +48,7 @@ namespace Unv.FormulaNone.Screens
 		#region Initialization
 		public SelectionScreen()
 		{
-			m_carImages  = new Dictionary<string, Texture2D>(6);
+			m_carImages = new ListDictionary();
 			m_raceTracks = new List<Texture2D>(4);
 		}
 
@@ -55,25 +58,29 @@ namespace Unv.FormulaNone.Screens
 				m_content = new ContentManager(Game.Services, "Content/Images");
 
 			m_raceTracks.Clear();
-			m_leftPointerImage = m_content.Load<Texture2D>("UI/LeftPointer01_40x40");
-			m_titleFont = m_content.Load<SpriteFont>("../Fonts/PageTitleFont");
+			m_leftPointerImage	= m_content.Load<Texture2D>("UI/LeftPointer01_40x40");
+			m_titleFont			= m_content.Load<SpriteFont>("../Fonts/PageTitleFont");
+			m_uiFont			= m_content.Load<SpriteFont>("../Fonts/UIFont");
+
 
 			string[] filepaths = null;
 			
 			// Load car images
 			filepaths = Directory.GetFiles("./Content/Images/Cars/", "*.xnb", SearchOption.TopDirectoryOnly);
+			CarTypes = new List<string>(filepaths.Length);
+
 			foreach (var path in filepaths)
 			{
 				string imageName	= Path.GetFileNameWithoutExtension(path);
 				Texture2D image		= m_content.Load<Texture2D>(string.Format("Cars/{0}", imageName));
 				image.Tag = imageName;
+				CarTypes.Add(imageName);
 
-				if (m_carImages.ContainsKey(imageName))
+				if (m_carImages.Contains(imageName))
 					m_carImages[imageName] = image;
 				else
 					m_carImages.Add(imageName, image);
 			}
-			CarTypes = new List<string>(m_carImages.Keys);
 
 			// Load race track images
 			filepaths = Directory.GetFiles("./Content/Images/RaceTracks/", "*.xnb", SearchOption.TopDirectoryOnly);
@@ -85,7 +92,6 @@ namespace Unv.FormulaNone.Screens
 
 				m_raceTracks.Add(image);
 			}
-
 
 			SetUpUIControls();
 
@@ -124,7 +130,7 @@ namespace Unv.FormulaNone.Screens
 											(int) safeViewStart.Y,
 											(int) safeViewSize.X,
 											(int) safeViewSize.Y);
-			Vector2 titleSize = m_titleFont.MeasureString(m_titleText);
+			Vector2		titleSize		= m_titleFont.MeasureString(m_titleText);
 			m_titleLocation = safeViewArea.Position();
 			m_titleLocation.X += (safeViewArea.Width - titleSize.X) / 2f;
 
@@ -157,21 +163,22 @@ namespace Unv.FormulaNone.Screens
 			m_raceCarSelector.Padding				= 13;
 			m_raceCarSelector.MustHaveItemSelected	= true;
 			m_raceCarSelector.ShiftLeftIndicator	= m_leftPointerImage;
-			foreach (var carImageData in m_carImages)
-				m_raceCarSelector.AddItem(carImageData.Key, carImageData.Value, -MathHelper.PiOver2);
+			foreach (var carType in CarTypes)
+				m_raceCarSelector.AddItem(carType, m_carImages[carType] as Texture2D, -MathHelper.PiOver2);
 			m_uiControlManager.AddControl(m_raceCarSelector);
 
 
 			// Set up player action selector
 			m_actionSelector = new FilmStripSelector(m_uiControlManager);
-			m_actionSelector.ItemWidth = 125;
-			m_actionSelector.ItemHeight = 50;
-			m_actionSelector.Padding = 13;
-			m_actionSelector.MustHaveItemSelected = true;
+			m_actionSelector.ItemWidth				= 125;
+			m_actionSelector.ItemHeight				= 50;
+			m_actionSelector.Padding				= 13;
+			m_actionSelector.MustHaveItemSelected	= true;
+			m_actionSelector.ShiftLeftIndicator		= m_leftPointerImage;
 
 			m_actionSelector.AddItem("Play", "Start Racing");
 			m_actionSelector.AddItem("Exit", "Exit Game");
-			m_actionSelector.AddItem("Credits", "Play Credits");
+			m_actionSelector.AddItem("Credits", "Roll Credits");
 
 			m_uiControlManager.AddControl(m_actionSelector);
 		}
@@ -206,6 +213,23 @@ namespace Unv.FormulaNone.Screens
 				drawColor);
 
 			m_uiControlManager.Draw(spriteBatch);
+
+
+			for (int i = 0; i < 5; i++)
+			{
+				Vector2 shadowPosition = m_titleLocation + i * new Vector2(1, 1);
+
+				spriteBatch.DrawString(
+					m_titleFont,
+					m_titleText,
+					shadowPosition,
+					new Color(0f * TransitionAlpha, 0.4f * TransitionAlpha, 0f * TransitionAlpha));
+			}
+			spriteBatch.DrawString(
+				m_titleFont, 
+				m_titleText, 
+				m_titleLocation, 
+				new Color(0f * TransitionAlpha, 0.8f * TransitionAlpha, 0f * TransitionAlpha));
 
 			spriteBatch.End();
 

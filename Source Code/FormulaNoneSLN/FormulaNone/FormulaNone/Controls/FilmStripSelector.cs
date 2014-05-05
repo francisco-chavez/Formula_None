@@ -427,12 +427,12 @@ namespace Unv.FormulaNone.Controls
 
 			public override void DrawDisplayItem(SpriteBatch spriteBatch, Rectangle drawArea, Color lighting)
 			{
-				throw new NotImplementedException();
+				//throw new NotImplementedException();
 			}
 
 			public override void Clear()
 			{
-				throw new NotImplementedException();
+				//throw new NotImplementedException();
 			}
 		}
 
