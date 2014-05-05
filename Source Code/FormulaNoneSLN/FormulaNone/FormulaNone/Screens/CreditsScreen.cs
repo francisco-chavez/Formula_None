@@ -23,6 +23,9 @@ namespace Unv.FormulaNone.Screens
 		private ContentManager				m_content;
 		private SpriteFont					m_titleFont;
 		private SpriteFont					m_creditsFont;
+
+		private Rectangle					m_drawArea;
+		private Vector2						m_creditPositionOffset;
 		#endregion
 
 
@@ -40,6 +43,16 @@ namespace Unv.FormulaNone.Screens
 
 			m_creditsFont = m_content.Load<SpriteFont>("CreditsFont");
 			m_titleFont = m_content.Load<SpriteFont>("CreditsTitleFont");
+
+			m_drawArea =
+				new Rectangle(
+					(int) (0.1f * Game.Window.ClientBounds.Width),
+					(int) (0.1f * Game.Window.ClientBounds.Height),
+					(int) (0.8f * Game.Window.ClientBounds.Width),
+					(int) (0.8f * Game.Window.ClientBounds.Height));
+
+			m_creditPositionOffset.X = m_drawArea.X;
+			m_creditPositionOffset.Y = Game.Window.ClientBounds.Height;
 
 			if (m_credits != null)
 				m_credits.Clear();
@@ -118,6 +131,49 @@ namespace Unv.FormulaNone.Screens
 				canvas,
 				new Rectangle(0, 0, Game.Window.ClientBounds.Width, Game.Window.ClientBounds.Height),
 				new Color(TransitionAlpha * 0f, TransitionAlpha * 0.1f, TransitionAlpha * 0f));
+
+			// Within the safe draw area, cut what's left over from adding the name
+			// and title widths in half to give us the min amount of space we want
+			// between title and name. Add that to the max title width to get the
+			// offset for the name on the X-axis. 
+			//
+			// I played around with the expression on paper a bit to cut down on the
+			// number of operations (and to clean-up the expression a bit (mostly to
+			// clean it up)).
+			// -FCT
+
+			Color textColor = new Color(0f, 0.6f * TransitionAlpha, 0f);
+
+			float nameOffsetX = (m_drawArea.Width + m_maxTitleWidth - m_maxNameWidth) / 2f;
+			for (int i = 0; i < m_credits.Count; i++)
+			{
+				Vector2 titlePosition;
+				Vector2 namePosition;
+
+				titlePosition = m_creditPositionOffset;
+				titlePosition.Y += i * m_creditsFont.LineSpacing;
+
+				namePosition = titlePosition;
+				namePosition.X += nameOffsetX;
+
+				spriteBatch.DrawString(
+					m_creditsFont,
+					m_credits[i].Item1,
+					titlePosition,
+					textColor);
+
+				spriteBatch.DrawString(
+					m_creditsFont,
+					m_credits[i].Item2,
+					namePosition,
+					textColor);
+			}
+
+			spriteBatch.DrawString(
+				m_titleFont,
+				"Credits",
+				m_drawArea.Position() + new Vector2((m_drawArea.Width - m_titleFont.MeasureString("Credits").X) / 2, 0f),
+				textColor);
 
 			spriteBatch.End();
 
