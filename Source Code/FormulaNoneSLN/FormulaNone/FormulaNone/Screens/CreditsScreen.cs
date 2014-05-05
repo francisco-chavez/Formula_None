@@ -105,6 +105,12 @@ namespace Unv.FormulaNone.Screens
 		public override void Update(GameTime gameTime, bool otherScreenHasFocus, bool coveredByOtherScreen)
 		{
 			base.Update(gameTime, otherScreenHasFocus, false);
+
+			if (IsActive)
+			{
+				m_creditPositionOffset.Y -= 
+					(float) gameTime.ElapsedGameTime.TotalSeconds * m_creditsFont.LineSpacing * 1.25f;
+			}
 		}
 
 		public override void HandleInput(InputState input)
@@ -122,39 +128,37 @@ namespace Unv.FormulaNone.Screens
 
 		public override void Draw(GameTime gameTime)
 		{
-			var spriteBatch = ScreenManager.SpriteBatch;
-			var canvas = Game.WhiteTexture2D;
+			var spriteBatch			= ScreenManager.SpriteBatch;
+			var canvas				= Game.WhiteTexture2D;
+			var colorAlpha			= TransitionAlpha;
+			var backgroundLighting	= new Color(colorAlpha * 0f, colorAlpha * 0.1f, colorAlpha * 0f);
 
 			spriteBatch.Begin();
 
 			spriteBatch.Draw(
 				canvas,
 				new Rectangle(0, 0, Game.Window.ClientBounds.Width, Game.Window.ClientBounds.Height),
-				new Color(TransitionAlpha * 0f, TransitionAlpha * 0.1f, TransitionAlpha * 0f));
+				backgroundLighting);
 
-			// Within the safe draw area, cut what's left over from adding the name
-			// and title widths in half to give us the min amount of space we want
-			// between title and name. Add that to the max title width to get the
-			// offset for the name on the X-axis. 
-			//
-			// I played around with the expression on paper a bit to cut down on the
-			// number of operations (and to clean-up the expression a bit (mostly to
-			// clean it up)).
-			// -FCT
 
 			Color textColor = new Color(0f, 0.6f * TransitionAlpha, 0f);
 
-			float nameOffsetX = (m_drawArea.Width + m_maxTitleWidth - m_maxNameWidth) / 2f;
+			float freeSpaceX = m_drawArea.Width - (m_maxNameWidth + m_maxTitleWidth);
+			float titleOffsetX = freeSpaceX / 4;
+			float nameOffsetX = (freeSpaceX + m_maxTitleWidth) - titleOffsetX;
+
 			for (int i = 0; i < m_credits.Count; i++)
 			{
 				Vector2 titlePosition;
 				Vector2 namePosition;
 
 				titlePosition = m_creditPositionOffset;
+				titlePosition.X += titleOffsetX;
 				titlePosition.Y += i * m_creditsFont.LineSpacing;
 
-				namePosition = titlePosition;
+				namePosition = m_creditPositionOffset;
 				namePosition.X += nameOffsetX;
+				namePosition.Y = titlePosition.Y;
 
 				spriteBatch.DrawString(
 					m_creditsFont,
@@ -168,6 +172,12 @@ namespace Unv.FormulaNone.Screens
 					namePosition,
 					textColor);
 			}
+
+			spriteBatch.Draw(
+				canvas,
+				new Rectangle(0, 0, Game.Window.ClientBounds.Width, m_drawArea.X + m_titleFont.LineSpacing + 8),
+				backgroundLighting);
+
 
 			spriteBatch.DrawString(
 				m_titleFont,

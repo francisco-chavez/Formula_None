@@ -249,9 +249,6 @@ namespace Unv.FormulaNone
 			}
 
 			screens.Add(screen);
-
-			// update the TouchPanel to respond to gestures this screen is interested in
-			TouchPanel.EnabledGestures = screen.EnabledGestures;
 		}
 
 
@@ -271,13 +268,6 @@ namespace Unv.FormulaNone
 
 			screens.Remove(screen);
 			screensToUpdate.Remove(screen);
-
-			// if there is a screen still in the manager, update TouchPanel
-			// to respond to gestures that screen is interested in.
-			if (screens.Count > 0)
-			{
-				TouchPanel.EnabledGestures = screens[screens.Count - 1].EnabledGestures;
-			}
 		}
 
 
