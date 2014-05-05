@@ -269,6 +269,10 @@ namespace Unv.FormulaNone.Screens
 							break;
 
 						case "Exit":
+							const string message = "Are you sure you want to exit this game?";
+							MessageBoxScreen confirmExitMessageBox = new MessageBoxScreen(message);
+							confirmExitMessageBox.Accepted += ConfirmExitMessageBox_Accepted;
+							ScreenManager.AddScreen(confirmExitMessageBox, playerIndex);
 							break;
 
 						case "Credits":
@@ -292,6 +296,11 @@ namespace Unv.FormulaNone.Screens
 			}
 
 			base.HandleInput(input);
+		}
+
+		void ConfirmExitMessageBox_Accepted(object sender, PlayerIndexEventArgs e)
+		{
+			Game.Exit();
 		}
 		#endregion
 	}
