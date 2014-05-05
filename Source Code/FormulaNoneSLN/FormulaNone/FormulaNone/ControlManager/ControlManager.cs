@@ -20,6 +20,17 @@ namespace Unv.FormulaNone
 		#region Properties
 		public Rectangle	DrawArea	{ get; set; }
 		public GameScreen	Screen		{ get; private set; }
+		
+		public ControlBase CurrentControl
+		{
+			get
+			{
+				if (SelectedIndex == -1)
+					return null;
+
+				return m_controls[SelectedIndex];
+			}
+		}
 
 		public int SelectedIndex
 		{

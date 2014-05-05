@@ -130,7 +130,9 @@ namespace Unv.FormulaNone.Screens
 											(int) safeViewStart.Y,
 											(int) safeViewSize.X,
 											(int) safeViewSize.Y);
-			Vector2		titleSize		= m_titleFont.MeasureString(m_titleText);
+
+
+			Vector2 titleSize = m_titleFont.MeasureString(m_titleText);
 			m_titleLocation = safeViewArea.Position();
 			m_titleLocation.X += (safeViewArea.Width - titleSize.X) / 2f;
 
@@ -145,9 +147,9 @@ namespace Unv.FormulaNone.Screens
 			// Set up race track selector
 			m_raceTrackSelector = new FilmStripSelector(m_uiControlManager);
 			m_raceTrackSelector.SelectionChanged	+= RaceTrackSelector_SelectionChanged;
-			m_raceTrackSelector.ItemWidth			= 125;
-			m_raceTrackSelector.ItemHeight			= 125;
-			m_raceTrackSelector.Padding				= 13;
+			m_raceTrackSelector.ItemWidth			= 175;
+			m_raceTrackSelector.ItemHeight			= 175;
+			m_raceTrackSelector.Padding				= 18;
 			m_raceTrackSelector.MustHaveItemSelected = true;
 			m_raceTrackSelector.ShiftLeftIndicator	= m_leftPointerImage;
 			foreach (var trackImage in m_raceTracks)
@@ -158,9 +160,9 @@ namespace Unv.FormulaNone.Screens
 			// Set up the race cars selector
 			m_raceCarSelector = new FilmStripSelector(m_uiControlManager);
 			m_raceCarSelector.SelectionChanged		+= RaceCarSelector_SelectionChanged;
-			m_raceCarSelector.ItemWidth				= 125;
-			m_raceCarSelector.ItemHeight			= 125;
-			m_raceCarSelector.Padding				= 13;
+			m_raceCarSelector.ItemWidth				= 175;
+			m_raceCarSelector.ItemHeight			= 175;
+			m_raceCarSelector.Padding				= 18;
 			m_raceCarSelector.MustHaveItemSelected	= true;
 			m_raceCarSelector.ShiftLeftIndicator	= m_leftPointerImage;
 			foreach (var carType in CarTypes)
@@ -170,11 +172,12 @@ namespace Unv.FormulaNone.Screens
 
 			// Set up player action selector
 			m_actionSelector = new FilmStripSelector(m_uiControlManager);
-			m_actionSelector.ItemWidth				= 125;
-			m_actionSelector.ItemHeight				= 50;
-			m_actionSelector.Padding				= 13;
+			m_actionSelector.ItemWidth				= 175;
+			m_actionSelector.ItemHeight				= 80;
+			m_actionSelector.Padding				= 8;
 			m_actionSelector.MustHaveItemSelected	= true;
 			m_actionSelector.ShiftLeftIndicator		= m_leftPointerImage;
+			m_actionSelector.TextFont				= m_uiFont;
 
 			m_actionSelector.AddItem("Play", "Start Racing");
 			m_actionSelector.AddItem("Exit", "Exit Game");

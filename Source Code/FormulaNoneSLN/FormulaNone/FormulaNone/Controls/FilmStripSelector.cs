@@ -38,7 +38,20 @@ namespace Unv.FormulaNone.Controls
 		public	int			MSSecondsPerGlowCycle	{ get; set; }
 		public	Texture2D	ShiftLeftIndicator		{ get; set; }
 
-		public	override int MaxHeight
+		public	SpriteFont TextFont
+		{
+			get { return m_textFont; }
+			set
+			{
+				foreach (var container in m_contentItems)
+					if (container is TextListItem)
+						((TextListItem) container).TextFont = value;
+				m_textFont = value;
+			}
+		}
+		private SpriteFont m_textFont;
+
+		public override int MaxHeight
 		{
 			get { return ItemHeight; }
 			set { ItemHeight = value; }
@@ -121,6 +134,7 @@ namespace Unv.FormulaNone.Controls
 			ItemHeight				= 100;
 
 			MSSecondsPerGlowCycle	= 1350;
+			TextFont				= null;
 		}
 		#endregion
 
@@ -351,7 +365,8 @@ namespace Unv.FormulaNone.Controls
 			var container = new TextListItem()
 			{
 				DisplayItem = display,
-				Value = value
+				Value		= value,
+				TextFont	= TextFont
 			};
 
 			if (MustHaveItemSelected && SelectedIndex == -1)
@@ -385,29 +400,28 @@ namespace Unv.FormulaNone.Controls
 
 		#region Helper Classes
 		/// 
-		/// I know, I could have used generics to get rid of some of the redundent 
-		/// code, but generics has some limitiations I don't feel like working 
-		/// around. If I had used generics, I would have still needed a non-generic 
-		/// base container class for the generic container class. Creating a 
-		/// List&lt;Container&lt;Object&gt;&gt; of type object wouldn't have worked 
-		/// unless I did a hard caste to Container&lt;Object&gt;, to add it to the list.
-		/// I don't know if the caste would have worked. Using a non-generic base container
-		/// would have let me create a list of items of the base type, but that's just
-		/// the first thing to get around. I would also have made the entire film strip
-		/// generic and get round this, but that still wouldn't solve the next issue.
-		/// A String and a Texture2D don't have a common base class (or shared interface) 
-		/// that would let them be drawn with the same command, and they don't even use 
-		/// the same command to get drawn. I could get around this by using a delegate
-		/// to define a commom method signiture and have a seperate class provide the
-		/// correct draw method based on the display type. At this point, we're just
-		/// throwing the reason for generics out the window.
+		/// I know, I could have used generics to get rid of some of the redundent code, 
+		/// but generics has some limitiations I don't feel like working around. If I had 
+		/// used generics, I would have still needed a non-generic base container class for 
+		/// the generic container class. Creating a List&lt;Container&lt;Object&gt;&gt; of 
+		/// type object wouldn't have worked unless I did a hard caste to 
+		/// Container&lt;Object&gt;, to add it to the list. I don't know if the caste would 
+		/// have worked. Using a non-generic base container would have let me create a list 
+		/// of items of the base type, but that's just the first thing to get around. I 
+		/// would also have made the entire film strip generic and get round this, but that 
+		/// still wouldn't solve the next issue. A String and a Texture2D don't have a 
+		/// common base class (or shared interface) that would let them be drawn with the 
+		/// same command, and they don't even use the same command to get drawn. By 
+		/// command, I mean method. We have the Draw method for the Texture2D and the 
+		/// DrawString method for the String. They share most of the same parameters, but 
+		/// they are still different methods. Generics won't get us around that.
 		/// 
-		/// I could also create a base selector class, and have a selector for text
-		/// and a selector for images inherit from it. But, we only have two types
-		/// to select from, there there's no point to add that much extra clutter for
-		/// just two selection types. If I had three or more selection types, then this
-		/// would be worth it, but I don't have three selection types. As it stands,
-		/// it's just simpiler have a single, non-generic selector.
+		/// I could also create a base selector class, and have a selector for text and a 
+		/// selector for images inherit from it. But, we only have two types of items to 
+		/// select from, there's no point to add that much extra clutter for just two 
+		/// selection types. If I had three or more selection types, then this would be 
+		/// worth it, but I don't have three selection types. As it stands, it's just 
+		/// simpiler have a single, non-generic selector.
 		/// 
 		/// -FCT
 		///
@@ -418,21 +432,53 @@ namespace Unv.FormulaNone.Controls
 
 			public abstract void DrawDisplayItem(SpriteBatch spriteBatch, Rectangle drawArea, Color lighting);
 			public abstract void Clear();
+
+			protected float FindScale(Vector2 targetSize, Vector2 itemSize)
+			{
+				float scaleX = targetSize.X / itemSize.X;
+				float scaleY = targetSize.Y / itemSize.Y;
+				float scaleToUse = Math.Max(scaleX, scaleY);
+
+				// We want the image to be as large as posible, while keeping it 
+				// within the draw area. So, we start with the larger of the two 
+				// scale/aspect ratios, and if it turns out to be to large, we 
+				// use the smaller one.
+				if (itemSize.X * scaleToUse > targetSize.X || itemSize.Y * scaleToUse > targetSize.Y)
+					scaleToUse = Math.Min(scaleX, scaleY);
+
+				return scaleToUse;
+			}
 		}
 
 		private class TextListItem
 			: ListItem
 		{
-			public string DisplayItem { get; set; }
+			public string		DisplayItem { get; set; }
+			public SpriteFont	TextFont	{ get; set; }
 
 			public override void DrawDisplayItem(SpriteBatch spriteBatch, Rectangle drawArea, Color lighting)
 			{
-				//throw new NotImplementedException();
+				Vector2 textSize		= TextFont.MeasureString(DisplayItem);
+				Vector2 centerPosition	= drawArea.Position() + drawArea.Size() / 2;
+				float	scale			= FindScale(drawArea.Size(), textSize);
+
+				spriteBatch.DrawString(
+					TextFont, 
+					DisplayItem, 
+					centerPosition, 
+					lighting, 
+					0f, 
+					textSize / 2, 
+					scale, 
+					SpriteEffects.None, 
+					0f);
 			}
 
 			public override void Clear()
 			{
-				//throw new NotImplementedException();
+				DisplayItem = null;
+				TextFont	= null;
+				Value		= null;
 			}
 		}
 
@@ -445,29 +491,19 @@ namespace Unv.FormulaNone.Controls
 
 			public override void DrawDisplayItem(SpriteBatch spriteBatch, Rectangle drawArea, Color lighting)
 			{
-				Vector2 center = drawArea.Position() + drawArea.Size() / 2;
-
-				var drawSize = drawArea.Size();
-				var itemSize = DisplayItem.Size();
-				float scaleX = drawSize.X / itemSize.X;
-				float scaleY = drawSize.Y / itemSize.Y;
-
-				// We want the image to be as large as posible, while keeping it 
-				// within the draw area. So, we start with the larger of the two 
-				// scale/aspect ratios, and if it turns out to be to large, we 
-				// use the smaller one.
-				float scaleToUse = Math.Max(scaleX, scaleY);
-				if (itemSize.X * scaleToUse > drawSize.X || itemSize.Y * scaleToUse > drawSize.Y)
-					scaleToUse = Math.Min(scaleX, scaleY);
+				var		drawSize	= drawArea.Size();
+				Vector2 center		= drawArea.Position() + drawSize / 2;
+				var		itemSize	= DisplayItem.Size();
+				float	scale		= FindScale(drawSize, itemSize);
 
 				spriteBatch.Draw(
 					DisplayItem, 
-					center, 
-					null, 
-					lighting, 
+					center,			// When we add rotation to a drawing, the pivet
+					null,			// point of the image is placed at the position
+					lighting,		// that is given for drawing the image.
 					DisplayRotation, 
-					itemSize / 2, 
-					scaleToUse, 
+					itemSize / 2,	// <- This is our pivet point on the image
+					scale, 
 					SpriteEffects.None, 
 					0f);
 			}
