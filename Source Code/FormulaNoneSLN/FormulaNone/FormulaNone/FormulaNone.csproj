@@ -148,6 +148,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\RaceEngineLib\RaceEngineLib.csproj">
+      <Project>{21A2851F-53EB-43A5-A658-F5B63666EAB8}</Project>
+      <Name>RaceEngineLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\RaceEngineStorageLib\RaceEngineStorageLib.csproj">
+      <Project>{24DE83F2-ACE3-46D7-B113-C81149B3FAC8}</Project>
+      <Name>RaceEngineStorageLib</Name>
+    </ProjectReference>
     <ProjectReference Include="..\FormulaNoneContent\FormulaNoneContent.contentproj">
       <XnaReferenceType>Content</XnaReferenceType>
     </ProjectReference>

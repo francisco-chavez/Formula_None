@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual C# Express 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FormulaNone", "FormulaNone\FormulaNone\FormulaNone.csproj", "{0F68D329-B5E0-47B0-8AB5-7C6A43F5B377}"
 EndProject
-Project("{96E2B04D-8817-42C6-938A-82C39BA4D311}") = "FormulaNoneContent", "FormulaNone\FormulaNoneContent\FormulaNoneContent.contentproj", "{134C54A3-D983-4352-9FF4-704A20A0ED4E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FormulaNoneContent", "FormulaNone\FormulaNoneContent\FormulaNoneContent.contentproj", "{134C54A3-D983-4352-9FF4-704A20A0ED4E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RaceEngineLib", "RaceEngineLib\RaceEngineLib.csproj", "{21A2851F-53EB-43A5-A658-F5B63666EAB8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RaceEngineStorageLib", "RaceEngineStorageLib\RaceEngineStorageLib.csproj", "{24DE83F2-ACE3-46D7-B113-C81149B3FAC8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,6 +27,18 @@ Global
 		{134C54A3-D983-4352-9FF4-704A20A0ED4E}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{134C54A3-D983-4352-9FF4-704A20A0ED4E}.Release|Any CPU.ActiveCfg = Debug|Any CPU
 		{134C54A3-D983-4352-9FF4-704A20A0ED4E}.Release|x86.ActiveCfg = Debug|Any CPU
+		{21A2851F-53EB-43A5-A658-F5B63666EAB8}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{21A2851F-53EB-43A5-A658-F5B63666EAB8}.Debug|x86.ActiveCfg = Debug|x86
+		{21A2851F-53EB-43A5-A658-F5B63666EAB8}.Debug|x86.Build.0 = Debug|x86
+		{21A2851F-53EB-43A5-A658-F5B63666EAB8}.Release|Any CPU.ActiveCfg = Release|x86
+		{21A2851F-53EB-43A5-A658-F5B63666EAB8}.Release|x86.ActiveCfg = Release|x86
+		{21A2851F-53EB-43A5-A658-F5B63666EAB8}.Release|x86.Build.0 = Release|x86
+		{24DE83F2-ACE3-46D7-B113-C81149B3FAC8}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{24DE83F2-ACE3-46D7-B113-C81149B3FAC8}.Debug|x86.ActiveCfg = Debug|x86
+		{24DE83F2-ACE3-46D7-B113-C81149B3FAC8}.Debug|x86.Build.0 = Debug|x86
+		{24DE83F2-ACE3-46D7-B113-C81149B3FAC8}.Release|Any CPU.ActiveCfg = Release|x86
+		{24DE83F2-ACE3-46D7-B113-C81149B3FAC8}.Release|x86.ActiveCfg = Release|x86
+		{24DE83F2-ACE3-46D7-B113-C81149B3FAC8}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
