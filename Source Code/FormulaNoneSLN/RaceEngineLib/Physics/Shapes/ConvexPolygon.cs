@@ -5,16 +5,24 @@ using System.Text;
 
 using Microsoft.Xna.Framework;
 
-namespace Unv.RaceEngineLib.Physics.Collidables
+using Unv.RaceEngineLib.Physics.Measurements;
+
+
+namespace Unv.RaceEngineLib.Physics.Shapes
 {
 	public class ConvexPolygon
-		: ShapeBase
+		: Shape
 	{
-		private Vector2		m_centerOffMass;
-		private Vector2[]	m_borderPoints;
+		private readonly Vector2[]	m_borderPoints;
+		private readonly Vector2	m_centerOfMass;
+		private readonly float		m_area;
 
 
-		public ConvexPolygon(IEnumerable<Vector2> borderPoints, Vector2 centerOfMass)
+		public override Vector2 CenterOfMass { get { return m_centerOfMass; } }
+		public override float	Area { get { return m_area; } }
+
+
+		public ConvexPolygon(IEnumerable<Vector2> borderPoints)
 		{
 			if (borderPoints == null)
 				throw new ArgumentNullException("A set of 3 or more points are required to create a ConvexPolygon");
@@ -31,16 +39,28 @@ namespace Unv.RaceEngineLib.Physics.Collidables
 			// to)? After all, I am putting this in a private attribute to stop
 			// the user from accessing it.
 			// -FCT
-			m_borderPoints = borderPoints.Select(b => { return b; }).ToArray();
-			m_centerOffMass = centerOfMass;
-		}
+			m_borderPoints = borderPoints.Select(point => { return point; }).ToArray();
 
+			Vector2 a = m_borderPoints[0];
+			Vector2 b;
+			Vector2 c;
 
-		public float Direction
-		{
-			get { return mn_direction; }
-			set { mn_direction = MathHelper.WrapAngle(value); }
+			for (int i = 2; i < m_borderPoints.Length; i++)
+			{
+				b = m_borderPoints[i - 1];
+				c = m_borderPoints[i];
+
+				Vector2 center;
+				float area;
+
+				// Using Heron's Formula to find triangle area.
+				float l1 = (b - a).Length();
+				float l2 = (c - b).Length();
+				float l3 = (a - c).Length();
+
+				float s = 0.5f * (l1 + l2 + l3);
+				area = (float) Math.Sqrt(s * (s - l1) * (s - l2) * (s - l3));
+			}
 		}
-		private float mn_direction = 0f;
 	}
 }

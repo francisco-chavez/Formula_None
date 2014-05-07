@@ -43,5 +43,17 @@ namespace Unv.RaceEngineLib
 		{
 			return (float) Math.Atan2(vector.Y, vector.X);
 		}
+
+		/// <summary>
+		/// Assuming that the vector is parallel to a line going through two points,
+		/// this will return the unit normal of that line.
+		/// </summary>
+		public static Vector2 NormalVector(this Vector2 vector)
+		{
+			Vector2 norm = new Vector2(-vector.Y, vector.X);
+			norm.Normalize();
+
+			return norm;
+		}
 	}
 }
