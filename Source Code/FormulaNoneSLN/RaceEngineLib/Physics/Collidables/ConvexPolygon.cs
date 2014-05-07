@@ -16,6 +16,12 @@ namespace Unv.RaceEngineLib.Physics.Collidables
 
 		public ConvexPolygon(IEnumerable<Vector2> borderPoints, Vector2 centerOfMass)
 		{
+			if (borderPoints == null)
+				throw new ArgumentNullException("A set of 3 or more points are required to create a ConvexPolygon");
+
+			if (borderPoints.Count() < 3)
+				throw new ArgumentException("A set of 3 or more points are required to create a ConvexPolygon");
+
 			// This creates an IEnumerable of Vectory2 with the same points as
 			// the borderPoints value that was given, copies those points into
 			// an array, and sets that array to m_borderPoints. I'm copying 

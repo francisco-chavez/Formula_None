@@ -97,6 +97,7 @@
     <Compile Include="Physics\Collidables\Circular.cs" />
     <Compile Include="Physics\Collidables\ConvexPolygon.cs" />
     <Compile Include="Physics\Collidables\ShapeBase.cs" />
+    <Compile Include="Physics\Measurements\Manifold.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Vector2Ext.cs" />
   </ItemGroup>

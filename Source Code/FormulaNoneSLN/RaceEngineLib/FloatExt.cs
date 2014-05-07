@@ -9,8 +9,8 @@ namespace Unv.RaceEngineLib
 	{
 		/// <summary>
 		/// Treats the float as a radian value and converts it into a unit vector
-		/// int the XY-Plain with a theta value (off the positive X-Axis) equal
-		/// to the radian value.
+		/// in the XY-Plain with a theta value (off the positive X-Axis) equal to 
+		/// the radian value.
 		/// </summary>
 		public static Vector2 ToUnitVector2(this float rads)
 		{
