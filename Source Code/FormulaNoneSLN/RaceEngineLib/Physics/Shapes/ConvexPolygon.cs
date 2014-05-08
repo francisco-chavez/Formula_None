@@ -41,26 +41,33 @@ namespace Unv.RaceEngineLib.Physics.Shapes
 			// -FCT
 			m_borderPoints = borderPoints.Select(point => { return point; }).ToArray();
 
+
+			// Break the shape into trianlge. This will give us a list of components 
+			// with their own area and center of mass. We sum up all their areas to 
+			// get the area of the shape. We then sum up the weighted center of mass's 
+			// of the triangles to find the center of mass of the overall shape.
 			Vector2 a = m_borderPoints[0];
 			Vector2 b;
 			Vector2 c;
 
+			Triangle[] trianles = new Triangle[m_borderPoints.Length - 2];
+
+			float totalArea = 0f;
 			for (int i = 2; i < m_borderPoints.Length; i++)
 			{
 				b = m_borderPoints[i - 1];
 				c = m_borderPoints[i];
 
-				Vector2 center;
-				float area;
-
-				// Using Heron's Formula to find triangle area.
-				float l1 = (b - a).Length();
-				float l2 = (c - b).Length();
-				float l3 = (a - c).Length();
-
-				float s = 0.5f * (l1 + l2 + l3);
-				area = (float) Math.Sqrt(s * (s - l1) * (s - l2) * (s - l3));
+				trianles[i - 2] = new Triangle(a, b, c);
+				totalArea += trianles[i - 2].Area;
 			}
+
+			Vector2 weightedCenterSum = Vector2.Zero;
+			foreach (var component in trianles)
+				weightedCenterSum += component.Area * component.CenterOfMass;
+			
+			m_centerOfMass = weightedCenterSum / totalArea;
+			m_area = totalArea;
 		}
 	}
 }
