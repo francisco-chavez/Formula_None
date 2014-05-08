@@ -46,12 +46,17 @@ namespace Unv.RaceEngineLib
 
 		/// <summary>
 		/// Assuming that the vector is parallel to a line going through two points,
-		/// this will return the unit normal of that line.
+		/// this will return the normal of that line.
 		/// </summary>
-		public static Vector2 NormalVector(this Vector2 vector)
+		/// <param name="normalize">
+		/// Setting this to true, will normalize the normal vector, turning it into
+		/// a normal-unit vector. These can be used an an axis.
+		/// </param>
+		public static Vector2 NormalVector(this Vector2 vector, bool normalize = true)
 		{
 			Vector2 norm = new Vector2(-vector.Y, vector.X);
-			norm.Normalize();
+			if (normalize)
+				norm.Normalize();
 
 			return norm;
 		}

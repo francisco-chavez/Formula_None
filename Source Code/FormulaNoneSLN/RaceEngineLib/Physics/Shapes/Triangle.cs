@@ -38,7 +38,7 @@ namespace Unv.RaceEngineLib.Physics.Shapes
 			// used a lot of square roots (a total of four). Then I realized that I already 
 			// have the code for finding the height of the triangle by using the triangle's 
 			// extent over the normal unit axis of the base vector for the height. This 
-			// cuts down the number of square root operation down to two. Using doubles to 
+			// cuts down the number of square root operations down to one. Using doubles to 
 			// run the calculations of Heron's Formula as my base case, I tested this method 
 			// and compared it to using floats to calculate Heron's Formula. This is XNA, 
 			// we're supposed to use floats instead of doubles. Long story short, the error 
@@ -46,9 +46,14 @@ namespace Unv.RaceEngineLib.Physics.Shapes
 			// with floats. To be honest, the error of Heron's Formula with floats was 
 			// really small to begin with.
 
+			// In this case, I'm going to normalize the normal vector into a unit vector 
+			// myself. The reason I'm doing this is because we need to caluculate the length 
+			// of a vector to turn it into a unit vector. This adds a square root operation,
+			// which isn't needed because the already got that measurement when we grabed the 
+			// length of the base.
 			Vector2 baseVector	= a - b;						// Use points a & b to create the base of the triangle			
 			float	baseLength	= baseVector.Length();			// Get the length of the base
-			Vector2 unitVert	= baseVector.NormalVector();	// Get the perpendicular unit axis of the base
+			Vector2 unitVert	= baseVector.NormalVector(false) / baseLength;	// Get the perpendicular unit axis of the base
 			float	height		= Range.FindExtent(unitVert, a, c).Length;	// a is on the base line, and
 																			// c is the only missing point
 			// one half base times height
