@@ -30,7 +30,7 @@ namespace Unv.RaceEngineLib.Physics
 			{
 				for (int j = 0; j < m_mobileBodies.Count; j++)
 				{
-					float r = m_mobileBodies[i].QuickSize + m_mobileBodies[j].QuickSize;
+					float r = m_mobileBodies[i].Shape.QuickRadius + m_mobileBodies[j].Shape.QuickRadius;
 					float r2 = r * r;
 
 					float distance2 = (m_mobileBodies[i].Position - m_mobileBodies[j].Position).LengthSquared();
@@ -50,7 +50,7 @@ namespace Unv.RaceEngineLib.Physics
 			{
 				for (int j = 0; j < m_mobileBodies.Count; j++)
 				{
-					float r = m_immobileBodies[i].QuickSize + m_mobileBodies[j].QuickSize;
+					float r = m_immobileBodies[i].Shape.QuickRadius + m_mobileBodies[j].Shape.QuickRadius;
 					float r2 = r * r;
 
 					float distance2 = (m_immobileBodies[i].Position - m_mobileBodies[j].Position).LengthSquared();

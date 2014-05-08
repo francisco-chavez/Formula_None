@@ -16,10 +16,12 @@ namespace Unv.RaceEngineLib.Physics.Shapes
 		private readonly Vector2[]	m_borderPoints;
 		private readonly Vector2	m_centerOfMass;
 		private readonly float		m_area;
+		private readonly float		m_quickRadius;
 
 
-		public override Vector2 CenterOfMass { get { return m_centerOfMass; } }
-		public override float	Area { get { return m_area; } }
+		public override Vector2 CenterOfMass	{ get { return m_centerOfMass; } }
+		public override float	Area			{ get { return m_area; } }
+		public override float	QuickRadius		{ get { return m_quickRadius; } }
 
 
 		public ConvexPolygon(IEnumerable<Vector2> borderPoints)
@@ -68,6 +70,19 @@ namespace Unv.RaceEngineLib.Physics.Shapes
 			
 			m_centerOfMass = weightedCenterSum / totalArea;
 			m_area = totalArea;
+
+			// Find a radius from the center of mass to use
+			// that includes all the points of the shape.
+			Vector2 l = Vector2.Zero;
+
+			foreach (var point in m_borderPoints)
+			{
+				Vector2 diff = point - CenterOfMass;
+				if (diff.LengthSquared() > l.LengthSquared())
+					l = diff;
+			}
+
+			m_quickRadius = l.Length() + 1f;
 		}
 	}
 }

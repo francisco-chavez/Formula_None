@@ -22,6 +22,8 @@ namespace Unv.RaceEngineLib.Physics.Shapes
 			get { return MathHelper.Pi * Radius * Radius; }
 		}
 
+		public override float QuickRadius { get { return Radius + 0.1f; } }
+
 		public override Vector2 CenterOfMass { get { return Vector2.Zero; } }
 
 		public Circular(float radius)

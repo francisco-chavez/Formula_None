@@ -10,6 +10,7 @@ namespace Unv.RaceEngineLib.Physics
 {
 	public class Body
 	{
+		public Shape	Shape			{ get; set; }
 		public MassData MassData		{ get; set; }
 		public Vector2	Velocity		{ get; set; }
 		public Vector2	Force			{ get; set; }
@@ -19,7 +20,5 @@ namespace Unv.RaceEngineLib.Physics
 		public float	Orientation		{ get; set; }
 		public float	AngularVelocity { get; set; }
 		public float	Torque			{ get; set; }
-
-		public float	QuickSize		{ get; private set; }
 	}
 }
