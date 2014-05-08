@@ -97,6 +97,7 @@
     <Compile Include="Physics\Body.cs" />
     <Compile Include="Physics\MassData.cs" />
     <Compile Include="Physics\Material.cs" />
+    <Compile Include="Physics\Measurements\FrictionSettings.cs" />
     <Compile Include="Physics\Measurements\Manifold.cs" />
     <Compile Include="Physics\Measurements\MaterialSettings.cs" />
     <Compile Include="Physics\Measurements\Pair.cs" />
