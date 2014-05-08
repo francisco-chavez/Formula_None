@@ -1,0 +1,26 @@
+﻿<Window x:Class="Unv.RaceTrackEditor.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		mc:Ignorable="d"
+		xmlns:vm="clr-namespace:Unv.RaceTrackEditor.ViewModels"
+		Height="700" Width="1100"
+		Style="{StaticResource WindowStyle}"
+		WindowStartupLocation="CenterScreen"
+		Title="{Binding DisplayTitle}">
+	<Window.Resources>
+		<vm:MainWindowViewModel x:Key="MainWindowViewModelDataSource"
+								d:IsDataSource="True"/>
+	</Window.Resources>
+	
+	<Window.DataContext>
+		<Binding Source="{StaticResource MainWindowViewModelDataSource}"/>
+	</Window.DataContext>
+	
+	<DockPanel x:Name="Root">
+		<Menu DockPanel.Dock="Top">
+			<MenuItem Header="New Project..."/>
+		</Menu>
+	</DockPanel>
+</Window>

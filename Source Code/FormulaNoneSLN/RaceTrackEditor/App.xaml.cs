@@ -5,7 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Windows;
 
-namespace RaceTrackEditor
+namespace Unv.RaceTrackEditor
 {
 	/// <summary>
 	/// Interaction logic for App.xaml
