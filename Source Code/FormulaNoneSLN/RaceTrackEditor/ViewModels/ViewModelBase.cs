@@ -7,6 +7,7 @@ namespace Unv.RaceTrackEditor.ViewModels
 	public abstract class ViewModelBase
 		: INPC
 	{
+		#region Properties
 		public string DisplayTitle
 		{
 			get { return mn_displayTitle; }
@@ -30,8 +31,19 @@ namespace Unv.RaceTrackEditor.ViewModels
 					.FromProperty(prop, typeof(FrameworkElement)).Metadata.DefaultValue;
 			}
 		}
+		#endregion
 
 
-		public ViewModelBase() { }
+		#region Constructors
+		public ViewModelBase()
+			: this(null)
+		{
+		}
+
+		public ViewModelBase(string displayTitle)
+		{
+			DisplayTitle = displayTitle;
+		}
+		#endregion
 	}
 }
