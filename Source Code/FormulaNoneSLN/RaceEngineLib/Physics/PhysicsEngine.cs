@@ -31,7 +31,7 @@ namespace Unv.RaceEngineLib.Physics
 
 
 		#region Methods
-		public Body AddModileBody(Shape shape, Vector2 position, string materialKey)
+		public Body AddMobileBody(Shape shape, Vector2 position, string materialKey)
 		{
 			var material = MaterialSettings.Instance.Materials[materialKey];
 
@@ -43,10 +43,36 @@ namespace Unv.RaceEngineLib.Physics
 			massData.Mass = material.Density * shape.Area;
 
 			return b;
-
 		}
 
-		public void AddImmobilebody(Shape shape, Vector2 position) { }
+		public Body AddImmobileBody(Shape shape, Vector2 position, string materialKey)
+		{
+			var material = MaterialSettings.Instance.Materials[materialKey];
+
+			Body body = new Body();
+			body.Shape			= shape;
+			body.Resitution		= material.Restitution;
+
+			MassData massData = new MassData();
+			massData.Mass		= float.PositiveInfinity;
+			massData.Inertia	= float.PositiveInfinity;
+
+			body.MassData		= massData;
+
+			m_immobileBodies.Add(body);
+
+			return body;
+		}
+
+		public void ClearMobileBodies()
+		{
+			m_mobileBodies.Clear();
+		}
+
+		public void ClearImmobileBodies()
+		{
+			m_immobileBodies.Clear();
+		}
 
 		public void Step(float timeMS)
 		{

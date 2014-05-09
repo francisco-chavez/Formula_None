@@ -23,6 +23,18 @@ namespace Unv.RaceEngineLib.Physics.Shapes
 		public override float	Area			{ get { return m_area; } }
 		public override float	QuickRadius		{ get { return m_quickRadius; } }
 
+		public Vector2[] CenteredBorderPoints
+		{
+			get
+			{
+				Vector2[] result = new Vector2[m_borderPoints.Length];
+				for (int i = 0; i < result.Length; i++)
+					result[i] = m_borderPoints[i] - CenterOfMass;
+
+				return result;
+			}
+		}
+
 
 		public ConvexPolygon(IEnumerable<Vector2> borderPoints)
 		{
@@ -71,18 +83,17 @@ namespace Unv.RaceEngineLib.Physics.Shapes
 			m_centerOfMass = weightedCenterSum / totalArea;
 			m_area = totalArea;
 
-			// Find a radius from the center of mass to use
-			// that includes all the points of the shape.
-			Vector2 l = Vector2.Zero;
+			// Find a radius from the center of mass to use that 
+			// includes all the points making up of the shape.
+			Vector2 radius = Vector2.Zero;
 
-			foreach (var point in m_borderPoints)
+			foreach (var point in CenteredBorderPoints)
 			{
-				Vector2 diff = point - CenterOfMass;
-				if (diff.LengthSquared() > l.LengthSquared())
-					l = diff;
+				if (point.LengthSquared() > radius.LengthSquared())
+					radius = point;
 			}
 
-			m_quickRadius = l.Length() + 1f;
+			m_quickRadius = radius.Length() + 1f;
 		}
 	}
 }

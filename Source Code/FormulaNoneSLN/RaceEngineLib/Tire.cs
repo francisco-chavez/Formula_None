@@ -12,15 +12,12 @@ namespace Unv.RaceEngineLib
 {
 	public class Tire
 	{
-		private Body m_body;
-
-
-		public Vector2 Position { get { return m_body.Position; } }
+		public Body Body { get; private set; }
 
 
 		public Tire(Body body)
 		{
-			m_body = body;
+			Body = body;
 		}
 	}
 }
