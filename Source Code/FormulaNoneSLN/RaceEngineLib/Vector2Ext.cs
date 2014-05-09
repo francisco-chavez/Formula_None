@@ -60,5 +60,15 @@ namespace Unv.RaceEngineLib
 
 			return norm;
 		}
+
+		public static float Cross(this Vector2 a, Vector2 b)
+		{
+			return a.X * b.Y - a.Y * b.X;
+		}
+
+		public static Vector2 CrossProduct(this Vector2 a, float s)
+		{
+			return -s * a.NormalVector(false);
+		}
 	}
 }

@@ -16,5 +16,10 @@ namespace Unv.RaceEngineLib
 		{
 			return new Vector2((float) Math.Cos(rads), (float) Math.Sin(rads));
 		}
+
+		public static Vector2 CrossProduct(this float s, Vector2 a)
+		{
+			return -s * a.NormalVector(false);
+		}
 	}
 }

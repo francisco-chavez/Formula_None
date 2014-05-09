@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+using Microsoft.Xna.Framework;
+
 using Unv.RaceEngineLib.Physics.Measurements;
 
 
@@ -10,10 +12,46 @@ namespace Unv.RaceEngineLib.Physics
 {
 	public class PhysicsEngine
 	{
-		private List<Body> m_mobileBodies = new List<Body>();
-		private List<Body> m_immobileBodies = new List<Body>();
+		#region Attributes
+		private List<Body> m_mobileBodies;
+		private List<Body> m_immobileBodies;
 
-		private List<Pair> m_pairs = new List<Pair>();
+		private List<Pair> m_pairs;
+		#endregion
+
+
+		#region Constructors
+		public PhysicsEngine()
+		{
+			m_mobileBodies		= new List<Body>();
+			m_immobileBodies	= new List<Body>();
+			m_pairs				= new List<Pair>();
+		}
+		#endregion
+
+
+		#region Methods
+		public Body AddModileBody(Shape shape, Vector2 position, string materialKey)
+		{
+			var material = MaterialSettings.Instance.Materials[materialKey];
+
+			Body b = new Body();
+			b.Shape = shape;
+			b.Resitution = material.Restitution;
+
+			MassData massData = new MassData();
+			massData.Mass = material.Density * shape.Area;
+
+			return b;
+
+		}
+
+		public void AddImmobilebody(Shape shape, Vector2 position) { }
+
+		public void Step(float timeMS)
+		{
+			GeneratePairs();
+		}
 
 		/// <summary>
 		/// This is a Broad Phase Collision Check. If two bodies might be
@@ -21,7 +59,7 @@ namespace Unv.RaceEngineLib.Physics
 		/// will be thrown into the pairs list to take a close look at
 		/// when we do the Narrows Phase Collision Check.
 		/// </summary>
-		public void GeneratePairs()
+		private void GeneratePairs()
 		{
 			m_pairs.Clear();
 
@@ -62,5 +100,6 @@ namespace Unv.RaceEngineLib.Physics
 				}
 			}
 		}
+		#endregion
 	}
 }

@@ -93,6 +93,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Obstacle.cs" />
+    <Compile Include="ObstacleMap.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
