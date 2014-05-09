@@ -6,6 +6,8 @@ using System.Text;
 using System.Windows;
 using System.Windows.Input;
 
+using Unv.RaceTrackEditor.Dialogs;
+
 
 namespace Unv.RaceTrackEditor.ViewModels
 {
@@ -36,6 +38,10 @@ namespace Unv.RaceTrackEditor.ViewModels
 
 		private void CreateNewProject()
 		{
+			var dialog = new NewProjectDialog();
+			dialog.Owner = App.Current.MainWindow;
+
+			var keepGoing = dialog.ShowDialog() == true;
 		}
 	}
 }
