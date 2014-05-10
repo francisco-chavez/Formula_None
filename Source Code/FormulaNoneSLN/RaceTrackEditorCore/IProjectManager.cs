@@ -10,6 +10,9 @@ namespace Unv.RaceTrackEditor.Core
 {
 	public interface IProjectManager
 	{
-		ProjectModel GetNewProjectInfo();
+		ProjectModel CurrentProject { get; set; }
+
+		NewProjectInfoModel GetNewProjectInfo();
+		void SaveCurrentProject();
 	}
 }

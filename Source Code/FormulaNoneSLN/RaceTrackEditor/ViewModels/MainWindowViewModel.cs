@@ -6,7 +6,8 @@ using System.Text;
 using System.Windows;
 using System.Windows.Input;
 
-using Unv.RaceTrackEditor.Dialogs;
+using Unv.RaceTrackEditor.Core;
+using Unv.RaceTrackEditor.Core.Models;
 
 
 namespace Unv.RaceTrackEditor.ViewModels
@@ -14,34 +15,46 @@ namespace Unv.RaceTrackEditor.ViewModels
 	public class MainWindowViewModel
 		: ViewModelBase
 	{
+		#region Attributes
+		#endregion
+
+
+		#region Properties
+		public IProjectManager ProjectManager { get; set; }
+		#endregion
+
+
+		#region Commands
 		public ICommand CreateNewProjectCommand
 		{
 			get
 			{
-				if(m_createNewProjectCommand == null)
+				if(mn_createNewProjectCommand == null)
 				{
-					m_createNewProjectCommand =
+					mn_createNewProjectCommand =
 						new RelayCommand(p => this.CreateNewProject());
 				}
 
-				return m_createNewProjectCommand;
+				return mn_createNewProjectCommand;
 			}
 		}
-		private RelayCommand m_createNewProjectCommand;
+		private RelayCommand mn_createNewProjectCommand;
+		#endregion
 
 
 		public MainWindowViewModel()
 			: base("Race Track Editor")
 		{
+			ProjectManager = App.ProjectManager;
 		}
 
 
 		private void CreateNewProject()
 		{
-			var dialog = new NewProjectDialog();
-			dialog.Owner = App.Current.MainWindow;
-
-			var keepGoing = dialog.ShowDialog() == true;
+			NewProjectInfoModel info = ProjectManager.GetNewProjectInfo();
+			
+			if (!info.CreateProject)
+				return;
 		}
 	}
 }

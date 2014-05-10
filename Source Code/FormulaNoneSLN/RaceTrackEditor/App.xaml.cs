@@ -5,6 +5,10 @@ using System.Data;
 using System.Linq;
 using System.Windows;
 
+using Unv.RaceTrackEditor.Core;
+using Unv.RaceTrackEditor.Services;
+
+
 namespace Unv.RaceTrackEditor
 {
 	/// <summary>
@@ -12,5 +16,11 @@ namespace Unv.RaceTrackEditor
 	/// </summary>
 	public partial class App : Application
 	{
+		public static IProjectManager ProjectManager { get; set; }
+
+		static App()
+		{
+			ProjectManager = new ProjectManagerService();
+		}
 	}
 }
