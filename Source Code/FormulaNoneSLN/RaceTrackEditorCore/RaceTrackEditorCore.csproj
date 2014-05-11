@@ -43,6 +43,7 @@
     <Compile Include="IProjectManager.cs" />
     <Compile Include="Models\NewProjectInfoModel.cs" />
     <Compile Include="Models\ProjectModel.cs" />
+    <Compile Include="Models\RaceTrackModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
