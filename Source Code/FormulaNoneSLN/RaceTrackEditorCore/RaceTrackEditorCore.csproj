@@ -40,6 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IProjectFileReader.cs" />
+    <Compile Include="IProjectFileWriter.cs" />
     <Compile Include="IProjectManager.cs" />
     <Compile Include="Models\NewProjectInfoModel.cs" />
     <Compile Include="Models\ProjectModel.cs" />

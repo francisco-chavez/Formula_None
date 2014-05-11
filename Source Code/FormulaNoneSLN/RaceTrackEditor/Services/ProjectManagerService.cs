@@ -41,6 +41,30 @@ namespace Unv.RaceTrackEditor.Services
 			}
 		}
 		private ProjectModel mn_currentProject;
+
+		public IProjectFileReader ProjectReader
+		{
+			get
+			{
+				throw new NotImplementedException();
+			}
+			set
+			{
+				throw new NotImplementedException();
+			}
+		}
+
+		public IProjectFileWriter ProjectWriter
+		{
+			get
+			{
+				throw new NotImplementedException();
+			}
+			set
+			{
+				throw new NotImplementedException();
+			}
+		}
 		#endregion
 
 
@@ -65,6 +89,11 @@ namespace Unv.RaceTrackEditor.Services
 			newProjectInfo.RaceTrackImagePath	= dialog.RaceTrackImagePath;
 
 			return newProjectInfo;
+		}
+
+		public ProjectModel CreateNewProject(NewProjectInfoModel projectInfo)
+		{
+			throw new NotImplementedException();
 		}
 
 		public void SaveCurrentProject()
