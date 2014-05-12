@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows;
 
 using Unv.RaceTrackEditor.Core;
 using Unv.RaceTrackEditor.Core.Models;
 using Unv.RaceTrackEditor.Dialogs;
-using System.Windows;
 
 
 namespace Unv.RaceTrackEditor.Services
@@ -72,6 +72,8 @@ namespace Unv.RaceTrackEditor.Services
 
 		public ProjectModel CreateNewProject(NewProjectInfoModel projectInfo)
 		{
+			if (!projectInfo.CreateProject)
+				throw new Exception("Can not create a project that is flagged as do not create.");
 			throw new NotImplementedException();
 		}
 
