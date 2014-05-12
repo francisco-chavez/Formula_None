@@ -51,6 +51,7 @@ namespace Unv.RaceTrackEditor.ViewModels
 
 		private void CreateNewProject()
 		{
+
 			NewProjectInfoModel info = ProjectManager.GetNewProjectInfo();
 			
 			if (!info.CreateProject)

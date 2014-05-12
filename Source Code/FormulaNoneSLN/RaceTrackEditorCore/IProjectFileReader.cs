@@ -7,5 +7,7 @@ namespace Unv.RaceTrackEditor.Core
 {
 	public interface IProjectFileReader
 	{
+		string FileExtension		{ get; }
+		string ExtensionDescription { get; }
 	}
 }

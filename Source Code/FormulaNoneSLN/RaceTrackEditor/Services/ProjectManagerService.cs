@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Windows;
 
+using Microsoft.Win32;
+
 using Unv.RaceTrackEditor.Core;
 using Unv.RaceTrackEditor.Core.Models;
 using Unv.RaceTrackEditor.Dialogs;
@@ -55,19 +57,18 @@ namespace Unv.RaceTrackEditor.Services
 		#region Methods
 		public NewProjectInfoModel GetNewProjectInfo()
 		{
-			NewProjectInfoModel newProjectInfo = new NewProjectInfoModel();
-			var dialog = new NewProjectDialog()
-			{
-				Owner = App.Current.MainWindow
-			};
+			SaveFileDialog dlg = new SaveFileDialog();
+			dlg.CreatePrompt = false;
+			dlg.Title = "Select New Project File";
+			dlg.Filter = string.Format("{0} (*.{1})|*.{1}", ProjectWriter.ExtensionDescription, ProjectWriter.FileExtension);
 
-			newProjectInfo.CreateProject				= dialog.ShowDialog() == true;
+			bool keepGoing = dlg.ShowDialog(App.Current.MainWindow) == true;
 
-			newProjectInfo.ProjectLocation		= dialog.ProjectLocation;
-			newProjectInfo.ProjectName			= dialog.ProjectName;
-			newProjectInfo.RaceTrackImagePath	= dialog.RaceTrackImagePath;
+			NewProjectInfoModel info = new NewProjectInfoModel();
+			info.CreateProject = keepGoing;
+			info.FilePath = dlg.FileName;
 
-			return newProjectInfo;
+			return info;
 		}
 
 		public ProjectModel CreateNewProject(NewProjectInfoModel projectInfo)
@@ -76,6 +77,7 @@ namespace Unv.RaceTrackEditor.Services
 				throw new Exception("Can not create a project that is flagged as do not create.");
 
 			var newProject = this.ProjectWriter.CreateNewProject(projectInfo);
+			newProject.ProjectManager = this;
 
 			return newProject;
 		}

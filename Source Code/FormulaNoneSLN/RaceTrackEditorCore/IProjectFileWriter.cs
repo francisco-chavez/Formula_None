@@ -10,7 +10,8 @@ namespace Unv.RaceTrackEditor.Core
 {
 	public interface IProjectFileWriter
 	{
-		bool CanCreateNewProject(string directory, string projectName);
+		string FileExtension		{ get; }
+		string ExtensionDescription { get; }
 
 		ProjectModel CreateNewProject(NewProjectInfoModel projectInformation);
 	}

@@ -14,7 +14,6 @@
 		<SolidColorBrush x:Key="DarkTextBrush" Color="#FF002200"/>
 
 
-
 		<Style x:Key="WindowStyle" TargetType="Window">
 			<Setter Property="SnapsToDevicePixels" Value="True"/>
 			<Setter Property="UseLayoutRounding" Value="True"/>

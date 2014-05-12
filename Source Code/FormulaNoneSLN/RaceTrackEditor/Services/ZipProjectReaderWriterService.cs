@@ -17,7 +17,14 @@ namespace Unv.RaceTrackEditor.Services
 	public class ZipProjectReaderWriterService
 		: IProjectFileReader, IProjectFileWriter
 	{
-		public static readonly string FILE_EXTENSION = "zip";
+		#region Properties
+		public string FileExtension { get { return FILE_EXTENSION; } }
+		private static readonly string FILE_EXTENSION = "zip";
+
+		public string ExtensionDescription { get { return EXTENSION_DESCRIPTION; } }
+		private static readonly string EXTENSION_DESCRIPTION = "Formula None Project";
+		#endregion
+
 
 		#region Constructors
 		public ZipProjectReaderWriterService() 
@@ -27,36 +34,29 @@ namespace Unv.RaceTrackEditor.Services
 
 
 		#region Methods
-		public bool CanCreateNewProject(string directory, string projectName)
-		{
-			string filePath = GetFilePath(directory, projectName);
-
-			bool canCreateNew = !File.Exists(filePath);
-			return canCreateNew;
-		}
-
 		public ProjectModel CreateNewProject(NewProjectInfoModel projectInformation)
 		{
-			bool	canCreateNew	= CanCreateNewProject(projectInformation.ProjectLocation, projectInformation.ProjectName);
-			string	projectFilePath = GetFilePath(projectInformation.ProjectLocation, projectInformation.ProjectName);
+			string	filePath		= projectInformation.FilePath;
+			bool	canCreateNew	= !File.Exists(filePath);
+			string	projectName		= Path.GetFileNameWithoutExtension(filePath);
 
 			if (!canCreateNew)
 			{
 				var userInput = 
 					MessageBox.Show(
-						string.Format("Project: {0} already exists. Do you wish to replace it?", projectInformation.ProjectName), 
+						string.Format("Project: {0} already exists in selected location. Do you wish to replace it?", projectName), 
 						"Problem with Project Creation", 
 						MessageBoxButton.YesNo, 
 						MessageBoxImage.Question);
 
 				if (userInput == MessageBoxResult.Yes)
 				{
-					while (File.Exists(projectFilePath))
+					while (File.Exists(filePath))
 					{
 						bool forgetIt = false;
 						try
 						{
-							File.Delete(projectFilePath);
+							File.Delete(filePath);
 
 							// Give the system some time to get rid of the file
 							// Side Note: On a slow system or a system underload,
@@ -85,32 +85,30 @@ namespace Unv.RaceTrackEditor.Services
 				}
 			}
 
-
-			// Place project information into project file
-			Uri targetImageUri = new Uri("/RaceTrackImage.png", UriKind.Relative);
-			
-			using(Package package = ZipPackage.Open(projectFilePath, FileMode.CreateNew))
+			using (Package package = ZipPackage.Open(filePath))
 			{
-				PackagePart imagePackagePart = package.CreatePart(targetImageUri, "Image/png");
-
-				using (FileStream imageFileStream = new FileStream(projectInformation.RaceTrackImagePath, FileMode.Open, FileAccess.Read))
-				{
-					CopyStream(imageFileStream, imagePackagePart.GetStream());
-				}
 			}
 
-			ProjectModel result = new ProjectModel()
+			var projectModel = new ProjectModel()
 			{
+				ProjectFilePath = filePath
 			};
 
-			return result;
-		}
+			return projectModel;
 
-		private string GetFilePath(string directoryPath, string projectName)
-		{
-			string fileName = string.Format("{0}.{1}", projectName, FILE_EXTENSION);
-			string filePath = Path.Combine(directoryPath, fileName);
-			return filePath;
+
+			// Place project information into project file
+			//Uri targetImageUri = new Uri("/RaceTrackImage.png", UriKind.Relative);
+			
+			//using(Package package = ZipPackage.Open(projectFilePath, FileMode.CreateNew))
+			//{
+			//    PackagePart imagePackagePart = package.CreatePart(targetImageUri, "Image/png");
+
+			//    using (FileStream imageFileStream = new FileStream(projectInformation.RaceTrackImagePath, FileMode.Open, FileAccess.Read))
+			//    {
+			//        CopyStream(imageFileStream, imagePackagePart.GetStream());
+			//    }
+			//}
 		}
 
 		private static void CopyStream(Stream source, Stream target)

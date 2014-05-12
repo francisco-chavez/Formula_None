@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Windows.Media.Imaging;
 
 using Unv.RaceTrackEditor.Core.Models;
 
@@ -12,7 +14,40 @@ namespace Unv.RaceTrackEditor.ViewModels
 		: ViewModelBase
 	{
 		#region Attributes
-		private ProjectModel m_data;
+		#endregion
+
+
+		#region Properties
+		public ProjectModel ProjectModel
+		{
+			get { return mn_projectModel; }
+			set
+			{
+				if (mn_projectModel != value)
+				{
+					mn_projectModel = value;
+					OnPropertyChanged("ProjectModel");
+
+					LoadProjectModelData();
+				}
+			}
+		}
+		private ProjectModel mn_projectModel;
+
+		public BitmapImage RaceTrackImage
+		{
+			get { return mn_raceTrackImage; }
+			private set
+			{
+				if (mn_raceTrackImage != value)
+				{
+					mn_raceTrackImage = value;
+					OnPropertyChanged("RaceTrackImage");
+				}
+			}
+		}
+		private BitmapImage mn_raceTrackImage;
+		
 		#endregion
 
 
@@ -23,39 +58,22 @@ namespace Unv.RaceTrackEditor.ViewModels
 
 		public ProjectViewModel(ProjectModel data)
 		{
-			m_data = data;
+			this.ProjectModel = data;
 		}
 		#endregion
 
 
-		#region Properties
-		public string ProjectName
+		#region Methods
+		private void LoadProjectModelData()
 		{
-			get { return mn_projectName; }
-			set
-			{
-				if (mn_projectName != value)
-				{
-					mn_projectName = value;
-					OnPropertyChanged("ProjectName");
-				}
-			}
-		}
-		private string mn_projectName;
+			RaceTrackImage	= null;
+			DisplayTitle	= null;
 
-		public string ParentDirectory
-		{
-			get { return mn_parentDirectory; }
-			set
-			{
-				if (mn_parentDirectory != value)
-				{
-					mn_parentDirectory = value;
-					OnPropertyChanged("ParentDirectory");
-				}
-			}
+			if (ProjectModel == null)
+				return;
+
+			this.DisplayTitle = Path.GetFileNameWithoutExtension(ProjectModel.ProjectFilePath);
 		}
-		private string mn_parentDirectory;
 		#endregion
 	}
 }

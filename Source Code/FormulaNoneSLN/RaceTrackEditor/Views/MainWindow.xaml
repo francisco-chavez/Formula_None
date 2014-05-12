@@ -33,6 +33,6 @@
 			<MenuItem Header="Data"></MenuItem>
 		</Menu>
 		
-		<Grid/>
+		<ContentPresenter />
 	</DockPanel>
 </Window>

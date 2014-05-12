@@ -16,7 +16,7 @@ namespace Unv.RaceTrackEditor
 	/// </summary>
 	public partial class App : Application
 	{
-		public static IProjectManager		ProjectManager	{ get; set; }
+		public static IProjectManager ProjectManager { get; set; }
 
 		static App()
 		{

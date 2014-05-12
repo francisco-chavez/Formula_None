@@ -26,23 +26,16 @@ namespace Unv.RaceTrackEditor.Dialogs
 
 
 		#region Attributes
-		public static readonly DependencyProperty ProjectNameProperty;
-		public static readonly DependencyProperty ProjectLocationProperty;
+		public static readonly DependencyProperty ProjectPathProperty;
 		public static readonly DependencyProperty RaceTrackImagePathProperty;
 		#endregion
 
 
 		#region Properties
-		public string ProjectName
+		public string ProjectPath
 		{
-			get { return (string) GetValue(ProjectNameProperty); }
-			set { SetValue(ProjectNameProperty, value); }
-		}
-
-		public string ProjectLocation
-		{
-			get { return (string) GetValue(ProjectLocationProperty); }
-			set { SetValue(ProjectLocationProperty, value); }
+			get { return (string) GetValue(ProjectPathProperty); }
+			set { SetValue(ProjectPathProperty, value); }
 		}
 
 		public string RaceTrackImagePath
@@ -112,13 +105,8 @@ namespace Unv.RaceTrackEditor.Dialogs
 
 		static NewProjectDialog()
 		{
-			ProjectNameProperty = DependencyProperty.Register(
-				"ProjectName",
-				typeof(string),
-				typeof(NewProjectDialog));
-
-			ProjectLocationProperty = DependencyProperty.Register(
-				"ProjectLocation",
+			ProjectPathProperty = DependencyProperty.Register(
+				"ProjectPath",
 				typeof(string),
 				typeof(NewProjectDialog));
 
@@ -176,11 +164,11 @@ namespace Unv.RaceTrackEditor.Dialogs
 			if (RaceTrackImage == null)
 				return false;
 
-			if (!IsProjectNameValidish(this.ProjectName))
-				return false;
+			//if (!IsProjectNameValidish(this.ProjectName))
+			//    return false;
 
-			if (!IsProjectDirectoryValidish(this.ProjectLocation))
-				return false;
+			//if (!IsProjectDirectoryValidish(this.ProjectLocation))
+			//    return false;
 
 			return true;
 		}
@@ -204,7 +192,7 @@ namespace Unv.RaceTrackEditor.Dialogs
 
 			case Forms.DialogResult.OK:
 			case Forms.DialogResult.Yes:
-				this.ProjectLocation = dialog.SelectedPath;
+				//this.ProjectLocation = dialog.SelectedPath;
 				break;
 			}
 		}

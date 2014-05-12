@@ -7,7 +7,26 @@ namespace Unv.RaceTrackEditor.Core.Models
 {
 	public class ProjectModel
 	{
-		public string ParentDirectory	{ get; set; }
-		public string ProjectName		{ get; set; }
+		#region Properties
+		public string			ProjectFilePath { get; set; }
+		public IProjectManager	ProjectManager	{ get; set; }
+		#endregion
+
+
+		#region Constructors
+		public ProjectModel()
+			: this(null)
+		{
+		}
+
+		public ProjectModel(IProjectManager projectManager)
+		{
+			ProjectManager = projectManager;
+		}
+		#endregion
+
+
+		#region Methods
+		#endregion
 	}
 }
