@@ -128,7 +128,13 @@ namespace Unv.RaceTrackEditor.ViewModels
 
 		private void OpenProject()
 		{
-			throw new NotImplementedException();
+			var projectModel = ProjectManager.OpenProject();
+
+			if (projectModel == null)
+				return;
+
+			this.ProjectManager.CurrentProject = projectModel;
+			this.ProjectViewModel = new ProjectViewModel(projectModel);
 		}
 
 		private void ExitApplication()

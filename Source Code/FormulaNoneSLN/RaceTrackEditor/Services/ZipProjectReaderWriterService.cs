@@ -111,6 +111,21 @@ namespace Unv.RaceTrackEditor.Services
 			//}
 		}
 
+		public ProjectModel OpenProject(string filePath)
+		{
+			if (File.Exists(filePath))
+			{
+				ProjectModel projectModel = new ProjectModel();
+				projectModel.ProjectFilePath = filePath;
+				return projectModel;
+			}
+			else
+			{
+				throw new IOException(string.Format("Project File: {0} not found.", filePath));
+			}
+			throw new NotImplementedException();
+		}
+
 		private static void CopyStream(Stream source, Stream target)
 		{
 			const int bufferSize = 0x1000;

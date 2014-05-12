@@ -86,6 +86,29 @@ namespace Unv.RaceTrackEditor.Services
 		{
 			throw new NotImplementedException();
 		}
+
+		public ProjectModel OpenProject()
+		{
+			OpenFileDialog dlg = new OpenFileDialog();
+			
+			dlg.Filter = 
+				string.Format(
+				"{0} (*.{1})|*.{1}", 
+				ProjectWriter.ExtensionDescription, 
+				ProjectWriter.FileExtension);
+
+			dlg.Multiselect = false;
+			dlg.Title		= "Open Race Track Project";
+
+			var keepGoing = dlg.ShowDialog(App.Current.MainWindow) == true;
+
+			if (!keepGoing)
+				return null;
+
+			var result = ProjectReader.OpenProject(dlg.FileName);
+			result.ProjectManager = this;
+			return result;
+		}
 		#endregion
 	}
 }
