@@ -74,7 +74,10 @@ namespace Unv.RaceTrackEditor.Services
 		{
 			if (!projectInfo.CreateProject)
 				throw new Exception("Can not create a project that is flagged as do not create.");
-			throw new NotImplementedException();
+
+			var newProject = this.ProjectWriter.CreateNewProject(projectInfo);
+
+			return newProject;
 		}
 
 		public void SaveCurrentProject()

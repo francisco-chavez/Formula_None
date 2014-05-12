@@ -55,6 +55,8 @@ namespace Unv.RaceTrackEditor.ViewModels
 			
 			if (!info.CreateProject)
 				return;
+
+			var projectModel = ProjectManager.CreateNewProject(info);
 		}
 	}
 }

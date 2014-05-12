@@ -17,7 +17,7 @@ namespace Unv.RaceTrackEditor.Services
 	public class ZipProjectReaderWriterService
 		: IProjectFileReader, IProjectFileWriter
 	{
-		public static readonly string FILE_EXTENSION = "fnp";
+		public static readonly string FILE_EXTENSION = "zip";
 
 		#region Constructors
 		public ZipProjectReaderWriterService() 
@@ -85,18 +85,41 @@ namespace Unv.RaceTrackEditor.Services
 				}
 			}
 
-			using (Package package = Package.Open(projectFilePath, FileMode.CreateNew))
+
+			// Place project information into project file
+			Uri targetImageUri = new Uri("/RaceTrackImage.png", UriKind.Relative);
+			
+			using(Package package = ZipPackage.Open(projectFilePath, FileMode.CreateNew))
 			{
+				PackagePart imagePackagePart = package.CreatePart(targetImageUri, "Image/png");
+
+				using (FileStream imageFileStream = new FileStream(projectInformation.RaceTrackImagePath, FileMode.Open, FileAccess.Read))
+				{
+					CopyStream(imageFileStream, imagePackagePart.GetStream());
+				}
 			}
 
-			return null;
+			ProjectModel result = new ProjectModel()
+			{
+			};
+
+			return result;
 		}
 
 		private string GetFilePath(string directoryPath, string projectName)
 		{
-			string fileName= string.Format("{0}.{1}", projectName, FILE_EXTENSION);
+			string fileName = string.Format("{0}.{1}", projectName, FILE_EXTENSION);
 			string filePath = Path.Combine(directoryPath, fileName);
 			return filePath;
+		}
+
+		private static void CopyStream(Stream source, Stream target)
+		{
+			const int bufferSize = 0x1000;
+			byte[] buffer = new byte[bufferSize];
+			int bytesRead = 0;
+			while ((bytesRead = source.Read(buffer, 0, bufferSize)) > 0)
+				target.Write(buffer, 0, bytesRead);
 		}
 		#endregion
 	}
