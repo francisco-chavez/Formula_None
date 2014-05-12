@@ -21,6 +21,21 @@ namespace Unv.RaceTrackEditor.ViewModels
 
 		#region Properties
 		public IProjectManager ProjectManager { get; set; }
+
+		public ProjectViewModel ProjectViewModel
+		{
+			get { return mn_projectViewModel; }
+			set
+			{
+				if (mn_projectViewModel != value)
+				{
+					mn_projectViewModel = value;
+					OnPropertyChanged("ProjectViewModel");
+				}
+			}
+		}
+		private ProjectViewModel mn_projectViewModel;
+		
 		#endregion
 
 
@@ -39,16 +54,30 @@ namespace Unv.RaceTrackEditor.ViewModels
 			}
 		}
 		private RelayCommand mn_createNewProjectCommand;
+
+		public ICommand ExitApplicationCommand
+		{
+			get
+			{
+				if (mn_exitApplicationCommand == null)
+					mn_exitApplicationCommand = new RelayCommand(p => ExitApplication());
+				return mn_exitApplicationCommand;
+			}
+		}
+		private RelayCommand mn_exitApplicationCommand;
 		#endregion
 
 
+		#region Constructors
 		public MainWindowViewModel()
 			: base("Race Track Editor")
 		{
 			ProjectManager = App.ProjectManager;
 		}
+		#endregion
 
 
+		#region Methods
 		private void CreateNewProject()
 		{
 
@@ -58,6 +87,14 @@ namespace Unv.RaceTrackEditor.ViewModels
 				return;
 
 			var projectModel = ProjectManager.CreateNewProject(info);
+
+			this.ProjectViewModel = new ProjectViewModel(projectModel);
 		}
+
+		private void ExitApplication()
+		{
+			App.Current.Shutdown();
+		}
+		#endregion
 	}
 }

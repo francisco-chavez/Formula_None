@@ -5,6 +5,7 @@
 		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 		mc:Ignorable="d"
 		xmlns:vm="clr-namespace:Unv.RaceTrackEditor.ViewModels"
+		xmlns:views="clr-namespace:Unv.RaceTrackEditor.Views"
 		Height="700" Width="1100"
 		Style="{StaticResource WindowStyle}"
 		WindowStartupLocation="CenterScreen"
@@ -12,6 +13,10 @@
 	<Window.Resources>
 		<vm:MainWindowViewModel x:Key="MainWindowViewModelDataSource"
 								d:IsDataSource="True"/>
+		
+		<DataTemplate x:Key="ProjectViewTemplate" DataType="vm:ProjectViewModel">
+			<views:ProjectView/>
+		</DataTemplate>
 	</Window.Resources>
 	
 	<Window.DataContext>
@@ -28,11 +33,13 @@
 				<MenuItem Header="Save"/>
 				<MenuItem Header="Save As..."/>
 				<Separator/>
-				<MenuItem Header="Exit"/>
+				<MenuItem Header="Exit"
+						  Command="{Binding ExitApplicationCommand}"/>
 			</MenuItem>
 			<MenuItem Header="Data"></MenuItem>
 		</Menu>
 		
-		<ContentPresenter />
+		<ContentPresenter Content="{Binding Path=ProjectViewModel}"
+						  ContentTemplate="{StaticResource ProjectViewTemplate}"/>
 	</DockPanel>
 </Window>
