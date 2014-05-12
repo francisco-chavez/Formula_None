@@ -65,6 +65,28 @@ namespace Unv.RaceTrackEditor.ViewModels
 			}
 		}
 		private RelayCommand mn_exitApplicationCommand;
+
+		public ICommand SaveProjectCommand
+		{
+			get
+			{
+				if (mn_saveProjectCommand == null)
+					mn_saveProjectCommand = new RelayCommand(p => SaveProject(), p => CanSaveProject(null));
+				return mn_saveProjectCommand;
+			}
+		}
+		private RelayCommand mn_saveProjectCommand;
+
+		public ICommand OpenProjectCommand
+		{
+			get
+			{
+				if (mn_openProjectCommand == null)
+					mn_openProjectCommand = new RelayCommand(p => OpenProject());
+				return mn_openProjectCommand;
+			}
+		}
+		private RelayCommand mn_openProjectCommand;
 		#endregion
 
 
@@ -89,6 +111,24 @@ namespace Unv.RaceTrackEditor.ViewModels
 			var projectModel = ProjectManager.CreateNewProject(info);
 
 			this.ProjectViewModel = new ProjectViewModel(projectModel);
+		}
+
+		private void SaveProject()
+		{
+			throw new NotImplementedException();
+		}
+
+		private bool CanSaveProject(object parameter)
+		{
+			if (this.ProjectViewModel == null || this.ProjectViewModel.ProjectModel == null)
+				return false;
+
+			return true;
+		}
+
+		private void OpenProject()
+		{
+			throw new NotImplementedException();
 		}
 
 		private void ExitApplication()

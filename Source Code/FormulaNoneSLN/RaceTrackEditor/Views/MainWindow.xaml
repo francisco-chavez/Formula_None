@@ -30,8 +30,8 @@
 						  Command="{Binding CreateNewProjectCommand}"/>
 				<MenuItem Header="Open Project..."/>
 				<Separator/>
-				<MenuItem Header="Save"/>
-				<MenuItem Header="Save As..."/>
+				<MenuItem Header="Save"
+						  Command="{Binding SaveProjectCommand}"/>
 				<Separator/>
 				<MenuItem Header="Exit"
 						  Command="{Binding ExitApplicationCommand}"/>
