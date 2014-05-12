@@ -28,7 +28,8 @@
 			<MenuItem Header="File">
 				<MenuItem Header="New Project..."
 						  Command="{Binding CreateNewProjectCommand}"/>
-				<MenuItem Header="Open Project..."/>
+				<MenuItem Header="Open Project..."
+						  Command="{Binding OpenProjectCommand}"/>
 				<Separator/>
 				<MenuItem Header="Save"
 						  Command="{Binding SaveProjectCommand}"/>
