@@ -37,7 +37,10 @@
 				<MenuItem Header="Exit"
 						  Command="{Binding ExitApplicationCommand}"/>
 			</MenuItem>
-			<MenuItem Header="Data"></MenuItem>
+			<MenuItem Header="Data">
+				<MenuItem Header="Select Race Track Image..."
+						  Command="{Binding SelectRaceTrackImageCommand}"/>
+			</MenuItem>
 		</Menu>
 		
 		<ContentPresenter Content="{Binding Path=ProjectViewModel}"

@@ -87,6 +87,20 @@ namespace Unv.RaceTrackEditor.ViewModels
 			}
 		}
 		private RelayCommand mn_openProjectCommand;
+
+
+		public ICommand SelectRaceTrackImageCommand
+		{
+			get
+			{
+				if (mn_selectRaceTrackImageCommand == null)
+					mn_selectRaceTrackImageCommand = 
+						new RelayCommand(p => SelectRaceTrackImage(), p => CanSelectRaceTrackImage(null));
+				
+				return mn_selectRaceTrackImageCommand;
+			}
+		}
+		private RelayCommand mn_selectRaceTrackImageCommand;
 		#endregion
 
 
@@ -140,6 +154,17 @@ namespace Unv.RaceTrackEditor.ViewModels
 		private void ExitApplication()
 		{
 			App.Current.Shutdown();
+		}
+
+
+		private void SelectRaceTrackImage()
+		{
+			this.ProjectViewModel.SelectRaceTrackImage();
+		}
+
+		private bool CanSelectRaceTrackImage(object parameters)
+		{
+			return !(this.ProjectViewModel == null || this.ProjectViewModel.ProjectModel == null);
 		}
 		#endregion
 	}

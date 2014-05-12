@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Windows.Input;
 using System.Windows.Media.Imaging;
+
+using Microsoft.Win32;
 
 using Unv.RaceTrackEditor.Core.Models;
 
@@ -47,7 +50,6 @@ namespace Unv.RaceTrackEditor.ViewModels
 			}
 		}
 		private BitmapImage mn_raceTrackImage;
-		
 		#endregion
 
 
@@ -73,6 +75,11 @@ namespace Unv.RaceTrackEditor.ViewModels
 				return;
 
 			this.DisplayTitle = Path.GetFileNameWithoutExtension(ProjectModel.ProjectFilePath);
+		}
+
+		public void SelectRaceTrackImage()
+		{
+			throw new NotImplementedException();
 		}
 		#endregion
 	}
