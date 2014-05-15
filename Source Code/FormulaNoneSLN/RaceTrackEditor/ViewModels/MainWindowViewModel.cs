@@ -147,7 +147,6 @@ namespace Unv.RaceTrackEditor.ViewModels
 			if (projectModel == null)
 				return;
 
-			this.ProjectManager.CurrentProject = projectModel;
 			this.ProjectViewModel = new ProjectViewModel(projectModel);
 		}
 

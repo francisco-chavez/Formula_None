@@ -75,6 +75,9 @@ namespace Unv.RaceTrackEditor.ViewModels
 				return;
 
 			this.DisplayTitle = Path.GetFileNameWithoutExtension(ProjectModel.ProjectFilePath);
+
+			if (ProjectModel.RaceTrackModel != null)
+				this.RaceTrackImage = ProjectModel.RaceTrackModel.RaceTrackImage;
 		}
 
 		public void SelectRaceTrackImage()

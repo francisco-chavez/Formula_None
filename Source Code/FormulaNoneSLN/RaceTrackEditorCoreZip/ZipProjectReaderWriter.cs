@@ -123,6 +123,31 @@ namespace Unv.RaceTrackEditor.Core.Zip
 			{
 				var projectModel = new ProjectModelZip(m_projectManager);
 				projectModel.ProjectFilePath = filePath;
+
+				Uri imageUri = new Uri("/RaceTrackImage.png", UriKind.Relative);
+
+				BitmapImage image = null;
+
+				using (Package package = ZipPackage.Open(projectModel.ProjectFilePath, FileMode.Open))
+				{
+					if (package.PartExists(imageUri))
+					{
+						PackagePart imagePackagePart = package.GetPart(imageUri);
+
+						image = new BitmapImage();
+						image.BeginInit();
+						image.CacheOption = BitmapCacheOption.Default;
+						image.StreamSource = imagePackagePart.GetStream(FileMode.Open, FileAccess.Read);
+						image.EndInit();
+					}
+				}
+
+				if (image != null)
+				{
+					projectModel.RaceTrackModel = new RaceTrackModel();
+					projectModel.RaceTrackModel.RaceTrackImage = image;
+				}
+
 				return projectModel;
 			}
 			else
