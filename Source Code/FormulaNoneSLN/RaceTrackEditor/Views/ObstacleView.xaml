@@ -3,9 +3,20 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
-    <Grid>
-            
+             mc:Ignorable="d"
+			 Width="32" Height="32"
+			 Background="{x:Null}"
+			 ClipToBounds="False"
+			 RenderTransform="{StaticResource ObstacleViewCanvasOffset}">
+    <Grid Background="{x:Null}"
+		  Margin="0">
+		<Ellipse x:Name="GUI_GlowEffectItem"
+				 Width="32" Height="32"
+				 Fill="Transparent"
+				 Margin="0"
+				 Effect="{StaticResource BlurEffect}"/>
+		<Image Source="{StaticResource ObsticalImage}" 
+			   Width="32" Height="32"
+			   Margin="0"/>
     </Grid>
 </UserControl>
