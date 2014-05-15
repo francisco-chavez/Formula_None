@@ -12,16 +12,28 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+
 namespace Unv.RaceTrackEditor.Views
 {
 	/// <summary>
 	/// Interaction logic for ObstacleView.xaml
 	/// </summary>
-	public partial class ObstacleView : UserControl
+	public partial class ObstacleView 
+		: UserControl
 	{
+		#region Constructors
 		public ObstacleView()
 		{
 			InitializeComponent();
 		}
+		#endregion
+
+
+		#region Event Handlers
+		private void UserControl_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+		{
+			bool captured = CaptureMouse();
+		}
+		#endregion
 	}
 }

@@ -75,6 +75,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controls\MeasuredCanvas.cs" />
     <Compile Include="Controls\ObstacleEditor.xaml.cs">
       <DependentUpon>ObstacleEditor.xaml</DependentUpon>
     </Compile>
