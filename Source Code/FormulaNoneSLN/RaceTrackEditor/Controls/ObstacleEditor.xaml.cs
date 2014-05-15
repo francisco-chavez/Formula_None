@@ -18,7 +18,8 @@ namespace Unv.RaceTrackEditor.Controls
 	/// <summary>
 	/// Interaction logic for ObstacleEditor.xaml
 	/// </summary>
-	public partial class ObstacleEditor : UserControl
+	public partial class ObstacleEditor 
+		: UserControl
 	{
 		public ObstacleEditor()
 		{
