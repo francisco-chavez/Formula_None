@@ -14,5 +14,7 @@ namespace Unv.RaceTrackEditor.Core
 		string ExtensionDescription { get; }
 
 		ProjectModel CreateNewProject(NewProjectInfoModel projectInformation);
+
+		//void SaveRaceTrackImage(ProjectModel projectModel, 
 	}
 }

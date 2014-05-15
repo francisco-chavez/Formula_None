@@ -8,8 +8,10 @@ namespace Unv.RaceTrackEditor.Core.Models
 	public class ProjectModel
 	{
 		#region Properties
-		public string			ProjectFilePath { get; set; }
-		public IProjectManager	ProjectManager	{ get; set; }
+		public virtual string			ProjectFilePath { get; set; }
+		public virtual IProjectManager	ProjectManager	{ get; set; }
+
+		public virtual RaceTrackModel	RaceTrackModel	{ get; set; }
 		#endregion
 
 
@@ -27,6 +29,7 @@ namespace Unv.RaceTrackEditor.Core.Models
 
 
 		#region Methods
+		protected virtual void LoadRaceTrackModel() { }
 		#endregion
 	}
 }

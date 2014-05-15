@@ -8,18 +8,13 @@ using Microsoft.Win32;
 
 using Unv.RaceTrackEditor.Core;
 using Unv.RaceTrackEditor.Core.Models;
-using Unv.RaceTrackEditor.Dialogs;
 
 
-namespace Unv.RaceTrackEditor.Services
+namespace Unv.RaceTrackEditor.Core.Zip
 {
-	public class ProjectManagerService
+	public class ProjectManagerZip
 		: IProjectManager
 	{
-		#region Attributes
-		#endregion
-
-
 		#region Properties
 		public ProjectModel CurrentProject
 		{
@@ -30,9 +25,9 @@ namespace Unv.RaceTrackEditor.Services
 				{
 					var userInput =
 						MessageBox.Show(
-						"Do you wish to save the current project progress before switching projects?", 
-						"Save Project", 
-						MessageBoxButton.YesNo, 
+						"Do you wish to save the current project progress before switching projects?",
+						"Save Project",
+						MessageBoxButton.YesNo,
 						MessageBoxImage.Question);
 
 					if (userInput == MessageBoxResult.Yes)
@@ -44,13 +39,25 @@ namespace Unv.RaceTrackEditor.Services
 		}
 		private ProjectModel mn_currentProject;
 
-		public IProjectFileReader ProjectReader { get; set; }
-		public IProjectFileWriter ProjectWriter { get; set; }
+		public IProjectFileReader	ProjectReader	{ get; set; }
+		public IProjectFileWriter	ProjectWriter	{ get; set; }
+
+		public Application			Application		{ get; set; }
 		#endregion
 
 
 		#region Constructors
-		public ProjectManagerService() { }
+		public ProjectManagerZip()
+			: this(null)
+		{
+		}
+
+		public ProjectManagerZip(Application application)
+		{
+			var readerWriter = new ZipProjectReaderWriter(this);
+			this.ProjectWriter = readerWriter;
+			this.ProjectReader = readerWriter;
+		}
 		#endregion
 
 
@@ -62,7 +69,7 @@ namespace Unv.RaceTrackEditor.Services
 			dlg.Title = "Select New Project File";
 			dlg.Filter = string.Format("{0} (*.{1})|*.{1}", ProjectWriter.ExtensionDescription, ProjectWriter.FileExtension);
 
-			bool keepGoing = dlg.ShowDialog(App.Current.MainWindow) == true;
+			bool keepGoing = dlg.ShowDialog(Application.Current.MainWindow) == true;
 
 			NewProjectInfoModel info = new NewProjectInfoModel();
 			info.CreateProject = keepGoing;
@@ -90,17 +97,17 @@ namespace Unv.RaceTrackEditor.Services
 		public ProjectModel OpenProject()
 		{
 			OpenFileDialog dlg = new OpenFileDialog();
-			
-			dlg.Filter = 
+
+			dlg.Filter =
 				string.Format(
-				"{0} (*.{1})|*.{1}", 
-				ProjectWriter.ExtensionDescription, 
+				"{0} (*.{1})|*.{1}",
+				ProjectWriter.ExtensionDescription,
 				ProjectWriter.FileExtension);
 
 			dlg.Multiselect = false;
-			dlg.Title		= "Open Race Track Project";
+			dlg.Title = "Open Race Track Project";
 
-			var keepGoing = dlg.ShowDialog(App.Current.MainWindow) == true;
+			var keepGoing = dlg.ShowDialog(Application.Current.MainWindow) == true;
 
 			if (!keepGoing)
 				return null;
@@ -108,6 +115,11 @@ namespace Unv.RaceTrackEditor.Services
 			var result = ProjectReader.OpenProject(dlg.FileName);
 			result.ProjectManager = this;
 			return result;
+		}
+
+		public void SetRaceTrackImage(string imagePath, ProjectModel projectModel)
+		{
+			throw new NotImplementedException();
 		}
 		#endregion
 	}

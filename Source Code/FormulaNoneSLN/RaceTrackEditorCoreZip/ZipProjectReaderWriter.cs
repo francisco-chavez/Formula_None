@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.IO.Compression;
 using System.IO.Packaging;
 using System.Linq;
 using System.Text;
@@ -10,25 +9,45 @@ using System.Windows;
 
 using Unv.RaceTrackEditor.Core;
 using Unv.RaceTrackEditor.Core.Models;
+using Unv.RaceTrackEditor.Core.Zip.Models;
 
 
-namespace Unv.RaceTrackEditor.Services
+namespace Unv.RaceTrackEditor.Core.Zip
 {
-	public class ZipProjectReaderWriterService
+	public class ZipProjectReaderWriter
 		: IProjectFileReader, IProjectFileWriter
 	{
-		#region Properties
-		public string FileExtension { get { return FILE_EXTENSION; } }
-		private static readonly string FILE_EXTENSION = "zip";
+		#region Attributes
+		private ProjectManagerZip m_projectManager;
+		#endregion
 
-		public string ExtensionDescription { get { return EXTENSION_DESCRIPTION; } }
-		private static readonly string EXTENSION_DESCRIPTION = "Formula None Project";
+
+		#region Properties
+		public string FileExtension 
+		{
+			get{return m_fileExtension;}
+			set{m_fileExtension = value;}
+		}
+		private string m_fileExtension = "zip";
+
+		public string ExtensionDescription
+		{
+			get{return m_extensionDescription;}
+			set{m_extensionDescription = value;}
+		}
+		private string m_extensionDescription = "Formula None Project";
 		#endregion
 
 
 		#region Constructors
-		public ZipProjectReaderWriterService() 
+		public ZipProjectReaderWriter() 
+			: this(null)
 		{ 
+		}
+
+		public ZipProjectReaderWriter(ProjectManagerZip projectManager)
+		{
+			m_projectManager = projectManager;
 		}
 		#endregion
 
@@ -43,10 +62,10 @@ namespace Unv.RaceTrackEditor.Services
 			if (!canCreateNew)
 			{
 				var userInput = 
-					MessageBox.Show(
-						string.Format("Project: {0} already exists in selected location. Do you wish to replace it?", projectName), 
-						"Problem with Project Creation", 
-						MessageBoxButton.YesNo, 
+			        MessageBox.Show(
+						string.Format("Project: {0} already exists in selected location. Do you wish to replace it?", projectName),
+						"Problem with Project Creation",
+						MessageBoxButton.YesNo,
 						MessageBoxImage.Question);
 
 				if (userInput == MessageBoxResult.Yes)
@@ -65,11 +84,11 @@ namespace Unv.RaceTrackEditor.Services
 						}
 						catch (Exception ex)
 						{
-							userInput = 
+							userInput =
 								MessageBox.Show(
-								"There was a problem getting rid of the old project file. Do you wish to try again?", 
-								"Deletion Problem", 
-								MessageBoxButton.YesNo, 
+								"There was a problem getting rid of the old project file. Do you wish to try again?",
+								"Deletion Problem",
+								MessageBoxButton.YesNo,
 								MessageBoxImage.Error);
 
 							forgetIt = userInput == MessageBoxResult.No;
@@ -89,7 +108,7 @@ namespace Unv.RaceTrackEditor.Services
 			{
 			}
 
-			var projectModel = new ProjectModel()
+			var projectModel = new ProjectModelZip(m_projectManager)
 			{
 				ProjectFilePath = filePath
 			};
@@ -115,7 +134,7 @@ namespace Unv.RaceTrackEditor.Services
 		{
 			if (File.Exists(filePath))
 			{
-				ProjectModel projectModel = new ProjectModel();
+				var projectModel = new ProjectModelZip(m_projectManager);
 				projectModel.ProjectFilePath = filePath;
 				return projectModel;
 			}

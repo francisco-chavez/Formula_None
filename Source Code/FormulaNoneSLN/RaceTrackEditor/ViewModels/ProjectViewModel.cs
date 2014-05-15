@@ -79,6 +79,17 @@ namespace Unv.RaceTrackEditor.ViewModels
 
 		public void SelectRaceTrackImage()
 		{
+			OpenFileDialog dlg = new OpenFileDialog();
+			dlg.Filter = "Image (*.png)|*.png";
+			dlg.Multiselect = false;
+			dlg.Title = "Select Race Track Image";
+
+			bool keepGoing = dlg.ShowDialog(App.Current.MainWindow) == true;
+			if (!keepGoing)
+				return;
+
+			string imagePath = dlg.FileName;
+
 			throw new NotImplementedException();
 		}
 		#endregion

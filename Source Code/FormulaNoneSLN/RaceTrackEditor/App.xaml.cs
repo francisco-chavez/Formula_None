@@ -6,7 +6,7 @@ using System.Linq;
 using System.Windows;
 
 using Unv.RaceTrackEditor.Core;
-using Unv.RaceTrackEditor.Services;
+using Unv.RaceTrackEditor.Core.Zip;
 
 
 namespace Unv.RaceTrackEditor
@@ -14,18 +14,14 @@ namespace Unv.RaceTrackEditor
 	/// <summary>
 	/// Interaction logic for App.xaml
 	/// </summary>
-	public partial class App : Application
+	public partial class App 
+		: Application
 	{
 		public static IProjectManager ProjectManager { get; set; }
 
 		static App()
 		{
-			ProjectManager = new ProjectManagerService();
-
-			var projectReaderWriter = new ZipProjectReaderWriterService();
-
-			ProjectManager.ProjectReader = projectReaderWriter;
-			ProjectManager.ProjectWriter = projectReaderWriter;
+			ProjectManager = new ProjectManagerZip(App.Current);
 		}
 	}
 }

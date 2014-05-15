@@ -9,30 +9,9 @@ namespace Unv.RaceTrackEditor.Core.Models
 {
 	public class RaceTrackModel
 	{
-		public IProjectManager ProjectManager { get; set; }
-
-		public BitmapImage RaceTrackImage
-		{
-			get 
-			{
-				if (m_raceTrackImage == null)
-					LoadRaceTrackImage();
-
-				return m_raceTrackImage; 
-			}
-		}
-		private BitmapImage m_raceTrackImage;
-
-		public void SetRaceTrackImage(string imagePath)
-		{
-			m_raceTrackImage = null;
-
-			throw new NotImplementedException();
-		}
-
-		private void LoadRaceTrackImage()
-		{
-			throw new NotImplementedException();
-		}
+		public virtual BitmapImage		RaceTrackImage		{ get; set; }
+		public virtual int				RaceTrackWidth		{ get; set; }
+		public virtual int				RaceTrackHeight		{ get; set; }
+		public virtual ObstaclesModel	Obstacles			{ get; set; }
 	}
 }

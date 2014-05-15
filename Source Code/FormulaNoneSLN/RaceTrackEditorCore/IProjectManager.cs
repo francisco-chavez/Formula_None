@@ -17,8 +17,10 @@ namespace Unv.RaceTrackEditor.Core
 
 
 		NewProjectInfoModel GetNewProjectInfo();
-		ProjectModel CreateNewProject(NewProjectInfoModel projectInfo);
-		ProjectModel OpenProject();
-		void SaveCurrentProject();
+		ProjectModel		CreateNewProject(NewProjectInfoModel projectInfo);
+		ProjectModel		OpenProject();
+		void				SaveCurrentProject();
+
+		void				SetRaceTrackImage(string imagePath, ProjectModel projectModel);
 	}
 }
