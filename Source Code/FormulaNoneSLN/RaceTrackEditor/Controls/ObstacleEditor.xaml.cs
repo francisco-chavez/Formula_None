@@ -21,9 +21,21 @@ namespace Unv.RaceTrackEditor.Controls
 	public partial class ObstacleEditor 
 		: UserControl
 	{
+		#region Attributes
+		public static readonly DependencyProperty ObstacleDataProperty;
+		#endregion
+
+
+		#region Properties
+		#endregion
+
+
+		#region Constructors
 		public ObstacleEditor()
 		{
 			InitializeComponent();
+			this.DataContext = this;
 		}
+		#endregion
 	}
 }

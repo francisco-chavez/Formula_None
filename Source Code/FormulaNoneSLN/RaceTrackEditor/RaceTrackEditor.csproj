@@ -81,6 +81,9 @@
     <Compile Include="INPC.cs" />
     <Compile Include="RelayCommand.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
+    <Compile Include="ViewModels\ObstacleDataViewModel.cs" />
+    <Compile Include="ViewModels\ObstacleLayerViewModel.cs" />
+    <Compile Include="ViewModels\ObstacleViewModel.cs" />
     <Compile Include="ViewModels\ProjectViewModel.cs" />
     <Compile Include="ViewModels\RaceTrackViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />

@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
 			 xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="500" d:DesignWidth="700">
 	<DockPanel>
 		<Border DockPanel.Dock="Right"
 				MinWidth="225"
@@ -46,6 +46,10 @@
 					</DataGrid.Columns>
 				</DataGrid>
 			</Grid>
+		</Border>
+		<Border x:Name="GUI_LayerContainer"
+				Background="Transparent">
+			<Image Source="{Binding RaceTrackImage}"/>
 		</Border>
 	</DockPanel>
 </UserControl>
