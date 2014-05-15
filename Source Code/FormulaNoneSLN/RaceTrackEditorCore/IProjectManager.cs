@@ -21,6 +21,6 @@ namespace Unv.RaceTrackEditor.Core
 		ProjectModel		OpenProject();
 		void				SaveCurrentProject();
 
-		void				SetRaceTrackImage(string imagePath, ProjectModel projectModel);
+		void				SetRaceTrackImage(string imagePath);
 	}
 }

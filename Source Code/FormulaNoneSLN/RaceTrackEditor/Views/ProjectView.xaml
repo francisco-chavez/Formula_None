@@ -8,6 +8,15 @@
 	<Border x:Name="Root"
 			BorderBrush="Green"
 			BorderThickness="3">
-		<TextBlock Text="{Binding DisplayTitle}"/>
+		<Grid>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="auto"/>
+				<RowDefinition Height="*"/>
+			</Grid.RowDefinitions>
+			
+			<TextBlock Grid.Row="0" Text="{Binding DisplayTitle}"/>
+
+			<Image Grid.Row="1" Source="{Binding Path=RaceTrackImage}"/>
+		</Grid>
 	</Border>
 </UserControl>

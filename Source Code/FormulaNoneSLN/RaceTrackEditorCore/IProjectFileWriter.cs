@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows.Media.Imaging;
 
 using Unv.RaceTrackEditor.Core.Models;
 
@@ -15,6 +16,6 @@ namespace Unv.RaceTrackEditor.Core
 
 		ProjectModel CreateNewProject(NewProjectInfoModel projectInformation);
 
-		//void SaveRaceTrackImage(ProjectModel projectModel, 
+		BitmapImage SaveRaceTrackImage(ProjectModel projectModel, string imagePath);
 	}
 }

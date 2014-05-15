@@ -151,9 +151,7 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Services\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\RaceEngineLib\RaceEngineLib.csproj">
       <Project>{21A2851F-53EB-43A5-A658-F5B63666EAB8}</Project>

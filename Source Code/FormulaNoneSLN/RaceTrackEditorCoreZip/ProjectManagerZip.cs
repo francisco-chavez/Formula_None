@@ -84,7 +84,7 @@ namespace Unv.RaceTrackEditor.Core.Zip
 				throw new Exception("Can not create a project that is flagged as do not create.");
 
 			var newProject = this.ProjectWriter.CreateNewProject(projectInfo);
-			newProject.ProjectManager = this;
+			CurrentProject = newProject;
 
 			return newProject;
 		}
@@ -113,13 +113,20 @@ namespace Unv.RaceTrackEditor.Core.Zip
 				return null;
 
 			var result = ProjectReader.OpenProject(dlg.FileName);
-			result.ProjectManager = this;
+			CurrentProject = result;
 			return result;
 		}
 
-		public void SetRaceTrackImage(string imagePath, ProjectModel projectModel)
+		public void SetRaceTrackImage(string imagePath)
 		{
-			throw new NotImplementedException();
+			if (CurrentProject == null)
+				throw new InvalidOperationException("There is no current project to set the race track image to.");
+
+			var image = ProjectWriter.SaveRaceTrackImage(CurrentProject, imagePath);
+			CurrentProject.RaceTrackModel = new RaceTrackModel()
+			{
+				RaceTrackImage = image
+			};
 		}
 		#endregion
 	}

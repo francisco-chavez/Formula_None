@@ -90,7 +90,9 @@ namespace Unv.RaceTrackEditor.ViewModels
 
 			string imagePath = dlg.FileName;
 
-			throw new NotImplementedException();
+			App.ProjectManager.SetRaceTrackImage(imagePath);
+
+			RaceTrackImage = ProjectModel.RaceTrackModel.RaceTrackImage;
 		}
 		#endregion
 	}

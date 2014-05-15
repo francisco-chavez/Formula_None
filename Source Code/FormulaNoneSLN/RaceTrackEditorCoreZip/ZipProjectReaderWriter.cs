@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Windows;
+using System.Windows.Media.Imaging;
 
 using Unv.RaceTrackEditor.Core;
 using Unv.RaceTrackEditor.Core.Models;
@@ -114,20 +115,6 @@ namespace Unv.RaceTrackEditor.Core.Zip
 			};
 
 			return projectModel;
-
-
-			// Place project information into project file
-			//Uri targetImageUri = new Uri("/RaceTrackImage.png", UriKind.Relative);
-			
-			//using(Package package = ZipPackage.Open(projectFilePath, FileMode.CreateNew))
-			//{
-			//    PackagePart imagePackagePart = package.CreatePart(targetImageUri, "Image/png");
-
-			//    using (FileStream imageFileStream = new FileStream(projectInformation.RaceTrackImagePath, FileMode.Open, FileAccess.Read))
-			//    {
-			//        CopyStream(imageFileStream, imagePackagePart.GetStream());
-			//    }
-			//}
 		}
 
 		public ProjectModel OpenProject(string filePath)
@@ -142,7 +129,6 @@ namespace Unv.RaceTrackEditor.Core.Zip
 			{
 				throw new IOException(string.Format("Project File: {0} not found.", filePath));
 			}
-			throw new NotImplementedException();
 		}
 
 		private static void CopyStream(Stream source, Stream target)
@@ -152,6 +138,32 @@ namespace Unv.RaceTrackEditor.Core.Zip
 			int bytesRead = 0;
 			while ((bytesRead = source.Read(buffer, 0, bufferSize)) > 0)
 				target.Write(buffer, 0, bytesRead);
+		}
+
+		public BitmapImage SaveRaceTrackImage(ProjectModel projectModel, string imagePath)
+		{
+			Uri imageDestinationUri = new Uri("/RaceTrackImage.png", UriKind.Relative);
+
+			BitmapImage image = null;
+
+			using (Package package = ZipPackage.Open(projectModel.ProjectFilePath, FileMode.Create))
+			{
+				PackagePart imagePackagePart = package.CreatePart(imageDestinationUri, "Image/PNG");
+
+				using (FileStream imageFileStream = new FileStream(imagePath, FileMode.Open, FileAccess.Read))
+				{
+					CopyStream(imageFileStream, imagePackagePart.GetStream());
+				}
+
+				image = new BitmapImage();
+				image.BeginInit();
+				image.CacheOption = BitmapCacheOption.Default;
+				image.StreamSource = imagePackagePart.GetStream(FileMode.Open, FileAccess.Read);
+				image.EndInit();
+				
+			}
+
+			return image;
 		}
 		#endregion
 	}
