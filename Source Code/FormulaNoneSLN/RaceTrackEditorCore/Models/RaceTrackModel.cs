@@ -9,7 +9,7 @@ namespace Unv.RaceTrackEditor.Core.Models
 {
 	public class RaceTrackModel
 	{
-		public virtual BitmapImage		RaceTrackImage		{ get; set; }
-		public virtual ObstaclesModel	Obstacles			{ get; set; }
+		public virtual BitmapImage			RaceTrackImage		{ get; set; }
+		public virtual ObstacleDataModel	Obstacles			{ get; set; }
 	}
 }

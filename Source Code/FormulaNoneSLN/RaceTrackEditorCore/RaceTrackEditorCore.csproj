@@ -47,7 +47,9 @@
     <Compile Include="IProjectFileWriter.cs" />
     <Compile Include="IProjectManager.cs" />
     <Compile Include="Models\NewProjectInfoModel.cs" />
-    <Compile Include="Models\ObstaclesModel.cs" />
+    <Compile Include="Models\ObstacleDataModel.cs" />
+    <Compile Include="Models\ObstacleLayerModel.cs" />
+    <Compile Include="Models\ObstacleModel.cs" />
     <Compile Include="Models\ProjectModel.cs" />
     <Compile Include="Models\RaceTrackModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
