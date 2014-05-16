@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Windows.Media.Imaging;
 
 
 namespace Unv.RaceTrackEditor.ViewModels
@@ -24,6 +25,20 @@ namespace Unv.RaceTrackEditor.ViewModels
 			}
 		}
 		private ObservableCollection<ObstacleLayerViewModel> mn_obstacleLayers;
+
+		public BitmapImage RaceTrackImage
+		{
+			get { return mn_raceTrackImage; }
+			set
+			{
+				if (mn_raceTrackImage != value)
+				{
+					mn_raceTrackImage = value;
+					OnPropertyChanged("RaceTrackImage");
+				}
+			}
+		}
+		private BitmapImage mn_raceTrackImage;
 		#endregion
 
 

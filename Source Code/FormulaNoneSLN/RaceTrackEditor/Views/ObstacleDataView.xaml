@@ -1,8 +1,8 @@
-﻿<UserControl x:Class="Unv.RaceTrackEditor.Controls.ObstacleEditor"
+﻿<UserControl x:Class="Unv.RaceTrackEditor.Views.ObstacleDataView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 			 xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              mc:Ignorable="d" 
              d:DesignHeight="500" d:DesignWidth="700">
@@ -16,7 +16,7 @@
 					<RowDefinition Height="*" MinHeight="175"/>
 					<RowDefinition Height="2*"/>
 				</Grid.RowDefinitions>
-				
+
 				<TextBlock Text="Layers:"
 						   Grid.Row="0"/>
 				<DataGrid x:Name="GUI_LayerSelector"

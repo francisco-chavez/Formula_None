@@ -13,29 +13,17 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 
-namespace Unv.RaceTrackEditor.Controls
+namespace Unv.RaceTrackEditor.Views
 {
 	/// <summary>
-	/// Interaction logic for ObstacleEditor.xaml
+	/// Interaction logic for ObstacleDataView.xaml
 	/// </summary>
-	public partial class ObstacleEditor 
+	public partial class ObstacleDataView 
 		: UserControl
 	{
-		#region Attributes
-		public static readonly DependencyProperty ObstacleDataProperty;
-		#endregion
-
-
-		#region Properties
-		#endregion
-
-
-		#region Constructors
-		public ObstacleEditor()
+		public ObstacleDataView()
 		{
 			InitializeComponent();
-			this.DataContext = this;
 		}
-		#endregion
 	}
 }

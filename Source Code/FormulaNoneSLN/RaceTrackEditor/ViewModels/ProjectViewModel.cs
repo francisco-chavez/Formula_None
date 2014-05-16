@@ -37,6 +37,23 @@ namespace Unv.RaceTrackEditor.ViewModels
 		}
 		private ProjectModel mn_projectModel;
 
+		public ObstacleDataViewModel ObstacleDataViewModel
+		{
+			get { return mn_obstacleDataViewModel; }
+			set
+			{
+				if (mn_obstacleDataViewModel != value)
+				{
+					mn_obstacleDataViewModel = value;
+					OnPropertyChanged("ObstacleDataViewModel");
+
+					if (value != null)
+						value.RaceTrackImage = this.RaceTrackImage;
+				}
+			}
+		}
+		private ObstacleDataViewModel mn_obstacleDataViewModel;
+
 		public BitmapImage RaceTrackImage
 		{
 			get { return mn_raceTrackImage; }
@@ -46,10 +63,44 @@ namespace Unv.RaceTrackEditor.ViewModels
 				{
 					mn_raceTrackImage = value;
 					OnPropertyChanged("RaceTrackImage");
+
+					if (ObstacleDataViewModel != null)
+						ObstacleDataViewModel.RaceTrackImage = value;
+
+					RaceTrackWidth  = (value == null) ? 0 : value.PixelWidth;
+					RaceTrackHeight = (value == null) ? 0 : value.PixelHeight;
 				}
 			}
 		}
 		private BitmapImage mn_raceTrackImage;
+
+		public int RaceTrackWidth
+		{
+			get { return mn_raceTrackWidth; }
+			set
+			{
+				if (mn_raceTrackWidth != value)
+				{
+					mn_raceTrackWidth = value;
+					OnPropertyChanged("RaceTrackWidth");
+				}
+			}
+		}
+		private int mn_raceTrackWidth;
+
+		public int RaceTrackHeight
+		{
+			get { return mn_raceTrackHeight; }
+			set
+			{
+				if (mn_raceTrackHeight != value)
+				{
+					mn_raceTrackHeight = value;
+					OnPropertyChanged("RaceTrackHeight");
+				}
+			}
+		}
+		private int mn_raceTrackHeight;
 		#endregion
 
 
@@ -61,6 +112,7 @@ namespace Unv.RaceTrackEditor.ViewModels
 		public ProjectViewModel(ProjectModel data)
 		{
 			this.ProjectModel = data;
+			this.ObstacleDataViewModel = new ObstacleDataViewModel();
 		}
 		#endregion
 
