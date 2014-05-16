@@ -11,5 +11,16 @@ namespace Unv.RaceTrackEditor.Core.Zip.Models
 	public class RaceTrackModelZip
 		: RaceTrackModel
 	{
+		public override ObstacleDataModel Obstacles
+		{
+			get { return base.Obstacles; }
+			set
+			{
+				if (!(value is ObstacleDataModelZip))
+					throw new TypeAccessException("RaceTrackModelZip only accepts an ObstacleDataModel of type ObstacleDataModelZip");
+				
+				base.Obstacles = value;
+			}
+		}
 	}
 }

@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.IO;
 using System.IO.Packaging;
 using System.Linq;
+using System.Net.Mime;
 using System.Text;
 using System.Threading;
 using System.Windows;
 using System.Windows.Media.Imaging;
+using System.Xml.Serialization;
 
 using Unv.RaceTrackEditor.Core;
 using Unv.RaceTrackEditor.Core.Models;
@@ -105,16 +107,57 @@ namespace Unv.RaceTrackEditor.Core.Zip
 				}
 			}
 
-			using (Package package = ZipPackage.Open(filePath))
+
+			var defaultLayer = new ObstacleLayerModelZip()
 			{
-			}
+				LayerName = "Layer 1"
+			};
+
+			var obstacleData = new ObstacleDataModelZip();
+			obstacleData.AddObstacleLayer(defaultLayer);
+
+			var raceTrackModel = new RaceTrackModelZip()
+			{
+				RaceTrackImage	= null,
+				Obstacles		= obstacleData
+			};
 
 			var projectModel = new ProjectModelZip(m_projectManager)
 			{
-				ProjectFilePath = filePath
+				ProjectFilePath = filePath,
+				RaceTrackModel	= raceTrackModel
 			};
 
+			SaveProject(projectModel);
+
 			return projectModel;
+		}
+
+		public void SaveProject(ProjectModel projectModel)
+		{
+			Uri imageDestinationUri			= new Uri("/RaceTrackImage.png", UriKind.Relative);
+			Uri obstacleDataDestinationUri	= new Uri("/ObstacleData.xml", UriKind.Relative);
+
+			using (Package package = ZipPackage.Open(projectModel.ProjectFilePath, FileMode.Create))
+			{
+				if (projectModel.RaceTrackModel != null)
+				{
+					if (projectModel.RaceTrackModel.RaceTrackImage != null)
+					{
+						PackagePart imagePackagePart = package.CreatePart(imageDestinationUri, "Image/PNG");
+						CopyStream(projectModel.RaceTrackModel.RaceTrackImage.StreamSource, imagePackagePart.GetStream());
+					}
+
+					if (projectModel.RaceTrackModel.Obstacles != null)
+					{
+						PackagePart obstaclePackagePart = 
+							package.CreatePart(obstacleDataDestinationUri, MediaTypeNames.Text.Xml);
+						XmlSerializer ser = new XmlSerializer(typeof(ObstacleDataModelZip));
+
+						ser.Serialize(obstaclePackagePart.GetStream(), projectModel.RaceTrackModel.Obstacles);
+					}
+				}
+			}
 		}
 
 		public ProjectModel OpenProject(string filePath)
