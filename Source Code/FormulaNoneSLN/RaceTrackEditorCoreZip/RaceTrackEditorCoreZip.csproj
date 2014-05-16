@@ -44,6 +44,9 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\ObstacleDataModelZip.cs" />
+    <Compile Include="Models\ObstacleLayerModelZip.cs" />
+    <Compile Include="Models\ObstacleModelZip.cs" />
     <Compile Include="Models\ProjectModelZip.cs" />
     <Compile Include="Models\RaceTrackModelZip.cs" />
     <Compile Include="ProjectManagerZip.cs" />

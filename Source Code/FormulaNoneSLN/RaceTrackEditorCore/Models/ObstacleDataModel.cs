@@ -5,9 +5,12 @@ namespace Unv.RaceTrackEditor.Core.Models
 {
 	public class ObstacleDataModel
 	{
-		public virtual List<ObstacleLayerModel> ObstacleLayers { get; protected set; }
+		public virtual IEnumerable<ObstacleLayerModel> ObstacleLayers { get; protected set; }
 
 
-		public ObstacleDataModel() { }
+		public ObstacleDataModel()
+		{
+			ObstacleLayers = new List<ObstacleLayerModel>();
+		}
 	}
 }
