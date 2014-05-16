@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Windows;
 using System.Windows.Media.Imaging;
 
 
@@ -39,6 +40,20 @@ namespace Unv.RaceTrackEditor.ViewModels
 			}
 		}
 		private BitmapImage mn_raceTrackImage;
+
+		public Thickness ImageMargin
+		{
+			get { return mn_imageMargin; }
+			set
+			{
+				if (mn_imageMargin != value)
+				{
+					mn_imageMargin = value;
+					OnPropertyChanged("ImageMargin");
+				}
+			}
+		}
+		private Thickness mn_imageMargin;
 		#endregion
 
 
@@ -47,6 +62,8 @@ namespace Unv.RaceTrackEditor.ViewModels
 			: base("Obstacle Editor")
 		{
 			ObstacleLayers = new ObservableCollection<ObstacleLayerViewModel>();
+
+			ImageMargin = new Thickness(15);
 		}
 		#endregion
 

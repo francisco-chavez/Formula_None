@@ -4,10 +4,12 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 			 xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+			 xmlns:controls="clr-namespace:Unv.RaceTrackEditor.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="500" d:DesignWidth="700">
 	<DockPanel>
 		<Border DockPanel.Dock="Right"
+				Style="{StaticResource GroupBorderStyle}"
 				MinWidth="225"
 				MaxWidth="300">
 			<Grid>
@@ -47,9 +49,20 @@
 				</DataGrid>
 			</Grid>
 		</Border>
-		<Border x:Name="GUI_LayerContainer"
-				Background="Transparent">
-			<Image Source="{Binding RaceTrackImage}"/>
+		
+		<Border Style="{StaticResource GroupBorderStyle}">
+			<xctk:Zoombox x:Name="GUI_LayerContainer"
+						  Background="{x:Null}">
+				<controls:MeasuredCanvas Background="Transparent" >
+					<Image x:Name="GUI_RaceTrackImage" 
+						   Source="{Binding RaceTrackImage}"
+						   Margin="{Binding ImageMargin}"
+						   Width="{Binding Path=RaceTrackImage.PixelWidth}"
+						   Height="{Binding Path=RaceTrackImage.PixelHeight}"
+						   Canvas.Top="0"
+						   Canvas.Bottom="0"/>
+				</controls:MeasuredCanvas>
+			</xctk:Zoombox>
 		</Border>
 	</DockPanel>
 </UserControl>

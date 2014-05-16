@@ -11,7 +11,7 @@
 		<BlurEffect x:Key="BlurEffect" Radius="25"/>
 		
 		<LinearGradientBrush x:Key="MainBackgroundBrush"
-							 StartPoint="0.485 0" EndPoint="0.515 1">
+							 StartPoint="0.49 0" EndPoint="0.51 1">
 			<GradientStop Color="#FFAAFFAA" Offset="0.2"/>
 			<GradientStop Color="#FFBBEEBB" Offset="0.40"/>
 			<GradientStop Color="#FFBBEEBB" Offset="0.60"/>
@@ -21,6 +21,14 @@
 		<SolidColorBrush x:Key="DarkTextBrush" Color="#FF002200"/>
 
 
+		<Style x:Key="GroupBorderStyle" TargetType="Border">
+			<Setter Property="BorderBrush"		Value="Green"/>
+			<Setter Property="BorderThickness"	Value="3"/>
+			<Setter Property="CornerRadius"		Value="4"/>
+			<Setter Property="Padding"			Value="2"/>
+			<Setter Property="Background"		Value="{StaticResource MainBackgroundBrush}"/>
+		</Style>
+		
 		<Style x:Key="WindowStyle" TargetType="Window">
 			<Setter Property="SnapsToDevicePixels" Value="True"/>
 			<Setter Property="UseLayoutRounding" Value="True"/>
