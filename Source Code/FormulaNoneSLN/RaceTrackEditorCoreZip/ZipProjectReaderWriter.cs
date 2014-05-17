@@ -85,15 +85,15 @@ namespace Unv.RaceTrackEditor.Core.Zip
 					if (package.PartExists(OBSTACLE_DATA_URI))
 					{
 						PackagePart obstacleDataPart = package.GetPart(OBSTACLE_DATA_URI);
-						XmlSerializer ser = new XmlSerializer(typeof(ObstacleDataModelZip));
+						XmlSerializer ser = new XmlSerializer(typeof(ObstacleDataModel));
 
-						obstacleData = (ObstacleDataModelZip) ser.Deserialize(obstacleDataPart.GetStream());
+						obstacleData = (ObstacleDataModel) ser.Deserialize(obstacleDataPart.GetStream());
 					}
 				}
 
 				if (image != null || obstacleData != null)
 				{
-					projectModel.RaceTrackModel = new RaceTrackModelZip();
+					projectModel.RaceTrackModel = new RaceTrackModel();
 
 					projectModel.RaceTrackModel.RaceTrackImage	= image;
 					projectModel.RaceTrackModel.Obstacles		= obstacleData;
@@ -159,15 +159,15 @@ namespace Unv.RaceTrackEditor.Core.Zip
 			}
 
 
-			var defaultLayer = new ObstacleLayerModelZip()
+			var defaultLayer = new ObstacleLayerModel()
 			{
 				LayerName = "Layer 1"
 			};
 
-			var obstacleData = new ObstacleDataModelZip();
-			obstacleData.AddObstacleLayer(defaultLayer);
+			var obstacleData = new ObstacleDataModel();
+			obstacleData.AddLayer(defaultLayer);
 
-			var raceTrackModel = new RaceTrackModelZip()
+			var raceTrackModel = new RaceTrackModel()
 			{
 				RaceTrackImage	= null,
 				Obstacles		= obstacleData
@@ -198,7 +198,7 @@ namespace Unv.RaceTrackEditor.Core.Zip
 		private void SaveProject(ProjectModel projectModel, string imagePath)
 		{
 			if (projectModel.RaceTrackModel == null && !string.IsNullOrWhiteSpace(imagePath))
-				projectModel.RaceTrackModel = new RaceTrackModelZip();
+				projectModel.RaceTrackModel = new RaceTrackModel();
 
 			using (Package package = ZipPackage.Open(projectModel.ProjectFilePath, FileMode.OpenOrCreate, FileAccess.ReadWrite))
 			{
@@ -237,7 +237,7 @@ namespace Unv.RaceTrackEditor.Core.Zip
 						else
 							obstaclePackagePart = package.CreatePart(OBSTACLE_DATA_URI, MediaTypeNames.Text.Xml);
 						
-						XmlSerializer ser = new XmlSerializer(typeof(ObstacleDataModelZip));
+						XmlSerializer ser = new XmlSerializer(typeof(ObstacleDataModel));
 
 						ser.Serialize(obstaclePackagePart.GetStream(), projectModel.RaceTrackModel.Obstacles);
 					}

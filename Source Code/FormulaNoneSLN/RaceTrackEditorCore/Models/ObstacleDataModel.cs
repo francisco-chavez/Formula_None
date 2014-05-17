@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Xml.Serialization;
 
 
 namespace Unv.RaceTrackEditor.Core.Models
@@ -8,19 +7,7 @@ namespace Unv.RaceTrackEditor.Core.Models
 	public class ObstacleDataModel
 	{
 		#region Properties
-		[XmlIgnore()]
-		public virtual IEnumerable<ObstacleLayerModel> ObstacleLayers
-		{
-			get { return m_obstacleLayers; }
-			protected set 
-			{
-				if (value == null)
-					m_obstacleLayers = null;
-				else
-					m_obstacleLayers = new List<ObstacleLayerModel>(value);
-			}
-		}
-		private List<ObstacleLayerModel> m_obstacleLayers;
+		public virtual List<ObstacleLayerModel> ObstacleLayers { get; protected set; }
 		#endregion
 
 
@@ -33,14 +20,14 @@ namespace Unv.RaceTrackEditor.Core.Models
 
 
 		#region Methods
-		public virtual void AddObstacleLayer(ObstacleLayerModel layerModel)
+		public virtual void AddLayer(ObstacleLayerModel layerModel)
 		{
 			if (layerModel == null)
 				throw new ArgumentNullException();
-			if (m_obstacleLayers.Contains(layerModel))
+			if (ObstacleLayers.Contains(layerModel))
 				throw new ArgumentException("The Obstacle Data Model already contains the given layer.");
 
-			m_obstacleLayers.Add(layerModel);
+			ObstacleLayers.Add(layerModel);
 		}
 		#endregion
 	}
