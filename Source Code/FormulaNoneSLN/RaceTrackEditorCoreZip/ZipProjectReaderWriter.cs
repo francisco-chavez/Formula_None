@@ -21,6 +21,9 @@ namespace Unv.RaceTrackEditor.Core.Zip
 		: IProjectFileReader, IProjectFileWriter
 	{
 		#region Attributes
+		private static readonly Uri IMAGE_URI			= new Uri("/RaceTrackImage.png", UriKind.Relative);
+		private static readonly Uri OBSTACLE_DATA_URI	= new Uri("/ObstacleData.xml", UriKind.Relative);
+
 		private ProjectManagerZip m_projectManager;
 		#endregion
 
@@ -63,15 +66,14 @@ namespace Unv.RaceTrackEditor.Core.Zip
 				var projectModel = new ProjectModelZip(m_projectManager);
 				projectModel.ProjectFilePath = filePath;
 
-				Uri imageUri = new Uri("/RaceTrackImage.png", UriKind.Relative);
-
-				BitmapImage image = null;
+				BitmapImage			image			= null;
+				ObstacleDataModel	obstacleData	= null;
 
 				using (Package package = ZipPackage.Open(projectModel.ProjectFilePath, FileMode.Open))
 				{
-					if (package.PartExists(imageUri))
+					if (package.PartExists(IMAGE_URI))
 					{
-						PackagePart imagePackagePart = package.GetPart(imageUri);
+						PackagePart imagePackagePart = package.GetPart(IMAGE_URI);
 
 						image = new BitmapImage();
 						image.BeginInit();
@@ -79,12 +81,22 @@ namespace Unv.RaceTrackEditor.Core.Zip
 						image.StreamSource = imagePackagePart.GetStream(FileMode.Open, FileAccess.Read);
 						image.EndInit();
 					}
+
+					if (package.PartExists(OBSTACLE_DATA_URI))
+					{
+						PackagePart obstacleDataPart = package.GetPart(OBSTACLE_DATA_URI);
+						XmlSerializer ser = new XmlSerializer(typeof(ObstacleDataModelZip));
+
+						obstacleData = (ObstacleDataModelZip) ser.Deserialize(obstacleDataPart.GetStream());
+					}
 				}
 
-				if (image != null)
+				if (image != null || obstacleData != null)
 				{
 					projectModel.RaceTrackModel = new RaceTrackModelZip();
-					projectModel.RaceTrackModel.RaceTrackImage = image;
+
+					projectModel.RaceTrackModel.RaceTrackImage	= image;
+					projectModel.RaceTrackModel.Obstacles		= obstacleData;
 				}
 
 				return projectModel;
@@ -185,9 +197,6 @@ namespace Unv.RaceTrackEditor.Core.Zip
 
 		private void SaveProject(ProjectModel projectModel, string imagePath)
 		{
-			Uri imageDestinationUri			= new Uri("/RaceTrackImage.png", UriKind.Relative);
-			Uri obstacleDataDestinationUri	= new Uri("/ObstacleData.xml", UriKind.Relative);
-
 			if (projectModel.RaceTrackModel == null && !string.IsNullOrWhiteSpace(imagePath))
 				projectModel.RaceTrackModel = new RaceTrackModelZip();
 
@@ -199,10 +208,10 @@ namespace Unv.RaceTrackEditor.Core.Zip
 					{
 						PackagePart imagePackagePart;
 
-						if (package.PartExists(imageDestinationUri))
-							imagePackagePart = package.GetPart(imageDestinationUri);
+						if (package.PartExists(IMAGE_URI))
+							imagePackagePart = package.GetPart(IMAGE_URI);
 						else
-							imagePackagePart = package.CreatePart(imageDestinationUri, "Image/PNG");
+							imagePackagePart = package.CreatePart(IMAGE_URI, "Image/PNG");
 
 						using (FileStream imageFileStream = new FileStream(imagePath, FileMode.Open, FileAccess.Read))
 						{
@@ -223,10 +232,10 @@ namespace Unv.RaceTrackEditor.Core.Zip
 						
 						PackagePart obstaclePackagePart;
 						
-						if(package.PartExists(obstacleDataDestinationUri))
-							obstaclePackagePart = package.GetPart(obstacleDataDestinationUri);
+						if(package.PartExists(OBSTACLE_DATA_URI))
+							obstaclePackagePart = package.GetPart(OBSTACLE_DATA_URI);
 						else
-							obstaclePackagePart = package.CreatePart(obstacleDataDestinationUri, MediaTypeNames.Text.Xml);
+							obstaclePackagePart = package.CreatePart(OBSTACLE_DATA_URI, MediaTypeNames.Text.Xml);
 						
 						XmlSerializer ser = new XmlSerializer(typeof(ObstacleDataModelZip));
 
