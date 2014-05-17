@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Xml.Serialization;
 
 
 namespace Unv.RaceTrackEditor.Core.Models
@@ -7,6 +8,7 @@ namespace Unv.RaceTrackEditor.Core.Models
 	public class ObstacleDataModel
 	{
 		#region Properties
+		[XmlIgnore()]
 		public virtual IEnumerable<ObstacleLayerModel> ObstacleLayers
 		{
 			get { return m_obstacleLayers; }

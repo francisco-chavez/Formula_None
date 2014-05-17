@@ -56,6 +56,45 @@ namespace Unv.RaceTrackEditor.Core.Zip
 
 
 		#region Methods
+		public ProjectModel OpenProject(string filePath)
+		{
+			if (File.Exists(filePath))
+			{
+				var projectModel = new ProjectModelZip(m_projectManager);
+				projectModel.ProjectFilePath = filePath;
+
+				Uri imageUri = new Uri("/RaceTrackImage.png", UriKind.Relative);
+
+				BitmapImage image = null;
+
+				using (Package package = ZipPackage.Open(projectModel.ProjectFilePath, FileMode.Open))
+				{
+					if (package.PartExists(imageUri))
+					{
+						PackagePart imagePackagePart = package.GetPart(imageUri);
+
+						image = new BitmapImage();
+						image.BeginInit();
+						image.CacheOption = BitmapCacheOption.Default;
+						image.StreamSource = imagePackagePart.GetStream(FileMode.Open, FileAccess.Read);
+						image.EndInit();
+					}
+				}
+
+				if (image != null)
+				{
+					projectModel.RaceTrackModel = new RaceTrackModelZip();
+					projectModel.RaceTrackModel.RaceTrackImage = image;
+				}
+
+				return projectModel;
+			}
+			else
+			{
+				throw new IOException(string.Format("Project File: {0} not found.", filePath));
+			}
+		}
+
 		public ProjectModel CreateNewProject(NewProjectInfoModel projectInformation)
 		{
 			string	filePath		= projectInformation.FilePath;
@@ -135,67 +174,65 @@ namespace Unv.RaceTrackEditor.Core.Zip
 
 		public void SaveProject(ProjectModel projectModel)
 		{
+			SaveProject(projectModel, null);
+		}
+
+		public void SaveRaceTrackImage(ProjectModel projectModel, string imagePath)
+		{
+			SaveProject(projectModel, imagePath);
+		}
+
+
+		private void SaveProject(ProjectModel projectModel, string imagePath)
+		{
 			Uri imageDestinationUri			= new Uri("/RaceTrackImage.png", UriKind.Relative);
 			Uri obstacleDataDestinationUri	= new Uri("/ObstacleData.xml", UriKind.Relative);
 
-			using (Package package = ZipPackage.Open(projectModel.ProjectFilePath, FileMode.Create))
+			if (projectModel.RaceTrackModel == null && !string.IsNullOrWhiteSpace(imagePath))
+				projectModel.RaceTrackModel = new RaceTrackModelZip();
+
+			using (Package package = ZipPackage.Open(projectModel.ProjectFilePath, FileMode.OpenOrCreate, FileAccess.ReadWrite))
 			{
 				if (projectModel.RaceTrackModel != null)
 				{
-					if (projectModel.RaceTrackModel.RaceTrackImage != null)
+					if (!string.IsNullOrWhiteSpace(imagePath))
 					{
-						PackagePart imagePackagePart = package.CreatePart(imageDestinationUri, "Image/PNG");
-						CopyStream(projectModel.RaceTrackModel.RaceTrackImage.StreamSource, imagePackagePart.GetStream());
+						PackagePart imagePackagePart;
+
+						if (package.PartExists(imageDestinationUri))
+							imagePackagePart = package.GetPart(imageDestinationUri);
+						else
+							imagePackagePart = package.CreatePart(imageDestinationUri, "Image/PNG");
+
+						using (FileStream imageFileStream = new FileStream(imagePath, FileMode.Open, FileAccess.Read))
+						{
+							CopyStream(imageFileStream, imagePackagePart.GetStream());
+						}
+
+						BitmapImage image = new BitmapImage();
+						image.BeginInit();
+						image.CacheOption = BitmapCacheOption.Default;
+						image.StreamSource = imagePackagePart.GetStream(FileMode.Open, FileAccess.Read);
+						image.EndInit();
+
+						projectModel.RaceTrackModel.RaceTrackImage = image;
 					}
 
 					if (projectModel.RaceTrackModel.Obstacles != null)
 					{
-						PackagePart obstaclePackagePart = 
-							package.CreatePart(obstacleDataDestinationUri, MediaTypeNames.Text.Xml);
+						
+						PackagePart obstaclePackagePart;
+						
+						if(package.PartExists(obstacleDataDestinationUri))
+							obstaclePackagePart = package.GetPart(obstacleDataDestinationUri);
+						else
+							obstaclePackagePart = package.CreatePart(obstacleDataDestinationUri, MediaTypeNames.Text.Xml);
+						
 						XmlSerializer ser = new XmlSerializer(typeof(ObstacleDataModelZip));
 
 						ser.Serialize(obstaclePackagePart.GetStream(), projectModel.RaceTrackModel.Obstacles);
 					}
 				}
-			}
-		}
-
-		public ProjectModel OpenProject(string filePath)
-		{
-			if (File.Exists(filePath))
-			{
-				var projectModel = new ProjectModelZip(m_projectManager);
-				projectModel.ProjectFilePath = filePath;
-
-				Uri imageUri = new Uri("/RaceTrackImage.png", UriKind.Relative);
-
-				BitmapImage image = null;
-
-				using (Package package = ZipPackage.Open(projectModel.ProjectFilePath, FileMode.Open))
-				{
-					if (package.PartExists(imageUri))
-					{
-						PackagePart imagePackagePart = package.GetPart(imageUri);
-
-						image = new BitmapImage();
-						image.BeginInit();
-						image.CacheOption = BitmapCacheOption.Default;
-						image.StreamSource = imagePackagePart.GetStream(FileMode.Open, FileAccess.Read);
-						image.EndInit();
-					}
-				}
-
-				if (image != null)
-				{
-					projectModel.RaceTrackModel = new RaceTrackModel();
-					projectModel.RaceTrackModel.RaceTrackImage = image;
-				}
-
-				return projectModel;
-			}
-			else
-			{
-				throw new IOException(string.Format("Project File: {0} not found.", filePath));
 			}
 		}
 
@@ -206,32 +243,6 @@ namespace Unv.RaceTrackEditor.Core.Zip
 			int bytesRead = 0;
 			while ((bytesRead = source.Read(buffer, 0, bufferSize)) > 0)
 				target.Write(buffer, 0, bytesRead);
-		}
-
-		public BitmapImage SaveRaceTrackImage(ProjectModel projectModel, string imagePath)
-		{
-			Uri imageDestinationUri = new Uri("/RaceTrackImage.png", UriKind.Relative);
-
-			BitmapImage image = null;
-
-			using (Package package = ZipPackage.Open(projectModel.ProjectFilePath, FileMode.Create))
-			{
-				PackagePart imagePackagePart = package.CreatePart(imageDestinationUri, "Image/PNG");
-
-				using (FileStream imageFileStream = new FileStream(imagePath, FileMode.Open, FileAccess.Read))
-				{
-					CopyStream(imageFileStream, imagePackagePart.GetStream());
-				}
-
-				image = new BitmapImage();
-				image.BeginInit();
-				image.CacheOption = BitmapCacheOption.Default;
-				image.StreamSource = imagePackagePart.GetStream(FileMode.Open, FileAccess.Read);
-				image.EndInit();
-				
-			}
-
-			return image;
 		}
 		#endregion
 	}

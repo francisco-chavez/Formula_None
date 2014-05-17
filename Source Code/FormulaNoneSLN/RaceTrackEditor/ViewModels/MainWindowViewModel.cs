@@ -129,7 +129,7 @@ namespace Unv.RaceTrackEditor.ViewModels
 
 		private void SaveProject()
 		{
-			throw new NotImplementedException();
+			App.ProjectManager.SaveCurrentProject();
 		}
 
 		private bool CanSaveProject(object parameter)

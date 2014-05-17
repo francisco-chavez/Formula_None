@@ -91,7 +91,10 @@ namespace Unv.RaceTrackEditor.Core.Zip
 
 		public void SaveCurrentProject()
 		{
-			throw new NotImplementedException();
+			if (CurrentProject == null)
+				throw new InvalidOperationException("There is no project to save.");
+
+			ProjectWriter.SaveProject(CurrentProject);
 		}
 
 		public ProjectModel OpenProject()
@@ -122,11 +125,7 @@ namespace Unv.RaceTrackEditor.Core.Zip
 			if (CurrentProject == null)
 				throw new InvalidOperationException("There is no current project to set the race track image to.");
 
-			var image = ProjectWriter.SaveRaceTrackImage(CurrentProject, imagePath);
-			CurrentProject.RaceTrackModel = new RaceTrackModel()
-			{
-				RaceTrackImage = image
-			};
+			ProjectWriter.SaveRaceTrackImage(CurrentProject, imagePath);
 		}
 		#endregion
 	}
