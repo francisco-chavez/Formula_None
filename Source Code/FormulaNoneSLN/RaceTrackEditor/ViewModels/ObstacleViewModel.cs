@@ -56,7 +56,7 @@ namespace Unv.RaceTrackEditor.ViewModels
 		public override void ClearOutModelData()
 		{
 			DisplayTitle = null;
-			// The X and Y properties are sturcts, so clearing 
+			// The X and Y properties are structs, so clearing 
 			// them out won't really free anything in memory.
 			// -FCT
 		}
