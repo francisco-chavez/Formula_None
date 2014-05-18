@@ -3,6 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:vm="clr-namespace:Unv.RaceTrackEditor.ViewModels"
+			 xmlns:views="clr-namespace:Unv.RaceTrackEditor.Views"
 			 xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
 			 xmlns:controls="clr-namespace:Unv.RaceTrackEditor.Controls"
              mc:Ignorable="d" 
@@ -57,7 +59,7 @@
 		
 		<Border Style="{StaticResource GroupBorderStyle}">
 			<xctk:Zoombox x:Name="GUI_LayerContainer"
-						  Background="{x:Null}">
+						  Background="Transparent">
 				<controls:MeasuredCanvas Background="Transparent" >
 					<Image x:Name="GUI_RaceTrackImage" 
 						   Source="{Binding RaceTrackImage}"
@@ -66,6 +68,22 @@
 						   Height="{Binding Path=RaceTrackImage.PixelHeight}"
 						   Canvas.Top="0"
 						   Canvas.Bottom="0"/>
+					<ListBox Canvas.Top="0"
+							 Canvas.Left="0" 
+							 Margin="0"
+							 Padding="0"
+							 ItemsSource="{Binding Path=ObstacleLayers, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
+						<ListBox.ItemsPanel>
+							<ItemsPanelTemplate>
+								<controls:MeasuredCanvas Background="Transparent"/>
+							</ItemsPanelTemplate>
+						</ListBox.ItemsPanel>
+						<ListBox.ItemTemplate>
+							<DataTemplate DataType="vm:ObstacleLayerViewModel">
+								<views:ObstacleLayerView Canvas.Top="0" Canvas.Left="0"/>
+							</DataTemplate>
+						</ListBox.ItemTemplate>
+					</ListBox>
 				</controls:MeasuredCanvas>
 			</xctk:Zoombox>
 		</Border>
