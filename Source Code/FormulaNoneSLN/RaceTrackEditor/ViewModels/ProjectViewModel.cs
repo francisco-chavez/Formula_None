@@ -16,10 +16,6 @@ namespace Unv.RaceTrackEditor.ViewModels
 	public class ProjectViewModel
 		: ViewModelBase
 	{
-		#region Attributes
-		#endregion
-
-
 		#region Properties
 		public ProjectModel ProjectModel
 		{
@@ -40,8 +36,11 @@ namespace Unv.RaceTrackEditor.ViewModels
 		public ObstacleDataViewModel ObstacleDataViewModel
 		{
 			get { return mn_obstacleDataViewModel; }
-			set
+			private set
 			{
+				if (value == null)
+					throw new ArgumentNullException();
+
 				if (mn_obstacleDataViewModel != value)
 				{
 					mn_obstacleDataViewModel = value;
@@ -64,8 +63,7 @@ namespace Unv.RaceTrackEditor.ViewModels
 					mn_raceTrackImage = value;
 					OnPropertyChanged("RaceTrackImage");
 
-					if (ObstacleDataViewModel != null)
-						ObstacleDataViewModel.RaceTrackImage = value;
+					ObstacleDataViewModel.RaceTrackImage = value;
 
 					RaceTrackWidth  = (value == null) ? 0 : value.PixelWidth;
 					RaceTrackHeight = (value == null) ? 0 : value.PixelHeight;
@@ -111,8 +109,8 @@ namespace Unv.RaceTrackEditor.ViewModels
 
 		public ProjectViewModel(ProjectModel data)
 		{
-			this.ProjectModel = data;
 			this.ObstacleDataViewModel = new ObstacleDataViewModel();
+			this.ProjectModel = data;
 		}
 		#endregion
 
@@ -129,7 +127,10 @@ namespace Unv.RaceTrackEditor.ViewModels
 			this.DisplayTitle = Path.GetFileNameWithoutExtension(ProjectModel.ProjectFilePath);
 
 			if (ProjectModel.RaceTrackModel != null)
+			{
 				this.RaceTrackImage = ProjectModel.RaceTrackModel.RaceTrackImage;
+				this.ObstacleDataViewModel.Model = ProjectModel.RaceTrackModel.Obstacles;
+			}
 		}
 
 		public void SelectRaceTrackImage()

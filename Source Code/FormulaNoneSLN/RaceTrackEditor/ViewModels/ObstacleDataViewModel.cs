@@ -6,11 +6,13 @@ using System.Text;
 using System.Windows;
 using System.Windows.Media.Imaging;
 
+using Unv.RaceTrackEditor.Core.Models;
+
 
 namespace Unv.RaceTrackEditor.ViewModels
 {
 	public class ObstacleDataViewModel
-		: ViewModelBase
+		: SingleModelViewModel<ObstacleDataModel>
 	{
 		#region Properties
 		public ObservableCollection<ObstacleLayerViewModel> ObstacleLayers
@@ -69,9 +71,27 @@ namespace Unv.RaceTrackEditor.ViewModels
 
 
 		#region Methods
-		public void AddLayer(ObstacleLayerViewModel layer)
+		public override void ClearOutModelData()
 		{
-			ObstacleLayers.Add(layer);
+			foreach (var layerVM in ObstacleLayers)
+				layerVM.ClearOutModelData();
+
+			ObstacleLayers.Clear();
+
+			base.ClearOutModelData();
+		}
+
+		public override void LoadModelData()
+		{
+			foreach (var layerModel in Model.ObstacleLayers)
+			{
+				var layerVM = new ObstacleLayerViewModel();
+				layerVM.Model = layerModel;
+
+				ObstacleLayers.Add(layerVM);
+			}
+
+			base.LoadModelData();
 		}
 		#endregion
 	}

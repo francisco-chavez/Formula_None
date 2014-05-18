@@ -4,6 +4,7 @@
 namespace Unv.RaceTrackEditor.Core.Models
 {
 	public class ObstacleModel
+		: IModel
 	{
 		#region Properties
 		[XmlAttribute]

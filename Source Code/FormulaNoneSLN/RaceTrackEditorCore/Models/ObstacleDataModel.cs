@@ -5,6 +5,7 @@ using System.Collections.Generic;
 namespace Unv.RaceTrackEditor.Core.Models
 {
 	public class ObstacleDataModel
+		: IModel
 	{
 		#region Properties
 		public virtual List<ObstacleLayerModel> ObstacleLayers { get; protected set; }

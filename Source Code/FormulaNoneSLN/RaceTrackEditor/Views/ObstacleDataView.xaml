@@ -29,7 +29,8 @@
 						  CanUserReorderColumns="True"
 						  CanUserResizeColumns="True"
 						  CanUserResizeRows="False"
-						  SelectionMode="Single">
+						  SelectionMode="Single"
+						  ItemsSource="{Binding Path=ObstacleLayers, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
 					<DataGrid.Columns>
 						<DataGridCheckBoxColumn Header="Is Visiable" 
 												CanUserReorder="True"
@@ -37,14 +38,18 @@
 												CanUserSort="True"
 												IsReadOnly="False"
 												IsThreeState="False"
-												SortDirection="Ascending"/>
+												SortDirection="Ascending"
+												Binding="{Binding Path=IsVisable, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+												SortMemberPath="IsVisable"/>
 						<DataGridTextColumn Header="Layer Name"
 											CanUserReorder="True"
 											CanUserResize="True"
 											CanUserSort="True"
 											IsReadOnly="False"
 											SortDirection="Ascending"
-											MinWidth="150"/>
+											MinWidth="150"
+											Binding="{Binding Path=DisplayTitle, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+											SortMemberPath="DisplayTitle"/>
 					</DataGrid.Columns>
 				</DataGrid>
 			</Grid>

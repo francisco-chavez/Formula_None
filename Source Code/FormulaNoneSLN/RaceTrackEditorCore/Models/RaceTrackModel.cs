@@ -8,6 +8,7 @@ using System.Windows.Media.Imaging;
 namespace Unv.RaceTrackEditor.Core.Models
 {
 	public class RaceTrackModel
+		: IModel
 	{
 		public virtual BitmapImage			RaceTrackImage		{ get; set; }
 		public virtual ObstacleDataModel	Obstacles			{ get; set; }

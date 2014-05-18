@@ -84,6 +84,7 @@
     <Compile Include="ViewModels\ObstacleViewModel.cs" />
     <Compile Include="ViewModels\ProjectViewModel.cs" />
     <Compile Include="ViewModels\RaceTrackViewModel.cs" />
+    <Compile Include="ViewModels\SingleModelViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="Dialogs\NewProjectDialog.xaml.cs">
       <DependentUpon>NewProjectDialog.xaml</DependentUpon>

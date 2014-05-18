@@ -4,11 +4,13 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 
+using Unv.RaceTrackEditor.Core.Models;
+
 
 namespace Unv.RaceTrackEditor.ViewModels
 {
 	public class ObstacleLayerViewModel
-		: ViewModelBase
+		: SingleModelViewModel<ObstacleLayerModel>
 	{
 		#region Properties
 		public bool IsVisable
@@ -44,9 +46,35 @@ namespace Unv.RaceTrackEditor.ViewModels
 		#region Constructors
 		public ObstacleLayerViewModel()
 		{
-			DisplayTitle = string.Empty;
-			IsVisable = true;
-			Obstacles = new ObservableCollection<ObstacleViewModel>();
+			DisplayTitle	= string.Empty;
+			IsVisable		= true;
+			Obstacles		= new ObservableCollection<ObstacleViewModel>();
+		}
+		#endregion
+
+
+		#region Methods
+		public override void ClearOutModelData()
+		{
+			this.DisplayTitle = null;
+			this.IsVisable = true;
+
+			this.Obstacles.Clear();
+
+			base.ClearOutModelData();
+		}
+
+		public override void LoadModelData()
+		{
+			this.DisplayTitle = Model.LayerName;
+			this.IsVisable = Model.IsVisable;
+
+			foreach (var obstacleModel in Model.Obstacles)
+			{
+				var obstacleVM = new ObstacleViewModel();
+			}
+
+			base.LoadModelData();
 		}
 		#endregion
 	}

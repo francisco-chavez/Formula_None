@@ -6,6 +6,7 @@ using System.Xml.Serialization;
 namespace Unv.RaceTrackEditor.Core.Models
 {
 	public class ObstacleLayerModel
+		: IModel
 	{
 		#region Properties
 		[XmlAttribute]

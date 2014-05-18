@@ -7,6 +7,7 @@ using System.Text;
 namespace Unv.RaceTrackEditor.Core.Models
 {
 	public class ProjectModel
+		: IModel
 	{
 		#region Properties
 		public virtual string			ProjectFilePath { get; set; }
