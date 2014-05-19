@@ -72,15 +72,18 @@
 							 Canvas.Left="0" 
 							 Margin="0"
 							 Padding="0"
+							 Background="Transparent"
+							 MinWidth="{Binding Path=RaceTrackImage.PixelWidth}"
+							 MinHeight="{Binding Path=RaceTrackImage.PixelHeight}"
 							 ItemsSource="{Binding Path=ObstacleLayers, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
 						<ListBox.ItemsPanel>
 							<ItemsPanelTemplate>
-								<controls:MeasuredCanvas Background="Transparent"/>
+								<controls:MeasuredCanvas/>
 							</ItemsPanelTemplate>
 						</ListBox.ItemsPanel>
 						<ListBox.ItemTemplate>
 							<DataTemplate DataType="vm:ObstacleLayerViewModel">
-								<views:ObstacleLayerView Canvas.Top="0" Canvas.Left="0"/>
+								<views:ObstacleLayerView/>
 							</DataTemplate>
 						</ListBox.ItemTemplate>
 					</ListBox>

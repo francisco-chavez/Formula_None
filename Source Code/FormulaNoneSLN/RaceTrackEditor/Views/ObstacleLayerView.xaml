@@ -10,6 +10,8 @@
 	<ListBox Canvas.Top="0"
 			 Canvas.Left="0" 
 			 Background="{x:Null}"
-			 ItemsPanel="{StaticResource ObstacleLayerPanelTemplate}">
+			 ItemsPanel="{StaticResource ObstacleLayerPanelTemplate}"
+			 ItemsSource="{Binding Obstacles}"
+			 ItemTemplate="{StaticResource ObstacleLayerItemsTemplate}">
 	</ListBox>
 </UserControl>
