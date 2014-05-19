@@ -1,6 +1,7 @@
 ﻿<Application x:Class="Unv.RaceTrackEditor.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:controls="clr-namespace:Unv.RaceTrackEditor.Controls"
              StartupUri="Views\MainWindow.xaml"
 			 ShutdownMode="OnMainWindowClose">
     <Application.Resources>
@@ -21,7 +22,12 @@
 		<SolidColorBrush x:Key="DarkTextBrush" Color="#FF002200"/>
 
 
-		<Style x:Key="GroupBorderStyle" TargetType="Border">
+		<ItemsPanelTemplate x:Key="ObstacleLayerPanelTemplate">
+			<controls:MeasuredCanvas Canvas.Top="0" Canvas.Left="0"/>
+		</ItemsPanelTemplate>
+
+
+			<Style x:Key="GroupBorderStyle" TargetType="Border">
 			<Setter Property="BorderBrush"		Value="Green"/>
 			<Setter Property="BorderThickness"	Value="3"/>
 			<Setter Property="CornerRadius"		Value="4"/>
