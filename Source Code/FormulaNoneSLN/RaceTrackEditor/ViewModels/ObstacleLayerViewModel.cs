@@ -72,6 +72,8 @@ namespace Unv.RaceTrackEditor.ViewModels
 			foreach (var obstacleModel in Model.Obstacles)
 			{
 				var obstacleVM = new ObstacleViewModel();
+				obstacleVM.Model = obstacleModel;
+				this.Obstacles.Add(obstacleVM);
 			}
 
 			base.LoadModelData();

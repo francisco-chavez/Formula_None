@@ -25,7 +25,7 @@
 
 
 		<ItemsPanelTemplate x:Key="ObstacleLayerPanelTemplate">
-			<controls:MeasuredCanvas Canvas.Top="0" Canvas.Left="0"/>
+			<controls:MeasuredCanvas/>
 		</ItemsPanelTemplate>
 		
 		<DataTemplate x:Key="ObstacleLayerItemsTemplate" DataType="vm:ObstacleViewModel">

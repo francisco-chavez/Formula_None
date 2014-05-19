@@ -56,6 +56,21 @@ namespace Unv.RaceTrackEditor.ViewModels
 			}
 		}
 		private Thickness mn_imageMargin;
+
+		public ObstacleLayerViewModel TestLayer
+		{
+			get { return m_TestLayer; }
+			set
+			{
+				if (m_TestLayer != value)
+				{
+					m_TestLayer = value;
+					OnPropertyChanged("TestLayer");
+				}
+			}
+		}
+		private ObstacleLayerViewModel m_TestLayer;
+		
 		#endregion
 
 
@@ -90,6 +105,11 @@ namespace Unv.RaceTrackEditor.ViewModels
 
 				ObstacleLayers.Add(layerVM);
 			}
+
+			if (TestLayer == null)
+				TestLayer = new ObstacleLayerViewModel();
+
+			TestLayer.Model = Model.ObstacleLayers.First();
 
 			base.LoadModelData();
 		}

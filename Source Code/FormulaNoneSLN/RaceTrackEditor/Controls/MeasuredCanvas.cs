@@ -27,11 +27,10 @@ namespace Unv.RaceTrackEditor.Controls
 
 				Size desiredSize = element.DesiredSize;
 
-				if (!double.IsNaN(desiredSize.Width) && !double.IsNaN(desiredSize.Height))
-				{
+				if (!double.IsNaN(desiredSize.Width))
 					size.Width = Math.Max(size.Width, left + desiredSize.Width);
-					size.Height = Math.Max(size.Height, top + desiredSize.Height);
-				}
+				if (!double.IsNaN(desiredSize.Height))
+					size.Height = Math.Max(size.Height, left + desiredSize.Height);
 			}
 
 			Thickness margin = this.Margin;
@@ -41,11 +40,11 @@ namespace Unv.RaceTrackEditor.Controls
 				size.Height += margin.Top + margin.Bottom;
 			}
 
-			if (double.IsNaN(MaxHeight) || MaxHeight <= 0)
-				size.Height = Math.Min(size.Height, MaxHeight);
 
-			if (double.IsNaN(MaxWidth) || MaxWidth <= 0)
-				size.Width = Math.Min(size.Width, MaxWidth);
+			if (!double.IsNaN(MinWidth) && size.Width < MinWidth)
+				size.Width = MinWidth;
+			if (!double.IsNaN(MinHeight) && size.Height < MinHeight)
+				size.Height = MinHeight;
 
 			return size;
 		}

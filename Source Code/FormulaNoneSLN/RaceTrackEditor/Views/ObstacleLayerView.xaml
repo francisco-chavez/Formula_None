@@ -4,14 +4,46 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
 			 xmlns:controls="clr-namespace:Unv.RaceTrackEditor.Controls"
+			 xmlns:vm="clr-namespace:Unv.RaceTrackEditor.ViewModels"
+			 xmlns:view="clr-namespace:Unv.RaceTrackEditor.Views"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300"
-			 Background="{x:Null}">
-	<ListBox Canvas.Top="0"
-			 Canvas.Left="0" 
 			 Background="{x:Null}"
-			 ItemsPanel="{StaticResource ObstacleLayerPanelTemplate}"
-			 ItemsSource="{Binding Obstacles}"
-			 ItemTemplate="{StaticResource ObstacleLayerItemsTemplate}">
+			 Margin="0"
+			 Padding="0"
+			 ClipToBounds="False">
+	<ListBox Margin="0"
+			 Padding="0"
+			 Background="{x:Null}"
+			 ItemsSource="{Binding Path=Obstacles, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+			 ClipToBounds="False"
+			 BorderThickness="0">
+		<ListBox.ItemContainerStyle>
+			<Style TargetType="ListBoxItem">
+				<Setter Property="Canvas.Left" Value="{Binding Path=X}"/>
+				<Setter Property="Canvas.Top" Value="{Binding Path=Y}"/>
+				<Setter Property="ClipToBounds" Value="False"/>
+				
+				<Setter Property="Template">
+					<Setter.Value>
+						<ControlTemplate TargetType="ListBoxItem">
+							<ContentPresenter Content="{TemplateBinding Content}"
+											  ContentTemplate="{TemplateBinding ContentTemplate}"
+											  ClipToBounds="{TemplateBinding ClipToBounds}"/>
+						</ControlTemplate>
+					</Setter.Value>
+				</Setter>
+			</Style>
+		</ListBox.ItemContainerStyle>
+		<ListBox.ItemsPanel>
+			<ItemsPanelTemplate>
+				<controls:MeasuredCanvas/>
+			</ItemsPanelTemplate>
+		</ListBox.ItemsPanel>
+		<ListBox.ItemTemplate>
+			<DataTemplate DataType="vm:ObstacleViewModel">
+				<view:ObstacleView/>
+			</DataTemplate>
+		</ListBox.ItemTemplate>
 	</ListBox>
 </UserControl>

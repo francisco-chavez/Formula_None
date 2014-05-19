@@ -59,20 +59,29 @@
 		
 		<Border Style="{StaticResource GroupBorderStyle}">
 			<xctk:Zoombox x:Name="GUI_LayerContainer"
-						  Background="Transparent">
-				<controls:MeasuredCanvas Background="Transparent" >
+						  Background="Transparent"
+						  MouseLeftButtonDown="GUI_LayerContainer_MouseLeftButtonDown">
+				<controls:MeasuredCanvas Background="Transparent"
+										 Margin="{Binding ImageMargin}">
 					<Image x:Name="GUI_RaceTrackImage" 
 						   Source="{Binding RaceTrackImage}"
-						   Margin="{Binding ImageMargin}"
+						   Margin="0"
 						   Width="{Binding Path=RaceTrackImage.PixelWidth}"
 						   Height="{Binding Path=RaceTrackImage.PixelHeight}"
 						   Canvas.Top="0"
-						   Canvas.Bottom="0"/>
+						   Canvas.Left="0"/>
+					<views:ObstacleLayerView x:Name="Layer1View"
+											 DataContext="{Binding Path=TestLayer}"
+											 Canvas.Top="0" Canvas.Left="0"
+											 MinWidth="{Binding Path=RaceTrackImage.PixelWidth}"
+											 MinHeight="{Binding Path=RaceTrackImage.PixelHeight}"/>
+					<!--
 					<ListBox Canvas.Top="0"
 							 Canvas.Left="0" 
 							 Margin="0"
 							 Padding="0"
 							 Background="Transparent"
+							 SizeChanged="ListBox_SizeChanged"
 							 MinWidth="{Binding Path=RaceTrackImage.PixelWidth}"
 							 MinHeight="{Binding Path=RaceTrackImage.PixelHeight}"
 							 ItemsSource="{Binding Path=ObstacleLayers, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
@@ -87,6 +96,7 @@
 							</DataTemplate>
 						</ListBox.ItemTemplate>
 					</ListBox>
+					-->
 				</controls:MeasuredCanvas>
 			</xctk:Zoombox>
 		</Border>

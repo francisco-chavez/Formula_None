@@ -8,9 +8,7 @@
 			 Background="{x:Null}"
 			 ClipToBounds="False"
 			 RenderTransform="{StaticResource ObstacleViewCanvasOffset}"
-			 MouseLeftButtonDown="UserControl_MouseLeftButtonDown"
-			 Canvas.Top="{Binding Y}"
-			 Canvas.Left="{Binding X}">
+			 MouseLeftButtonDown="UserControl_MouseLeftButtonDown">
     <Grid Background="{x:Null}"
 		  Margin="0">
 		<Ellipse x:Name="GUI_GlowEffectItem"
