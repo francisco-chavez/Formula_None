@@ -103,13 +103,15 @@
     <Compile Include="Views\ObstacleLayerView.xaml.cs">
       <DependentUpon>ObstacleLayerView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ObstacleView.xaml.cs">
-      <DependentUpon>ObstacleView.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="Views\ObstacleView.cs" />
     <Compile Include="Views\ProjectView.xaml.cs">
       <DependentUpon>ProjectView.xaml</DependentUpon>
     </Compile>
     <Page Include="Dialogs\NewProjectDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\Generic.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -122,10 +124,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ObstacleLayerView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\ObstacleView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

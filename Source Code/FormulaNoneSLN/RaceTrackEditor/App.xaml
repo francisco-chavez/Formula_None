@@ -8,10 +8,6 @@
 			 ShutdownMode="OnMainWindowClose">
     <Application.Resources>
 		<BitmapImage x:Key="ObsticalImage" UriSource="/ResourceImages/BorderingTire.png"/>
-		<TranslateTransform x:Key="ObstacleViewCanvasOffset"
-							X="-16"
-							Y="-16"/>
-		<BlurEffect x:Key="BlurEffect" Radius="25"/>
 		
 		<LinearGradientBrush x:Key="MainBackgroundBrush"
 							 StartPoint="0.49 0" EndPoint="0.51 1">
