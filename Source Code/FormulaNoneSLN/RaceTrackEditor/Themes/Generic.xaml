@@ -2,18 +2,23 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 					xmlns:views="clr-namespace:Unv.RaceTrackEditor.Views">
 	
-	<TranslateTransform x:Key="ObstacleCenteringTransform" X="-16" Y="-16"/>
-	<BlurEffect x:Key="GlowFuzzer" Radius="15" RenderingBias="Quality"/>
+	<TranslateTransform x:Key="ObstacleCenteringTransform" 
+						X="-16" 
+						Y="-16"/>
+	<BlurEffect x:Key="GlowFuzzer" 
+				Radius="15" 
+				RenderingBias="Quality"/>
+	
 	<ControlTemplate x:Key="ObstacleViewTemplate" TargetType="views:ObstacleView">
 		<Grid Background="{TemplateBinding Background}">
-			<Ellipse x:Name="PART_GlowItem" 
-								 Fill="{x:Null}"
-								 Width="{TemplateBinding Width}"
-								 Height="{TemplateBinding Height}"
-								 Effect="{StaticResource GlowFuzzer}"/>
+			<Ellipse x:Name="PART_GlowItem"
+					 Fill="{x:Null}"
+					 Width="{TemplateBinding Width}"
+					 Height="{TemplateBinding Height}"
+					 Effect="{StaticResource GlowFuzzer}"/>
 			<Image Width="{TemplateBinding Width}"
-							   Height="{TemplateBinding Height}"
-							   Source="{TemplateBinding ObstacleImage}"/>
+				   Height="{TemplateBinding Height}"
+				   Source="{TemplateBinding ObstacleImage}"/>
 		</Grid>
 
 		<ControlTemplate.Triggers>
@@ -24,11 +29,22 @@
 	</ControlTemplate>
 	
 	<Style TargetType="views:ObstacleView">	
-		<Setter Property="Width"	Value="32"/>
-		<Setter Property="Height"	Value="32"/>
-		<Setter Property="Background" Value="{x:Null}"/>
+		<Setter Property="Width"		Value="32"/>
+		<Setter Property="Height"		Value="32"/>
+		<Setter Property="Background"	Value="{x:Null}"/>
 		<Setter Property="RenderTransform" Value="{StaticResource ObstacleCenteringTransform}"/>
+		
+		<Setter Property="Padding"		Value="0"/>
+		<Setter Property="Margin"		Value="0"/>
+		<Setter Property="Panel.ClipToBounds" Value="False"/>
+		<Setter Property="Panel.Cursor" Value="Hand"/>
+		
+		<Setter Property="IsTabStop"	Value="False"/>
+		<Setter Property="IsManipulationEnabled" Value="True"/>
+		<Setter Property="BorderThickness" Value="0"/>
+		<Setter Property="ViewModel"	Value="{Binding}"/>
 
-		<Setter Property="Template" Value="{StaticResource ObstacleViewTemplate}"/>
+		
+		<Setter Property="Template"		Value="{StaticResource ObstacleViewTemplate}"/>
 	</Style>
 </ResourceDictionary>

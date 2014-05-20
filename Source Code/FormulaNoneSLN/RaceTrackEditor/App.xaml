@@ -19,13 +19,8 @@
 
 		<SolidColorBrush x:Key="DarkTextBrush" Color="#FF002200"/>
 
-		
-		<DataTemplate x:Key="ObstacleLayerItemsTemplate" DataType="vm:ObstacleViewModel">
-			<views:ObstacleView/>
-		</DataTemplate>
 
-
-			<Style x:Key="GroupBorderStyle" TargetType="Border">
+		<Style x:Key="GroupBorderStyle" TargetType="Border">
 			<Setter Property="BorderBrush"		Value="Green"/>
 			<Setter Property="BorderThickness"	Value="3"/>
 			<Setter Property="CornerRadius"		Value="4"/>
