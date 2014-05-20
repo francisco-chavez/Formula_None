@@ -80,7 +80,7 @@ namespace Unv.RaceTrackEditor.ViewModels
 		{
 			ObstacleLayers = new ObservableCollection<ObstacleLayerViewModel>();
 
-			ImageMargin = new Thickness(15);
+			ImageMargin = new Thickness(50);
 		}
 		#endregion
 

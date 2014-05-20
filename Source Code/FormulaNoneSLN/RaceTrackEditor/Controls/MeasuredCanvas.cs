@@ -40,7 +40,6 @@ namespace Unv.RaceTrackEditor.Controls
 				size.Height += margin.Top + margin.Bottom;
 			}
 
-
 			if (!double.IsNaN(MinWidth) && size.Width < MinWidth)
 				size.Width = MinWidth;
 			if (!double.IsNaN(MinHeight) && size.Height < MinHeight)

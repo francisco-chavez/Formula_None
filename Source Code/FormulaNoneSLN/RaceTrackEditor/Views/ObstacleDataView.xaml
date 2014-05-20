@@ -61,20 +61,20 @@
 			<xctk:Zoombox x:Name="GUI_LayerContainer"
 						  Background="Transparent"
 						  MouseLeftButtonDown="GUI_LayerContainer_MouseLeftButtonDown">
-				<controls:MeasuredCanvas Background="Transparent"
-										 Margin="{Binding ImageMargin}">
+				<controls:MeasuredCanvas Background="Transparent">
 					<Image x:Name="GUI_RaceTrackImage" 
 						   Source="{Binding RaceTrackImage}"
-						   Margin="0"
 						   Width="{Binding Path=RaceTrackImage.PixelWidth}"
 						   Height="{Binding Path=RaceTrackImage.PixelHeight}"
 						   Canvas.Top="0"
-						   Canvas.Left="0"/>
+						   Canvas.Left="0"
+						   Margin="{Binding ImageMargin}"/>
 					<views:ObstacleLayerView x:Name="Layer1View"
 											 DataContext="{Binding Path=TestLayer}"
 											 Canvas.Top="0" Canvas.Left="0"
 											 MinWidth="{Binding Path=RaceTrackImage.PixelWidth}"
-											 MinHeight="{Binding Path=RaceTrackImage.PixelHeight}"/>
+											 MinHeight="{Binding Path=RaceTrackImage.PixelHeight}">
+					</views:ObstacleLayerView>
 					<!--
 					<ListBox Canvas.Top="0"
 							 Canvas.Left="0" 
