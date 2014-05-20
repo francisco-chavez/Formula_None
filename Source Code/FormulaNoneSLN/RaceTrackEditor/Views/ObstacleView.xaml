@@ -9,6 +9,6 @@
 			 RenderTransform="{StaticResource ObstacleViewCanvasOffset}"
 			 MouseLeftButtonDown="UserControl_MouseLeftButtonDown">
 	<Image Source="{StaticResource ObsticalImage}" 
-			   Width="32" Height="32"
-			   Margin="0"/>
+		   Width="32" Height="32"
+		   Margin="0"/>
 </UserControl>

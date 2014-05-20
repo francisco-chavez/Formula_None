@@ -12,6 +12,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+using Unv.RaceTrackEditor.Controls;
+using Unv.RaceTrackEditor.ViewModels;
+
 
 namespace Unv.RaceTrackEditor.Views
 {
@@ -32,7 +35,48 @@ namespace Unv.RaceTrackEditor.Views
 		#region Event Handlers
 		private void UserControl_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
 		{
-			bool captured = CaptureMouse();
+			bool captured = false;
+			if(IsMouseOver)
+				captured = CaptureMouse();
+
+			if (captured)
+			{
+				this.MouseMove += new MouseEventHandler(ObstacleView_MouseMove);
+				this.LostMouseCapture += new MouseEventHandler(ObstacleView_LostMouseCapture);
+			}
+		}
+
+		void ObstacleView_LostMouseCapture(object sender, MouseEventArgs e)
+		{
+			if (!this.IsMouseCaptured)
+				return;
+			this.MouseMove -= ObstacleView_MouseMove;
+			this.LostMouseCapture -= ObstacleView_LostMouseCapture;
+		}
+
+		void ObstacleView_MouseMove(object sender, MouseEventArgs e)
+		{
+			if (!this.IsMouseCaptured)
+				return;
+
+			DependencyObject	currentParent	= VisualTreeHelper.GetParent(this);
+			ObstacleLayerView	parent			= currentParent as ObstacleLayerView;
+
+			while (parent == null && currentParent != null)
+			{
+				currentParent	= VisualTreeHelper.GetParent(currentParent);
+				parent			= currentParent as ObstacleLayerView;
+			}
+
+			if (parent == null)
+				return;
+
+			ObstacleViewModel vm = this.DataContext as ObstacleViewModel;
+
+
+			Point position = Mouse.GetPosition(parent);
+			vm.X = position.X;
+			vm.Y = position.Y;
 		}
 		#endregion
 	}

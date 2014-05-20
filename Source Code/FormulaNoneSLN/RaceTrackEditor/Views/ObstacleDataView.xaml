@@ -72,8 +72,8 @@
 					<views:ObstacleLayerView x:Name="Layer1View"
 											 DataContext="{Binding Path=TestLayer}"
 											 Canvas.Top="0" Canvas.Left="0"
-											 MinWidth="{Binding Path=RaceTrackImage.PixelWidth}"
-											 MinHeight="{Binding Path=RaceTrackImage.PixelHeight}">
+											 MinWidth="1080"
+											 MinHeight="670">
 					</views:ObstacleLayerView>
 					<!--
 					<ListBox Canvas.Top="0"
