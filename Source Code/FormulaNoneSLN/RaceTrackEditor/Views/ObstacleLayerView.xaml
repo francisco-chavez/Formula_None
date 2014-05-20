@@ -3,9 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-			 xmlns:controls="clr-namespace:Unv.RaceTrackEditor.Controls"
-			 xmlns:vm="clr-namespace:Unv.RaceTrackEditor.ViewModels"
-			 xmlns:view="clr-namespace:Unv.RaceTrackEditor.Views"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300"
 			 Background="{x:Null}"
@@ -15,31 +12,8 @@
 			 Padding="0"
 			 Background="{x:Null}"
 			 ItemsSource="{Binding Path=Obstacles, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
-			 BorderThickness="0">
-		<ListBox.ItemContainerStyle>
-			<Style TargetType="ListBoxItem">
-				<Setter Property="Canvas.Left" Value="{Binding Path=X}"/>
-				<Setter Property="Canvas.Top" Value="{Binding Path=Y}"/>
-				
-				<Setter Property="Template">
-					<Setter.Value>
-						<ControlTemplate TargetType="ListBoxItem">
-							<ContentPresenter/>
-						</ControlTemplate>
-					</Setter.Value>
-				</Setter>
-			</Style>
-		</ListBox.ItemContainerStyle>
-		<ListBox.ItemsPanel>
-			<ItemsPanelTemplate>
-				<controls:MeasuredCanvas IsItemsHost="True"/>
-			</ItemsPanelTemplate>
-		</ListBox.ItemsPanel>
-		<ListBox.ItemTemplate>
-			<DataTemplate DataType="vm:ObstacleViewModel">
-				<view:ObstacleView x:Name="ObstacleView"
-								   ObstacleImage="{StaticResource ObsticalImage}"/>
-			</DataTemplate>
-		</ListBox.ItemTemplate>
+			 ItemContainerStyle="{StaticResource ObstacleLayerItemContainerStyle}"
+			 ItemTemplate="{StaticResource ObstacleViewModelTemplate}"
+			 ItemsPanel="{StaticResource ObstalceLayerViewPanelTemplate}">
 	</ListBox>
 </UserControl>

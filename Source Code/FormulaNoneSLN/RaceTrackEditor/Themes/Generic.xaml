@@ -9,6 +9,7 @@
 				Radius="15" 
 				RenderingBias="Quality"/>
 	
+	
 	<ControlTemplate x:Key="ObstacleViewTemplate" TargetType="views:ObstacleView">
 		<Grid Background="{TemplateBinding Background}">
 			<Ellipse x:Name="PART_GlowItem"

@@ -2,12 +2,12 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 			 xmlns:controls="clr-namespace:Unv.RaceTrackEditor.Controls"
-			 xmlns:views="clr-namespace:Unv.RaceTrackEditor.Views"
+			 xmlns:view="clr-namespace:Unv.RaceTrackEditor.Views"
 			 xmlns:vm="clr-namespace:Unv.RaceTrackEditor.ViewModels"
              StartupUri="Views\MainWindow.xaml"
 			 ShutdownMode="OnMainWindowClose">
     <Application.Resources>
-		<BitmapImage x:Key="ObsticalImage" UriSource="/ResourceImages/BorderingTire.png"/>
+		<BitmapImage x:Key="ObstacleImage" UriSource="/ResourceImages/BorderingTire.png"/>
 		
 		<LinearGradientBrush x:Key="MainBackgroundBrush"
 							 StartPoint="0.49 0" EndPoint="0.51 1">
@@ -43,5 +43,30 @@
 			<Setter Property="Topmost" Value="True"/>
 			<Setter Property="WindowStyle" Value="ToolWindow"/>
 		</Style>
+
+		
+		<!-- 
+		Resources used by Obstacle Layer Views to display and arrange Obstacle Views
+		-->
+		<Style x:Key="ObstacleLayerItemContainerStyle" TargetType="ListBoxItem">
+			<Setter Property="Canvas.Left" Value="{Binding X}"/>
+			<Setter Property="Canvas.Top" Value="{Binding Y}"/>
+
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="ListBoxItem">
+						<ContentPresenter/>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+		</Style>
+
+		<DataTemplate x:Key="ObstacleViewModelTemplate" DataType="vm:ObstacleViewModel">
+			<view:ObstacleView ObstacleImage="{StaticResource ObstacleImage}"/>
+		</DataTemplate>
+
+		<ItemsPanelTemplate x:Key="ObstalceLayerViewPanelTemplate">
+			<controls:MeasuredCanvas IsItemsHost="True"/>
+		</ItemsPanelTemplate>
 	</Application.Resources>
 </Application>
