@@ -76,6 +76,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Controls\MeasuredCanvas.cs" />
+    <Compile Include="Converters\BoolToContentConverter.cs" />
     <Compile Include="INPC.cs" />
     <Compile Include="RelayCommand.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />

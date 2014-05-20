@@ -23,10 +23,6 @@
 
 		<SolidColorBrush x:Key="DarkTextBrush" Color="#FF002200"/>
 
-
-		<ItemsPanelTemplate x:Key="ObstacleLayerPanelTemplate">
-			<controls:MeasuredCanvas/>
-		</ItemsPanelTemplate>
 		
 		<DataTemplate x:Key="ObstacleLayerItemsTemplate" DataType="vm:ObstacleViewModel">
 			<views:ObstacleView/>

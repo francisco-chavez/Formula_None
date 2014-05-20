@@ -8,16 +8,7 @@
 			 Background="{x:Null}"
 			 RenderTransform="{StaticResource ObstacleViewCanvasOffset}"
 			 MouseLeftButtonDown="UserControl_MouseLeftButtonDown">
-    <Grid Background="{x:Null}"
-		  Margin="0"
-		  ClipToBounds="False">
-		<Ellipse x:Name="GUI_GlowEffectItem"
-				 Width="32" Height="32"
-				 Fill="Transparent"
-				 Margin="0"
-				 Effect="{StaticResource BlurEffect}"/>
-		<Image Source="{StaticResource ObsticalImage}" 
+	<Image Source="{StaticResource ObsticalImage}" 
 			   Width="32" Height="32"
 			   Margin="0"/>
-    </Grid>
 </UserControl>
