@@ -69,34 +69,36 @@
 						   Canvas.Top="0"
 						   Canvas.Left="0"
 						   Margin="{Binding ImageMargin}"/>
-					<views:ObstacleLayerView x:Name="Layer1View"
-											 DataContext="{Binding Path=TestLayer}"
-											 Canvas.Top="0" Canvas.Left="0"
-											 MinWidth="1080"
-											 MinHeight="670">
-					</views:ObstacleLayerView>
-					<!--
+
 					<ListBox Canvas.Top="0"
 							 Canvas.Left="0" 
 							 Margin="0"
 							 Padding="0"
-							 Background="Transparent"
-							 SizeChanged="ListBox_SizeChanged"
-							 MinWidth="{Binding Path=RaceTrackImage.PixelWidth}"
-							 MinHeight="{Binding Path=RaceTrackImage.PixelHeight}"
-							 ItemsSource="{Binding Path=ObstacleLayers, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
-						<ListBox.ItemsPanel>
-							<ItemsPanelTemplate>
-								<controls:MeasuredCanvas/>
-							</ItemsPanelTemplate>
-						</ListBox.ItemsPanel>
+							 Background="{x:Null}"
+							 MinWidth="1080"
+							 MinHeight="670"
+							 ItemsSource="{Binding Path=ObstacleLayers, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+							 ItemsPanel="{StaticResource ObstalceLayerViewPanelTemplate}">
+						<ListBox.ItemContainerStyle>
+							<Style TargetType="ListBoxItem">
+								<Setter Property="Background" Value="{x:Null}"/>
+								<Setter Property="Canvas.ForceCursor" Value="True"/>
+								
+								<Setter Property="Template">
+									<Setter.Value>
+										<ControlTemplate TargetType="ListBoxItem">
+											<ContentPresenter/>
+										</ControlTemplate>
+									</Setter.Value>
+								</Setter>
+							</Style>
+						</ListBox.ItemContainerStyle>
 						<ListBox.ItemTemplate>
 							<DataTemplate DataType="vm:ObstacleLayerViewModel">
-								<views:ObstacleLayerView/>
+								<views:ObstacleLayerView Background="{x:Null}"/>
 							</DataTemplate>
 						</ListBox.ItemTemplate>
 					</ListBox>
-					-->
 				</controls:MeasuredCanvas>
 			</xctk:Zoombox>
 		</Border>

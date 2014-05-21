@@ -28,10 +28,6 @@ namespace Unv.RaceTrackEditor.Views
 			InitializeComponent();
 		}
 
-		private void ListBox_SizeChanged(object sender, SizeChangedEventArgs e)
-		{
-		}
-
 		private void GUI_LayerContainer_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
 		{
 
