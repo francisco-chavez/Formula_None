@@ -61,16 +61,19 @@ namespace Unv.RaceTrackEditor.Views
 
 			m_startingPosition = Mouse.GetPosition(this);
 			m_currentPosition = m_startingPosition;
+
+			m_adorner.StartDrawing(m_startingPosition);
 		}
 
 		void ObstacleLayerView_MouseMove(object sender, MouseEventArgs e)
 		{
 			m_currentPosition = Mouse.GetPosition(this);
+			m_adorner.CurrentPosition = m_currentPosition;
 		}
 
 		void ObstacleLayerView_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
 		{
-			throw new NotImplementedException();
+			m_adorner.StopDrawing();
 		}
 		#endregion
 	}
