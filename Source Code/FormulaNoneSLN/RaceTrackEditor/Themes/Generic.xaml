@@ -11,7 +11,7 @@
 	
 	
 	<ControlTemplate x:Key="ObstacleViewTemplate" TargetType="views:ObstacleView">
-		<Grid Background="{TemplateBinding Background}">
+		<Grid Background="{x:Null}">
 			<Ellipse x:Name="PART_GlowItem"
 					 Fill="{x:Null}"
 					 Width="{TemplateBinding Width}"
@@ -41,7 +41,6 @@
 		<Setter Property="Panel.Cursor" Value="Hand"/>
 		
 		<Setter Property="IsTabStop"	Value="False"/>
-		<Setter Property="IsManipulationEnabled" Value="True"/>
 		<Setter Property="BorderThickness" Value="0"/>
 		<Setter Property="ViewModel"	Value="{Binding}"/>
 

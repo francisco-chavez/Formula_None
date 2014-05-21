@@ -59,8 +59,7 @@
 		
 		<Border Style="{StaticResource GroupBorderStyle}">
 			<xctk:Zoombox x:Name="GUI_LayerContainer"
-						  Background="Transparent"
-						  MouseLeftButtonDown="GUI_LayerContainer_MouseLeftButtonDown">
+						  Background="Transparent">
 				<controls:MeasuredCanvas Background="Transparent">
 					<Image x:Name="GUI_RaceTrackImage" 
 						   Source="{Binding RaceTrackImage}"
@@ -73,16 +72,18 @@
 					<ListBox Canvas.Top="0"
 							 Canvas.Left="0" 
 							 Margin="0"
-							 Padding="0"
+							 Padding="-2"
 							 Background="{x:Null}"
 							 MinWidth="1080"
 							 MinHeight="670"
 							 ItemsSource="{Binding Path=ObstacleLayers, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
-							 ItemsPanel="{StaticResource ObstalceLayerViewPanelTemplate}">
+							 ItemsPanel="{StaticResource ObstalceLayerViewPanelTemplate}"
+							 SelectedIndex="{Binding ElementName=GUI_LayerSelector, Path=SelectedIndex, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
 						<ListBox.ItemContainerStyle>
 							<Style TargetType="ListBoxItem">
 								<Setter Property="Background" Value="{x:Null}"/>
-								<Setter Property="Canvas.ForceCursor" Value="True"/>
+								<Setter Property="MinWidth" Value="1080"/>
+								<Setter Property="MinHeight" Value="670"/>
 								
 								<Setter Property="Template">
 									<Setter.Value>
@@ -91,6 +92,12 @@
 										</ControlTemplate>
 									</Setter.Value>
 								</Setter>
+								
+								<Style.Triggers>
+									<Trigger Property="IsSelected" Value="True">
+										<Setter Property="Panel.ZIndex" Value="10"/>
+									</Trigger>
+								</Style.Triggers>
 							</Style>
 						</ListBox.ItemContainerStyle>
 						<ListBox.ItemTemplate>

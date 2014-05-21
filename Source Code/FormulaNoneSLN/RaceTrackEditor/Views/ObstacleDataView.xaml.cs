@@ -27,10 +27,5 @@ namespace Unv.RaceTrackEditor.Views
 		{
 			InitializeComponent();
 		}
-
-		private void GUI_LayerContainer_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-		{
-
-		}
 	}
 }
