@@ -102,7 +102,9 @@
 						</ListBox.ItemContainerStyle>
 						<ListBox.ItemTemplate>
 							<DataTemplate DataType="vm:ObstacleLayerViewModel">
-								<views:ObstacleLayerView Background="{x:Null}"/>
+								<views:ObstacleLayerView Background="{x:Null}"
+														 Height="670"
+														 Width="1080"/>
 							</DataTemplate>
 						</ListBox.ItemTemplate>
 					</ListBox>

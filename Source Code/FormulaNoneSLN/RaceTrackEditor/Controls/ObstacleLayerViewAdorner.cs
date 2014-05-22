@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Media;
 using System.Windows.Shapes;
@@ -76,6 +77,8 @@ namespace Unv.RaceTrackEditor.Controls
 			if (!(adornerElement is ObstacleLayerView))
 				throw new ArgumentException();
 
+			this.IsHitTestVisible = false;
+
 			m_parentView	= (ObstacleLayerView) adornerElement;
 			m_drawArea		= new MeasuredCanvas();
 			m_drawArea.MinWidth = m_parentView.MinWidth;
@@ -89,6 +92,22 @@ namespace Unv.RaceTrackEditor.Controls
 			m_circle.Fill = this.DrawBrush;
 			m_circle.Width = 32;
 			m_circle.Height = 32;
+
+			Panel.SetZIndex(this, 150);
+
+			Binding b = new Binding("Width");
+			b.Source = m_parentView;
+			b.Mode = BindingMode.OneWay;
+			b.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
+			this.SetBinding(WidthProperty, b);
+
+			b = new Binding("Height");
+			b.Source = m_parentView;
+			b.Mode = BindingMode.OneWay;
+			b.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
+			this.SetBinding(HeightProperty, b);
+
+			this.AddVisualChild(m_drawArea);
 		}
 		#endregion
 
@@ -160,7 +179,7 @@ namespace Unv.RaceTrackEditor.Controls
 			m_drawArea.MinHeight = m_parentView.MinHeight;
 			m_drawArea.MinWidth = m_parentView.MinWidth;
 
-			m_drawArea.Measure(constraint);
+			m_drawArea.Measure(AdornedElement.RenderSize);
 			return m_drawArea.DesiredSize;
 		}
 
