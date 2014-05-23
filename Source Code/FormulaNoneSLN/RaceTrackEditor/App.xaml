@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 			 xmlns:controls="clr-namespace:Unv.RaceTrackEditor.Controls"
 			 xmlns:view="clr-namespace:Unv.RaceTrackEditor.Views"
+			 xmlns:convert="clr-namespace:Unv.RaceTrackEditor.Converters"
 			 xmlns:vm="clr-namespace:Unv.RaceTrackEditor.ViewModels"
              StartupUri="Views\MainWindow.xaml"
 			 ShutdownMode="OnMainWindowClose">
@@ -18,6 +19,12 @@
 		</LinearGradientBrush>
 
 		<SolidColorBrush x:Key="DarkTextBrush" Color="#FF002200"/>
+		
+		
+		<convert:BoolToContentConverter x:Key="LayerVisiblityConverter"
+										TrueContent="Visible"
+										FalseContent="Hidden"
+										NullContent="Collapsed"/>
 
 
 		<Style x:Key="GroupBorderStyle" TargetType="Border">
