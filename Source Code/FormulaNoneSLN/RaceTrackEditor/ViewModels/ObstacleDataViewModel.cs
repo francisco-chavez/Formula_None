@@ -113,6 +113,19 @@ namespace Unv.RaceTrackEditor.ViewModels
 
 			base.LoadModelData();
 		}
+
+		public override void RebuildModel()
+		{
+			foreach (var layerModel in Model.ObstacleLayers)
+				layerModel.Obstacles.Clear();
+			Model.ObstacleLayers.Clear();
+
+			foreach (var layerViewModel in this.ObstacleLayers)
+			{
+				layerViewModel.RebuildModel();
+				Model.ObstacleLayers.Add(layerViewModel.Model);
+			}
+		}
 		#endregion
 	}
 }

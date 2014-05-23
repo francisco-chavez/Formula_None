@@ -112,6 +112,24 @@ namespace Unv.RaceTrackEditor.ViewModels
 				}
 			}
 		}
+
+		public override void RebuildModel()
+		{
+			var model = this.Model;
+			if (model == null)
+				model = new ObstacleLayerModel();
+
+			model.Obstacles.Clear();
+			foreach (var obstacleViewModel in this.Obstacles)
+			{
+				obstacleViewModel.RebuildModel();
+				model.Obstacles.Add(obstacleViewModel.Model);
+			}
+			model.LayerName = this.DisplayTitle;
+			model.IsVisable = this.IsVisable;
+
+			this.Model = model;
+		}
 		#endregion
 	}
 }

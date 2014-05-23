@@ -45,5 +45,10 @@ namespace Unv.RaceTrackEditor.ViewModels
 			DisplayTitle = displayTitle;
 		}
 		#endregion
+
+
+		#region Methods
+		public virtual void RebuildModel() { }
+		#endregion
 	}
 }

@@ -150,6 +150,12 @@ namespace Unv.RaceTrackEditor.ViewModels
 
 			RaceTrackImage = ProjectModel.RaceTrackModel.RaceTrackImage;
 		}
+
+		public override void RebuildModel()
+		{
+			this.ObstacleDataViewModel.RebuildModel();
+			base.RebuildModel();
+		}
 		#endregion
 	}
 }

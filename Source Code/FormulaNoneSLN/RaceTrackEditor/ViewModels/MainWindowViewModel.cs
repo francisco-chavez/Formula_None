@@ -129,7 +129,8 @@ namespace Unv.RaceTrackEditor.ViewModels
 
 		private void SaveProject()
 		{
-			App.ProjectManager.SaveCurrentProject();
+			RebuildModel();
+			ProjectManager.SaveCurrentProject();
 		}
 
 		private bool CanSaveProject(object parameter)
@@ -164,6 +165,12 @@ namespace Unv.RaceTrackEditor.ViewModels
 		private bool CanSelectRaceTrackImage(object parameters)
 		{
 			return !(this.ProjectViewModel == null || this.ProjectViewModel.ProjectModel == null);
+		}
+
+		public override void RebuildModel()
+		{
+			this.ProjectViewModel.RebuildModel();
+			base.RebuildModel();
 		}
 		#endregion
 	}

@@ -69,6 +69,19 @@ namespace Unv.RaceTrackEditor.ViewModels
 
 			base.LoadModelData();
 		}
+
+		public override void RebuildModel()
+		{
+			var model = this.Model;
+			if (model == null)
+				model = new ObstacleModel();
+
+			model.Name	= this.DisplayTitle;
+			model.X		= this.X;
+			model.Y		= this.Y;
+
+			Model = model;
+		}
 		#endregion
 	}
 }
