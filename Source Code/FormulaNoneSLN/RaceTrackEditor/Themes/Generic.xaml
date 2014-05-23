@@ -12,7 +12,7 @@
 	
 	<ControlTemplate x:Key="ObstacleViewTemplate" TargetType="views:ObstacleView">
 		<Grid Background="{x:Null}">
-			<Ellipse Fill="{TemplateBinding views:ObstacleView.GlowBrush}"
+			<Ellipse Fill="{TemplateBinding GlowBrush}"
 					 Width="{TemplateBinding Width}"
 					 Height="{TemplateBinding Height}"
 					 Effect="{StaticResource GlowFuzzer}"/>
@@ -42,7 +42,6 @@
 		<Setter Property="IsTabStop"	Value="False"/>
 		<Setter Property="BorderThickness" Value="0"/>
 		<Setter Property="ViewModel"	Value="{Binding}"/>
-		<Setter Property="views:ObstacleView.GlowBrush" Value="{x:Null}"/>
 
 		
 		<Setter Property="Template"		Value="{StaticResource ObstacleViewTemplate}"/>

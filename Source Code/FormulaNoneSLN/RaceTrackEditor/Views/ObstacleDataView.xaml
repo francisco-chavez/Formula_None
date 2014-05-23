@@ -100,6 +100,7 @@
 								<Style.Triggers>
 									<Trigger Property="IsSelected" Value="True">
 										<Setter Property="Panel.ZIndex" Value="10"/>
+										<Setter Property="views:ObstacleView.GlowBrush" Value="#aaaa"/>
 									</Trigger>
 								</Style.Triggers>
 							</Style>

@@ -34,6 +34,12 @@ namespace Unv.RaceTrackEditor.Views
 			get { return (ObstacleViewModel) GetValue(ViewModelProperty); }
 			set { SetValue(ViewModelProperty, value); }
 		}
+
+		public Brush GlowBrush
+		{
+			get { return (Brush) GetValue(GlowBrushProperty); }
+			set { SetValue(GlowBrushProperty, value); }
+		}
 		#endregion
 
 
@@ -63,7 +69,7 @@ namespace Unv.RaceTrackEditor.Views
 				"GlowBrush",
 				typeof(Brush),
 				typeof(ObstacleView),
-				new FrameworkPropertyMetadata(null));
+				new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
 		}
 
 		public ObstacleView()
