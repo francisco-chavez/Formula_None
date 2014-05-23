@@ -56,8 +56,9 @@ namespace Unv.RaceTrackEditor.Views
 
 		void ObstacleLayerView_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
 		{
-			this.MouseMove += new MouseEventHandler(ObstacleLayerView_MouseMove);
-			this.MouseLeftButtonUp += new MouseButtonEventHandler(ObstacleLayerView_MouseLeftButtonUp);
+			this.MouseMove += ObstacleLayerView_MouseMove;
+			this.MouseLeftButtonUp += ObstacleLayerView_MouseLeftButtonUp;
+			this.MouseRightButtonDown += ObstacleLayerView_MouseRightButtonDown;
 
 			m_startingPosition = Mouse.GetPosition(this);
 			m_currentPosition = m_startingPosition;
@@ -69,10 +70,34 @@ namespace Unv.RaceTrackEditor.Views
 		{
 			m_currentPosition = Mouse.GetPosition(this);
 			m_adorner.CurrentPosition = m_currentPosition;
+
+			// If the User releases the left mouse button when it's not
+			// over the layer's draw area, the relase event won't get
+			// triggered. This way, we can see if it's currently relseased
+			// when it comes back into view.
+			if (e.LeftButton == MouseButtonState.Released)
+				StopDrawingTargetSystem();
 		}
 
 		void ObstacleLayerView_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
 		{
+			StopDrawingTargetSystem();
+		}
+
+		void ObstacleLayerView_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
+		{
+			StopDrawingTargetSystem();
+		}
+		#endregion
+
+
+		#region Methods
+		private void StopDrawingTargetSystem()
+		{
+			this.MouseMove -= ObstacleLayerView_MouseMove;
+			this.MouseLeftButtonUp -= ObstacleLayerView_MouseLeftButtonUp;
+			this.MouseRightButtonDown -= ObstacleLayerView_MouseRightButtonDown;
+
 			m_adorner.StopDrawing();
 		}
 		#endregion

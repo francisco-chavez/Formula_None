@@ -43,6 +43,8 @@ namespace Unv.RaceTrackEditor.Controls
 		}
 		private Brush m_drawBrush = Brushes.Maroon;
 
+		public double TargetTypeSwitchDistance { get; set; }
+
 		public Point CurrentPosition
 		{
 			get { return m_currentPosition; }
@@ -84,9 +86,13 @@ namespace Unv.RaceTrackEditor.Controls
 			m_drawArea.MinWidth = m_parentView.MinWidth;
 			m_drawArea.MinHeight = m_drawArea.MinHeight;
 
+			TargetTypeSwitchDistance = 16;
+
 			m_line = new Line();
 			m_line.Stroke = this.DrawBrush;
-			m_line.StrokeThickness = 30;
+			m_line.StrokeThickness = 32;
+			m_line.StrokeStartLineCap = PenLineCap.Round;
+			m_line.StrokeEndLineCap = PenLineCap.Round;
 
 			m_circle = new Ellipse();
 			m_circle.Fill = this.DrawBrush;
@@ -145,7 +151,7 @@ namespace Unv.RaceTrackEditor.Controls
 
 
 			var positionDelta = CurrentPosition - m_startingPosition;
-			bool drawLine = positionDelta.LengthSquared > 100;
+			bool drawLine = positionDelta.LengthSquared > TargetTypeSwitchDistance * TargetTypeSwitchDistance;
 
 			if (m_drawArea.Children.Count > 1)
 				m_drawArea.Children.Clear();
