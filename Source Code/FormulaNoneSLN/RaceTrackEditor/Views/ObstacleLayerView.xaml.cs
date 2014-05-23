@@ -13,6 +13,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 using Unv.RaceTrackEditor.Controls;
+using Unv.RaceTrackEditor.ViewModels;
 
 
 namespace Unv.RaceTrackEditor.Views
@@ -98,6 +99,8 @@ namespace Unv.RaceTrackEditor.Views
 		#region Methods
 		private void InsertNewObstacles()
 		{
+			ObstacleLayerViewModel layerVM = DataContext as ObstacleLayerViewModel;
+			layerVM.AddObstacles(m_startingPosition, m_currentPosition, 16);
 		}
 
 		private void StopDrawingTargetSystem()

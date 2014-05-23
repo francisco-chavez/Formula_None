@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Windows;
 
 using Unv.RaceTrackEditor.Core.Models;
 
@@ -77,6 +78,39 @@ namespace Unv.RaceTrackEditor.ViewModels
 			}
 
 			base.LoadModelData();
+		}
+
+		public void AddObstacles(Point startingPoint, Point endingPoint, double multiItemDistance)
+		{
+			var positionDelta = endingPoint - startingPoint;
+			double deltaLength = positionDelta.Length;
+			if (deltaLength < multiItemDistance)
+			{
+				Obstacles.Add(new ObstacleViewModel() { X = startingPoint.X, Y = startingPoint.Y });
+			}
+			else
+			{
+				double obsRadius = 16;
+				int radCount = (int) (deltaLength / obsRadius);
+				if (radCount % 2 == 1)
+					radCount--;
+
+				int obsCount = (radCount / 2) + 1;
+
+				var multVector = positionDelta / (obsCount - 1);
+				var startingVector = new Vector(startingPoint.X, startingPoint.Y);
+				for (int i = 0; i < obsCount; i++)
+				{
+					var location = startingVector + (multVector * i);
+					ObstacleViewModel vm = new ObstacleViewModel()
+					{
+						X = location.X,
+						Y = location.Y
+					};
+
+					Obstacles.Add(vm);
+				}
+			}
 		}
 		#endregion
 	}
