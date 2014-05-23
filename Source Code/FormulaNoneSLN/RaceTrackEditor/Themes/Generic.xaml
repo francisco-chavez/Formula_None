@@ -12,8 +12,7 @@
 	
 	<ControlTemplate x:Key="ObstacleViewTemplate" TargetType="views:ObstacleView">
 		<Grid Background="{x:Null}">
-			<Ellipse x:Name="PART_GlowItem"
-					 Fill="{x:Null}"
+			<Ellipse Fill="{TemplateBinding views:ObstacleView.GlowBrush}"
 					 Width="{TemplateBinding Width}"
 					 Height="{TemplateBinding Height}"
 					 Effect="{StaticResource GlowFuzzer}"/>
@@ -24,7 +23,7 @@
 
 		<ControlTemplate.Triggers>
 			<Trigger Property="IsMouseOver" Value="True">
-				<Setter TargetName="PART_GlowItem" Property="Fill" Value="Gold"/>
+				<Setter Property="views:ObstacleView.GlowBrush" Value="Gold"/>
 			</Trigger>
 		</ControlTemplate.Triggers>
 	</ControlTemplate>
@@ -43,6 +42,7 @@
 		<Setter Property="IsTabStop"	Value="False"/>
 		<Setter Property="BorderThickness" Value="0"/>
 		<Setter Property="ViewModel"	Value="{Binding}"/>
+		<Setter Property="views:ObstacleView.GlowBrush" Value="{x:Null}"/>
 
 		
 		<Setter Property="Template"		Value="{StaticResource ObstacleViewTemplate}"/>

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls.Primitives;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 using Unv.RaceTrackEditor.ViewModels;
@@ -17,6 +18,7 @@ namespace Unv.RaceTrackEditor.Views
 		#region Attributes
 		public static readonly DependencyProperty ObstacleImageProperty;
 		public static readonly DependencyProperty ViewModelProperty;
+		public static readonly DependencyProperty GlowBrushProperty;
 		#endregion
 
 
@@ -56,6 +58,12 @@ namespace Unv.RaceTrackEditor.Views
 				new FrameworkPropertyMetadata(
 					null, 
 					FrameworkPropertyMetadataOptions.AffectsParentArrange | FrameworkPropertyMetadataOptions.AffectsParentMeasure));
+
+			GlowBrushProperty = DependencyProperty.RegisterAttached(
+				"GlowBrush",
+				typeof(Brush),
+				typeof(ObstacleView),
+				new FrameworkPropertyMetadata(null));
 		}
 
 		public ObstacleView()
@@ -70,6 +78,19 @@ namespace Unv.RaceTrackEditor.Views
 		{
 			ViewModel.X += e.HorizontalChange;
 			ViewModel.Y += e.VerticalChange;
+		}
+		#endregion
+
+
+		#region Methods
+		public static object GetGlowBrush(UIElement target)
+		{
+			return (Brush) target.GetValue(GlowBrushProperty);
+		}
+
+		public static void SetGlowBrush(UIElement target, object value)
+		{
+			target.SetValue(GlowBrushProperty, value);
 		}
 		#endregion
 	}
