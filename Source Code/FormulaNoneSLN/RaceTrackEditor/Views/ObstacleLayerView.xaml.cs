@@ -56,6 +56,9 @@ namespace Unv.RaceTrackEditor.Views
 
 		void ObstacleLayerView_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
 		{
+			if (this.DataContext == null)
+				return;
+
 			this.MouseMove += ObstacleLayerView_MouseMove;
 			this.MouseLeftButtonUp += ObstacleLayerView_MouseLeftButtonUp;
 			this.MouseRightButtonDown += ObstacleLayerView_MouseRightButtonDown;
@@ -82,6 +85,7 @@ namespace Unv.RaceTrackEditor.Views
 		void ObstacleLayerView_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
 		{
 			StopDrawingTargetSystem();
+			InsertNewObstacles();
 		}
 
 		void ObstacleLayerView_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
@@ -92,6 +96,10 @@ namespace Unv.RaceTrackEditor.Views
 
 
 		#region Methods
+		private void InsertNewObstacles()
+		{
+		}
+
 		private void StopDrawingTargetSystem()
 		{
 			this.MouseMove -= ObstacleLayerView_MouseMove;

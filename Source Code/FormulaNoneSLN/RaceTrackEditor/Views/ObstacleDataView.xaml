@@ -9,6 +9,10 @@
 			 xmlns:controls="clr-namespace:Unv.RaceTrackEditor.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="500" d:DesignWidth="700">
+	<UserControl.Resources>
+		<CollectionViewSource x:Key="DataGridItemsSource" Source="{Binding ObstacleLayers}"/>
+		<CollectionViewSource x:Key="LayersSource" Source="{Binding ObstacleLayers}"/>
+	</UserControl.Resources>
 	<DockPanel>
 		<Border DockPanel.Dock="Right"
 				Style="{StaticResource GroupBorderStyle}"
@@ -32,7 +36,7 @@
 						  CanUserResizeColumns="True"
 						  CanUserResizeRows="False"
 						  SelectionMode="Single"
-						  ItemsSource="{Binding Path=ObstacleLayers, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
+						  ItemsSource="{Binding Source={StaticResource DataGridItemsSource}}">
 					<DataGrid.Columns>
 						<DataGridCheckBoxColumn Header="Is Visiable" 
 												CanUserReorder="True"
@@ -76,7 +80,7 @@
 							 Background="{x:Null}"
 							 MinWidth="1080"
 							 MinHeight="670"
-							 ItemsSource="{Binding Path=ObstacleLayers, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+							 ItemsSource="{Binding Source={StaticResource LayersSource}}"
 							 ItemsPanel="{StaticResource ObstalceLayerViewPanelTemplate}"
 							 SelectedIndex="{Binding ElementName=GUI_LayerSelector, Path=SelectedIndex, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
 						<ListBox.ItemContainerStyle>
