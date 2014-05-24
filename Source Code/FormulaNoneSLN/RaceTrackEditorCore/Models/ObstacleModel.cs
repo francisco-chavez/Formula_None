@@ -8,9 +8,6 @@ namespace Unv.RaceTrackEditor.Core.Models
 	{
 		#region Properties
 		[XmlAttribute]
-		public virtual string Name	{ get; set; }
-
-		[XmlAttribute]
 		public virtual double X		{ get; set; }
 
 		[XmlAttribute]

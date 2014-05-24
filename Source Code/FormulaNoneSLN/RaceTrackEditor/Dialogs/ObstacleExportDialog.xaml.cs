@@ -27,8 +27,21 @@ namespace Unv.RaceTrackEditor.Dialogs
 	{
 		#region Attributes
 		public static readonly DependencyProperty ObstacleLayersProperty;
-		private static readonly DependencyPropertyKey SelectedObstacleLayersPropertyKey;
 		public static readonly DependencyProperty ExportPathProperty;
+		#endregion
+
+
+		#region Commands
+		public ICommand ExportCommand
+		{
+			get
+			{
+				if (mn_exportCommand == null)
+					mn_exportCommand = new RelayCommand(p => ExportItems(), p => CanExportItems(null));
+				return mn_exportCommand;
+			}
+		}
+		private RelayCommand mn_exportCommand;
 		#endregion
 
 
@@ -39,17 +52,15 @@ namespace Unv.RaceTrackEditor.Dialogs
 			set { SetValue(ObstacleLayersProperty, value); }
 		}
 
-		public ObservableCollection<ObstacleLayerViewModel> SelectedObstacleLayers
-		{
-			get { return (ObservableCollection<ObstacleLayerViewModel>) GetValue(SelectedObstacleLayersPropertyKey.DependencyProperty); }
-			private set { SetValue(SelectedObstacleLayersPropertyKey, value); }
-		}
-
 		public string ExportPath
 		{
 			get { return (string) GetValue(ExportPathProperty); }
 			set { SetValue(ExportPathProperty, value); }
 		}
+
+		public ObstacleLayerViewModel[] SelectedObstacleLayers	{ get; private set; }
+
+		public string[]					FileTypes				{ get; set; }
 		#endregion
 
 
@@ -58,12 +69,6 @@ namespace Unv.RaceTrackEditor.Dialogs
 		{
 			ObstacleLayersProperty = DependencyProperty.Register(
 				"ObstacleLayers",
-				typeof(ObservableCollection<ObstacleLayerViewModel>),
-				typeof(ObstacleExportDialog),
-				new PropertyMetadata(null));
-
-			SelectedObstacleLayersPropertyKey = DependencyProperty.RegisterReadOnly(
-				"SelectedObstacleLayers",
 				typeof(ObservableCollection<ObstacleLayerViewModel>),
 				typeof(ObstacleExportDialog),
 				new PropertyMetadata(null));
@@ -80,15 +85,55 @@ namespace Unv.RaceTrackEditor.Dialogs
 			InitializeComponent();
 			this.DataContext = this;
 
-			this.SelectedObstacleLayers = new ObservableCollection<ObstacleLayerViewModel>();
+			this.Loaded += ObstacleExportDialog_Loaded;
 		}
 		#endregion
 
 
 		#region Event Handlers
-		private void Button_Click(object sender, RoutedEventArgs e)
+		private void Browse_Click(object sender, RoutedEventArgs e)
 		{
+			StringBuilder s = new StringBuilder();
 
+			for (int i = 0; i < FileTypes.Length; i++)
+			{
+				s.Append(FileTypes[i]);
+				s.Append(i == FileTypes.Length - 1 ? string.Empty : "|");
+			}
+
+			var dlg = new SaveFileDialog();
+			dlg.Filter = s.ToString();
+			dlg.Title = "Selected Obstacle Export Path";
+
+			if (!string.IsNullOrWhiteSpace(ExportPath))
+				dlg.FileName = ExportPath;
+
+			bool keepGoing = dlg.ShowDialog(this) == true;
+
+			if (!keepGoing)
+				return;
+
+			this.ExportPath = dlg.FileName;
+		}
+
+		void ObstacleExportDialog_Loaded(object sender, RoutedEventArgs e)
+		{
+			if (FileTypes == null)
+				throw new NullReferenceException("There are no file types to choose from for exporting the obstacle data.");
+			if (FileTypes.Length == 0)
+				throw new ArgumentException("There are no file types to choose from for exporting the obstacle data.");
+		}
+		#endregion
+
+
+		#region Methods
+		private void ExportItems()
+		{
+		}
+
+		private bool CanExportItems(object parameters)
+		{
+			return false;
 		}
 		#endregion
 	}

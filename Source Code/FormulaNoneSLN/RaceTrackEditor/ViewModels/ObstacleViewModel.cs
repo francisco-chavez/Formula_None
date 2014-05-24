@@ -63,7 +63,6 @@ namespace Unv.RaceTrackEditor.ViewModels
 
 		public override void LoadModelData()
 		{
-			DisplayTitle	= Model.Name;
 			X				= Model.X;
 			Y				= Model.Y;
 
@@ -76,7 +75,6 @@ namespace Unv.RaceTrackEditor.ViewModels
 			if (model == null)
 				model = new ObstacleModel();
 
-			model.Name	= this.DisplayTitle;
 			model.X		= this.X;
 			model.Y		= this.Y;
 
