@@ -83,5 +83,13 @@ namespace Unv.RaceTrackEditor.Dialogs
 			this.SelectedObstacleLayers = new ObservableCollection<ObstacleLayerViewModel>();
 		}
 		#endregion
+
+
+		#region Event Handlers
+		private void Button_Click(object sender, RoutedEventArgs e)
+		{
+
+		}
+		#endregion
 	}
 }
