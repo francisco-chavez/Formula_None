@@ -40,6 +40,9 @@
 			<MenuItem Header="Data">
 				<MenuItem Header="Select Race Track Image..."
 						  Command="{Binding SelectRaceTrackImageCommand}"/>
+				<Separator/>
+				<MenuItem Header="Export Obstacles..."
+						  Command="{Binding ExportRaceTrackObstaclesCommand}"/>
 			</MenuItem>
 		</Menu>
 		

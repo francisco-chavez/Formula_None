@@ -101,6 +101,17 @@ namespace Unv.RaceTrackEditor.ViewModels
 			}
 		}
 		private RelayCommand mn_selectRaceTrackImageCommand;
+
+		public ICommand ExportRaceTrackObstaclesCommand
+		{
+			get
+			{
+				if (mn_exportRaceTrackObstaclesCommand == null)
+					mn_exportRaceTrackObstaclesCommand = new RelayCommand(p => ExportRaceTrackObstacles(), p => CanExportRaceTrackObstacles(null));
+				return mn_exportRaceTrackObstaclesCommand;
+			}
+		}
+		private RelayCommand mn_exportRaceTrackObstaclesCommand;
 		#endregion
 
 
@@ -166,6 +177,16 @@ namespace Unv.RaceTrackEditor.ViewModels
 		{
 			return !(this.ProjectViewModel == null || this.ProjectViewModel.ProjectModel == null);
 		}
+
+		private void ExportRaceTrackObstacles()
+		{
+		}
+
+		private bool CanExportRaceTrackObstacles(object parameters)
+		{
+			return false;
+		}
+
 
 		public override void RebuildModel()
 		{

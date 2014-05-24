@@ -78,6 +78,9 @@
     <Compile Include="Controls\MeasuredCanvas.cs" />
     <Compile Include="Controls\ObstacleLayerViewAdorner.cs" />
     <Compile Include="Converters\BoolToContentConverter.cs" />
+    <Compile Include="Dialogs\ObstacleExportDialog.xaml.cs">
+      <DependentUpon>ObstacleExportDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="INPC.cs" />
     <Compile Include="RelayCommand.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
@@ -109,6 +112,10 @@
       <DependentUpon>ProjectView.xaml</DependentUpon>
     </Compile>
     <Page Include="Dialogs\NewProjectDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialogs\ObstacleExportDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
