@@ -129,11 +129,56 @@ namespace Unv.RaceTrackEditor.Dialogs
 		#region Methods
 		private void ExportItems()
 		{
+			List<ObstacleLayerViewModel> selectedLayers = 
+				new List<ObstacleLayerViewModel>(PART_LayerSelector.SelectedItems.Count);
+			
+			foreach (var item in PART_LayerSelector.SelectedItems)
+			{
+				var listBoxItem = item as ListBoxItem;
+				var itemContent = item as ObstacleLayerViewModel;
+
+				if (listBoxItem != null)
+					itemContent = listBoxItem.Content as ObstacleLayerViewModel;
+
+				if (itemContent != null)
+					selectedLayers.Add(itemContent);
+			}
+
+			this.SelectedObstacleLayers = selectedLayers.ToArray();
+			this.DialogResult = true;
 		}
 
 		private bool CanExportItems(object parameters)
 		{
-			return false;
+			if (string.IsNullOrWhiteSpace(ExportPath))
+				// There's no path to export files to
+				return false;
+
+			if (!System.IO.Path.HasExtension(ExportPath))
+				// The export path doesn't have an extension
+				return false;
+
+			var invalidCharacters = System.IO.Path.GetInvalidPathChars();
+			if (ExportPath.Any(character => { return invalidCharacters.Contains(character); }))
+				// The export path contains characters that are not 
+				// allowed in a path
+				return false;
+
+			bool acceptedFileType = false;
+			foreach(var t in FileTypes)
+			{
+				string ending = t.Split('|')[1];
+				ending = ending.Substring(1); // Take the '*' character off the ending
+				if (ExportPath.EndsWith(ending))
+				{
+					// The export path ends with an acceptable
+					// file type extension
+					acceptedFileType = true;
+					break;
+				}
+			}
+
+			return acceptedFileType;
 		}
 		#endregion
 	}
