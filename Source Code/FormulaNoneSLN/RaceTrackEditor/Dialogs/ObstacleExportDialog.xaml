@@ -62,7 +62,8 @@
 				 Grid.ColumnSpan="4"
 				 Margin="2"
 				 SelectionMode="Multiple"
-				 ItemsSource="{Binding ObstacleLayers}"/>
+				 ItemsSource="{Binding ObstacleLayers}"
+				 ItemTemplate="{StaticResource LayerDataTemplate}"/>
 		
 		<Button Grid.Column="2" Grid.Row="3"
 				Content="Cancel"

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,7 @@ using System.Windows.Input;
 
 using Unv.RaceTrackEditor.Core;
 using Unv.RaceTrackEditor.Core.Models;
+using Unv.RaceTrackEditor.Dialogs;
 
 
 namespace Unv.RaceTrackEditor.ViewModels
@@ -180,11 +182,30 @@ namespace Unv.RaceTrackEditor.ViewModels
 
 		private void ExportRaceTrackObstacles()
 		{
+			var dialog = new ObstacleExportDialog()
+			{
+				ObstacleLayers = 
+					new ObservableCollection<ObstacleLayerViewModel>(ProjectViewModel.ObstacleDataViewModel.ObstacleLayers),
+				FileTypes = new string[] { "XNA XML File|*.xml"},
+				Owner = App.Current.MainWindow // Should de-couple this part
+			};
+
+			bool keepGoing = dialog.ShowDialog() == true;
+
+			if (!keepGoing)
+				return;
+
+			var selectedLayers = dialog.SelectedObstacleLayers;
+
+			throw new NotImplementedException();
 		}
 
 		private bool CanExportRaceTrackObstacles(object parameters)
 		{
-			return false;
+			if (this.ProjectViewModel == null || this.ProjectViewModel.ObstacleDataViewModel == null)
+				return false;
+			
+			return true;
 		}
 
 
