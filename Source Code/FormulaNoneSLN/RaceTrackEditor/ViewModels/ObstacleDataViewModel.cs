@@ -6,6 +6,9 @@ using System.Text;
 using System.Windows;
 using System.Windows.Media.Imaging;
 
+using Microsoft.Xna.Framework;
+
+using Unv.RaceEngineLib.Storage;
 using Unv.RaceTrackEditor.Core.Models;
 
 
@@ -125,6 +128,31 @@ namespace Unv.RaceTrackEditor.ViewModels
 				layerViewModel.RebuildModel();
 				Model.ObstacleLayers.Add(layerViewModel.Model);
 			}
+		}
+
+		public ObstacleMap BuildMap(ObstacleLayerViewModel[] selectedLayers)
+		{
+			ObstacleMap result = new ObstacleMap();
+			
+			if (selectedLayers == null)
+				return result;
+
+			Vector2 margin = new Vector2(50f, 50f);
+
+			foreach (var layer in selectedLayers)
+				foreach (var obs in layer.Obstacles)
+				{
+					Vector2 positionOnCanvas = new Vector2((float) obs.X, (float) obs.Y);
+
+					result.Obstacles.Add(
+						new Obstacle() 
+						{ 
+							Radius = 16f, 
+							Position = positionOnCanvas - margin 
+						});
+				}
+
+			return result;
 		}
 		#endregion
 	}

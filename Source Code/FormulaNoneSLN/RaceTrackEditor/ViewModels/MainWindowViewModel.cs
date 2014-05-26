@@ -7,6 +7,7 @@ using System.Text;
 using System.Windows;
 using System.Windows.Input;
 
+using Unv.RaceEngineLib.Storage;
 using Unv.RaceTrackEditor.Core;
 using Unv.RaceTrackEditor.Core.Models;
 using Unv.RaceTrackEditor.Dialogs;
@@ -196,8 +197,9 @@ namespace Unv.RaceTrackEditor.ViewModels
 				return;
 
 			var selectedLayers = dialog.SelectedObstacleLayers;
+			var dataMap = ProjectViewModel.ObstacleDataViewModel.BuildMap(selectedLayers);
 
-			throw new NotImplementedException();
+			XNA_XML_Exporter.WriteToFile(dialog.ExportPath, dataMap);
 		}
 
 		private bool CanExportRaceTrackObstacles(object parameters)
