@@ -1,0 +1,419 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<XnaContent xmlns:Storage="Unv.RaceEngineLib.Storage">
+  <Asset Type="Storage:ObstacleMap">
+    <Obstacles>
+      <Item>
+        <Radius>16</Radius>
+        <Position>332.454041 -18.6751118</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>283.0499 -19.2034569</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>358.1572 -19.5115223</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>307.753143 -18.52197</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>259.433716 -17.5490341</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>384.097046 -19.2792187</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>409.265228 -18.28021</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>433.959869 -20.3152714</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>462.888855 -18.6215668</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>492.021423 -18.0604649</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>519.1355 -17.6608353</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>544.404663 -18.3733635</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>568.5989 -19.4749184</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>593.9221 -19.0071869</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>621.3555 -17.5202141</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>647.4932 -19.1666412</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>669.597351 -19.4032059</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>695.350037 -19.0396328</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>721.58075 -17.9040184</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>749.3006 -12.6914825</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>773.6639 -7.07770157</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>798.861755 1.82803345</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>825.618164 10.9244766</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>847.4519 24.8606567</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>868.1879 36.5508575</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>888.0048 52.4526062</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>905.7672 70.12276</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>923.239563 89.1450958</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>939.9501 109.963165</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>954.851135 132.0703</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>966.972351 156.322647</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>977.549438 181.622513</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>984.6284 208.5419</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>991.142456 235.481964</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>994.276855 261.797058</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>995.1233 287.2452</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>993.717163 312.509918</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>989.7799 340.37558</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>982.3137 366.444916</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>972.5533 393.46048</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>962.13446 418.4465</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>948.625366 444.080719</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>932.838745 465.839722</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>914.9465 487.512329</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>896.049866 506.4165</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>876.17334 521.566833</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>851.265 536.8484</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>828.8028 553.0526</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>803.6602 563.4932</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>777.5146 570.8921</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>751.3323 579.2412</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>724.598633 583.7071</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>699.8249 583.7077</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>673.6473 584.991</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>647.7773 584.7786</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>622.972351 583.6693</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>596.631653 584.4589</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>571.778442 585.1088</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>547.1147 583.764343</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>520.9618 583.872742</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>496.2887 583.858032</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>469.124878 585.3617</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>441.536224 583.2712</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>417.101837 584.1545</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>392.482483 584.876953</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>365.611938 583.7879</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>340.5058 584.372864</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>314.723663 584.2484</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>288.506561 584.9098</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>262.2583 584.0809</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>235.004059 580.195</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>206.632965 574.29</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>180.289429 567.3309</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>156.11586 557.4896</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>134.13147 544.4545</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>111.700378 530.2318</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>90.82884 514.1928</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>70.632576 496.393738</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>52.53511 476.379028</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>37.29953 453.539825</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>22.2188721 432.2618</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>8.718876 408.958221</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>-0.08557129 384.803528</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>-8.187107 358.906281</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>-14.1298447 333.17334</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>-17.2189789 307.1409</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>-17.27615 280.32</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>-17.3975563 252.69928</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>-12.7512932 227.501434</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>-6.75959 202.125473</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>1.645855 175.855057</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>12.7642441 151.981842</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>26.78695 126.945511</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>41.2324753 103.713623</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>58.84458 81.77379</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>78.0159454 63.3363266</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>99.355896 46.47515</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>120.586426 29.848</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>143.005142 15.9802475</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>166.964951 6.147976</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>191.240265 -4.53543472</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>216.312714 -10.8995094</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>238.197418 -14.4812584</Position>
+      </Item>
+    </Obstacles>
+  </Asset>
+</XnaContent>
