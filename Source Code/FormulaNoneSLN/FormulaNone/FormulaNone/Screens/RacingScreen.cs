@@ -45,6 +45,9 @@ namespace Unv.FormulaNone.Screens
 
 			m_background = m_content.Load<Texture2D>("Images/Backgrounds/DefaultBackground");
 
+			m_raceEngine = new RaceEngine();
+			m_raceEngine.AddObstacles(obstacleMap);
+
 			base.LoadContent();
 		}
 

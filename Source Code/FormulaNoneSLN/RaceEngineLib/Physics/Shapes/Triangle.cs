@@ -13,11 +13,11 @@ namespace Unv.RaceEngineLib.Physics.Shapes
 	public class Triangle
 		: Shape
 	{
-		public override Vector2 CenterOfMass
+		public override Vector2 CenterOfMassShift
 		{
-			get { throw new NotImplementedException(); }
+			get { return m_centerOfMassShift; }
 		}
-		private readonly Vector2 m_centerOfMass;
+		private Vector2 m_centerOfMassShift = Vector2.Zero;
 
 		public override float Area
 		{
@@ -34,6 +34,8 @@ namespace Unv.RaceEngineLib.Physics.Shapes
 
 		public Triangle(Vector2 a, Vector2 b, Vector2 c)
 		{
+			m_centerOfMassShift = Vector2.Zero;
+
 			// At first I used Heron's Formula to find the area of the triangle, but this 
 			// used a lot of square roots (a total of four). Then I realized that I already 
 			// have the code for finding the height of the triangle by using the triangle's 
@@ -62,15 +64,19 @@ namespace Unv.RaceEngineLib.Physics.Shapes
 
 			// The center of mass of a triangle with uniform density is the median point 
 			// of the triangle. This was the easiest way I was able to find to give me 
-			// the position bases on the points making up the triangle's bounds.
-			m_centerOfMass = (a + b + c) / 3f;
+			// the position bases on the points making up the triangle's bounds. Since
+			// all shapes have a center of mass at (0, 0), we need to set the center of
+			// mass shift to the negative of the center of mass of the original points
+			// that created the triangle.
+			Vector2 centerOfMass = (a + b + c) / 3f;
+			m_centerOfMassShift = -centerOfMass;
 
 
 			// Find a radius from the center of mass that contains
 			// all points in the triangle.
-			Vector2 u = a - b;
-			Vector2 v = b - c;
-			Vector2 w = c - a;
+			Vector2 u = a - centerOfMass;
+			Vector2 v = b - centerOfMass;
+			Vector2 w = c - centerOfMass;
 
 			Vector2 l = u;
 			if (l.LengthSquared() < v.LengthSquared())

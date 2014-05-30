@@ -11,9 +11,15 @@ namespace Unv.RaceEngineLib.Physics
 	public abstract class Shape
 	{
 		/// <summary>
+		/// Returns the distance vector the Shape was tranlated over to center its
+		/// mass to the point of origin.
+		/// </summary>
+		public abstract Vector2 CenterOfMassShift { get; }
+
+		/// <summary>
 		/// Returns the Center of mass of the shape.
 		/// </summary>
-		public abstract Vector2 CenterOfMass	{ get; }
+		public Vector2 CenterOfMass { get { return Vector2.Zero; } }
 
 		/// <summary>
 		/// Returns the area of the shape.

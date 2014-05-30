@@ -13,27 +13,17 @@ namespace Unv.RaceEngineLib.Physics.Shapes
 	public class ConvexPolygon
 		: Shape
 	{
-		private readonly Vector2[]	m_borderPoints;
+		private readonly Vector2[]	BorderPoints;
 		private readonly Vector2	m_centerOfMass;
 		private readonly float		m_area;
 		private readonly float		m_quickRadius;
+		private readonly Vector2	m_centerOfMassShift;
 
 
-		public override Vector2 CenterOfMass	{ get { return m_centerOfMass; } }
+		public override Vector2 CenterOfMassShift { get { return m_centerOfMassShift; } }
 		public override float	Area			{ get { return m_area; } }
 		public override float	QuickRadius		{ get { return m_quickRadius; } }
 
-		public Vector2[] CenteredBorderPoints
-		{
-			get
-			{
-				Vector2[] result = new Vector2[m_borderPoints.Length];
-				for (int i = 0; i < result.Length; i++)
-					result[i] = m_borderPoints[i] - CenterOfMass;
-
-				return result;
-			}
-		}
 
 
 		public ConvexPolygon(IEnumerable<Vector2> borderPoints)
@@ -53,24 +43,24 @@ namespace Unv.RaceEngineLib.Physics.Shapes
 			// to)? After all, I am putting this in a private attribute to stop
 			// the user from accessing it.
 			// -FCT
-			m_borderPoints = borderPoints.Select(point => { return point; }).ToArray();
+			Vector2[] pointPositions = borderPoints.Select(point => { return point; }).ToArray();
 
 
 			// Break the shape into trianlge. This will give us a list of components 
 			// with their own area and center of mass. We sum up all their areas to 
 			// get the area of the shape. We then sum up the weighted center of mass's 
 			// of the triangles to find the center of mass of the overall shape.
-			Vector2 a = m_borderPoints[0];
+			Vector2 a = pointPositions[0];
 			Vector2 b;
 			Vector2 c;
 
-			Triangle[] trianles = new Triangle[m_borderPoints.Length - 2];
+			Triangle[] trianles = new Triangle[pointPositions.Length - 2];
 
 			float totalArea = 0f;
-			for (int i = 2; i < m_borderPoints.Length; i++)
+			for (int i = 2; i < pointPositions.Length; i++)
 			{
-				b = m_borderPoints[i - 1];
-				c = m_borderPoints[i];
+				b = pointPositions[i - 1];
+				c = pointPositions[i];
 
 				trianles[i - 2] = new Triangle(a, b, c);
 				totalArea += trianles[i - 2].Area;
@@ -78,16 +68,22 @@ namespace Unv.RaceEngineLib.Physics.Shapes
 
 			Vector2 weightedCenterSum = Vector2.Zero;
 			foreach (var component in trianles)
-				weightedCenterSum += component.Area * component.CenterOfMass;
+				weightedCenterSum += component.Area * component.CenterOfMassShift;
 			
-			m_centerOfMass = weightedCenterSum / totalArea;
+			m_centerOfMassShift = weightedCenterSum / totalArea;
 			m_area = totalArea;
+
+			// Shift the border point positions so that the shape's center of
+			// mass is at the point of origin.
+			for (int i = 0; i < pointPositions.Length; i++)
+				pointPositions[i] = pointPositions[i] + m_centerOfMassShift;
+			BorderPoints = pointPositions;
 
 			// Find a radius from the center of mass to use that 
 			// includes all the points making up of the shape.
 			Vector2 radius = Vector2.Zero;
 
-			foreach (var point in CenteredBorderPoints)
+			foreach (var point in BorderPoints)
 			{
 				if (point.LengthSquared() > radius.LengthSquared())
 					radius = point;

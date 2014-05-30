@@ -11,6 +11,12 @@ namespace Unv.RaceEngineLib.Physics.Shapes
 	public class Circular
 		: Shape
 	{
+		#region Properties
+		public override Vector2 CenterOfMassShift
+		{
+			get { return Vector2.Zero; }
+		}
+
 		public float Radius
 		{
 			get { return m_radius; }
@@ -23,8 +29,8 @@ namespace Unv.RaceEngineLib.Physics.Shapes
 		}
 
 		public override float QuickRadius { get { return Radius + 0.1f; } }
+		#endregion
 
-		public override Vector2 CenterOfMass { get { return Vector2.Zero; } }
 
 		public Circular(float radius)
 		{
