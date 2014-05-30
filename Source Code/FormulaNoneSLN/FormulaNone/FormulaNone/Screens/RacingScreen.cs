@@ -18,6 +18,8 @@ namespace Unv.FormulaNone.Screens
 	{
 		#region Attributes
 		private ContentManager	m_content;
+		private Texture2D		m_trackImage;
+		private Texture2D		m_background;
 		private RaceEngine		m_raceEngine;
 		#endregion
 
@@ -39,7 +41,9 @@ namespace Unv.FormulaNone.Screens
 			var		carTypes		= SelectionScreen.CarTypes;
 
 			var obstacleMap = m_content.Load<ObstacleMap>(string.Format("DataMaps/Obstacles/{0}", selectedTrack));
-			var trackImage  = m_content.Load<Texture2D>(string.Format("Images/RaceTracks/{0}", selectedTrack));
+			m_trackImage	= m_content.Load<Texture2D>(string.Format("Images/RaceTracks/{0}", selectedTrack));
+
+			m_background = m_content.Load<Texture2D>("Images/Backgrounds/DefaultBackground");
 
 			base.LoadContent();
 		}
@@ -71,6 +75,18 @@ namespace Unv.FormulaNone.Screens
 
 		public override void Draw(GameTime gameTime)
 		{
+			var raceTrackOffset = (Game.Window.ClientBounds.Size() - m_trackImage.Size()) / 2;
+			var lighting = new Color(TransitionAlpha, TransitionAlpha, TransitionAlpha);
+
+			var spriteBatch = this.ScreenManager.SpriteBatch;
+
+			spriteBatch.Begin();
+
+			spriteBatch.Draw(m_background, Vector2.Zero, lighting);
+			spriteBatch.Draw(m_trackImage, raceTrackOffset, lighting);
+
+			spriteBatch.End();
+
 			base.Draw(gameTime);
 		}
 		#endregion
