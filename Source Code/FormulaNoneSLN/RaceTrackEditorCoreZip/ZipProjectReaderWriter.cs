@@ -163,22 +163,9 @@ namespace Unv.RaceTrackEditor.Core.Zip
 			{
 				LayerName = "Layer 1"
 			};
-			defaultLayer.Obstacles.Add(new ObstacleModel() { X = 0, Y = 0 });
-			defaultLayer.Obstacles.Add(new ObstacleModel() { X = 200, Y = 0 });
-			defaultLayer.Obstacles.Add(new ObstacleModel() { X = 0, Y = 200 });
-			defaultLayer.Obstacles.Add(new ObstacleModel() { X = 200, Y = 200 });
-			defaultLayer.Obstacles.Add(new ObstacleModel() { X = 100, Y = 100 });
-
-			var testLayer2 = new ObstacleLayerModel()
-			{
-				LayerName = "Layer 2"
-			};
-			testLayer2.Obstacles.Add(new ObstacleModel() { X = 25, Y = 100 });
-			testLayer2.Obstacles.Add(new ObstacleModel() { X = 75, Y = 100 });
 
 			var obstacleData = new ObstacleDataModel();
 			obstacleData.AddLayer(defaultLayer);
-			obstacleData.ObstacleLayers.Add(testLayer2);
 
 			var raceTrackModel = new RaceTrackModel()
 			{
