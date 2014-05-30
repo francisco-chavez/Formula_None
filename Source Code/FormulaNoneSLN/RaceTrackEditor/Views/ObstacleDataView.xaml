@@ -82,12 +82,19 @@
 							 MinHeight="670"
 							 ItemsSource="{Binding Source={StaticResource LayersSource}}"
 							 ItemsPanel="{StaticResource ObstalceLayerViewPanelTemplate}"
-							 SelectedIndex="{Binding ElementName=GUI_LayerSelector, Path=SelectedIndex, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
+							 SelectedIndex="{Binding ElementName=GUI_LayerSelector, Path=SelectedIndex, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+							 ScrollViewer.CanContentScroll="False"
+							 ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+							 ScrollViewer.VerticalScrollBarVisibility="Hidden">
 						<ListBox.ItemContainerStyle>
 							<Style TargetType="ListBoxItem">
 								<Setter Property="Background" Value="{x:Null}"/>
 								<Setter Property="MinWidth" Value="1080"/>
 								<Setter Property="MinHeight" Value="670"/>
+								
+								<Setter Property="ScrollViewer.CanContentScroll" Value="False"/>
+								<Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Hidden"/>
+								<Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Hidden"/>
 								
 								<Setter Property="Template">
 									<Setter.Value>

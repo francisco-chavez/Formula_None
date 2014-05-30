@@ -11,7 +11,10 @@
 			 Visibility="{Binding Path=IsVisable, 
 								  Mode=OneWay, 
 								  UpdateSourceTrigger=PropertyChanged, 
-								  Converter={StaticResource LayerVisiblityConverter}}">
+								  Converter={StaticResource LayerVisiblityConverter}}"
+			 ScrollViewer.CanContentScroll="False"
+			 ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+			 ScrollViewer.VerticalScrollBarVisibility="Hidden">
 	<ListBox Margin="0"
 			 BorderThickness="1"
 			 Padding="0"
@@ -19,6 +22,9 @@
 			 ItemsSource="{Binding Path=Obstacles, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
 			 ItemContainerStyle="{StaticResource ObstacleLayerItemContainerStyle}"
 			 ItemTemplate="{StaticResource ObstacleViewModelTemplate}"
-			 ItemsPanel="{StaticResource ObstalceLayerViewPanelTemplate}">
+			 ItemsPanel="{StaticResource ObstalceLayerViewPanelTemplate}"
+			 ScrollViewer.CanContentScroll="False"
+			 ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+			 ScrollViewer.VerticalScrollBarVisibility="Hidden">
 	</ListBox>
 </UserControl>
