@@ -14,19 +14,42 @@ namespace Unv.RaceEngineLib
 {
 	public class RaceEngine
 	{
+		#region Attributes
 		private PhysicsEngine	m_physicsEngine;
 		private List<Tire>		m_obstacles;
+		private List<RaceCar>	m_cars;
+
+		private float			m_currentTimeStep = 0f;
+		#endregion
 
 
-		public Tire[] Obstacles { get { return m_obstacles.ToArray(); } }
+		#region Properties
+		public Tire[]		Obstacles	{ get { return m_obstacles.ToArray(); } }
+		public RaceCar[]	Car			{ get { return m_cars.ToArray(); } }
+		#endregion
 
 
+		#region Constructors
 		public RaceEngine()
 		{
 			m_physicsEngine = new PhysicsEngine();
-			m_obstacles		= new List<Tire>(50);
-		}
+			m_obstacles		= new List<Tire>(100);
+			m_cars			= new List<RaceCar>(4);
 
+			m_physicsEngine.UpdateForcesEvent += PhysicsEngine_UpdateForcesEvent;
+		}
+		#endregion
+
+
+		#region Event Handlers
+		void PhysicsEngine_UpdateForcesEvent(object sender, EventArgs e)
+		{
+			ApplyForces();
+		}
+		#endregion
+
+
+		#region Methods
 		public void AddObstacles(ObstacleMap obstacleMap)
 		{
 			if (obstacleMap == null)
@@ -57,5 +80,28 @@ namespace Unv.RaceEngineLib
 			m_physicsEngine.ClearImmobileBodies();
 			m_obstacles.Clear();
 		}
+
+
+		public void AddCar(RaceCar car)
+		{
+			if (car == null)
+				throw new ArgumentNullException();
+
+			car.Body = m_physicsEngine.AddMobileBody(RaceCar.CAR_SHAPE, Vector2.Zero, "Metal");
+
+			m_cars.Add(car);
+		}
+
+
+		public void StepTime(float timeMS)
+		{
+			m_currentTimeStep = 0f;
+			m_physicsEngine.Step(timeMS);
+		}
+
+		public void ApplyForces()
+		{
+		}
+		#endregion
 	}
 }

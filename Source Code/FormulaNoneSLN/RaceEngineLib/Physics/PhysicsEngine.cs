@@ -12,6 +12,11 @@ namespace Unv.RaceEngineLib.Physics
 {
 	public class PhysicsEngine
 	{
+		#region Events
+		public event EventHandler UpdateForcesEvent;
+		#endregion
+
+
 		#region Attributes
 		private List<Body> m_mobileBodies;
 		private List<Body> m_immobileBodies;
@@ -77,6 +82,12 @@ namespace Unv.RaceEngineLib.Physics
 		public void Step(float timeMS)
 		{
 			GeneratePairs();
+
+			if (UpdateForcesEvent != null)
+				UpdateForcesEvent(this, null);
+
+			GenerateChanges();
+			ApplyChanges();
 		}
 
 		/// <summary>
@@ -125,6 +136,14 @@ namespace Unv.RaceEngineLib.Physics
 					m_pairs.Add(new Pair() { A = m_immobileBodies[i], B = m_mobileBodies[j] });
 				}
 			}
+		}
+
+		private void GenerateChanges()
+		{
+		}
+
+		private void ApplyChanges()
+		{
 		}
 		#endregion
 	}
