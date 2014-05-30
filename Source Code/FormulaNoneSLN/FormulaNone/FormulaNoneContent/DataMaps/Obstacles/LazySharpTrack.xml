@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<XnaContent xmlns:Storage="Unv.RaceEngineLib.Storage">
+  <Asset Type="Storage:ObstacleMap">
+    <Obstacles>
+      <Item>
+        <Radius>16</Radius>
+        <Position>939.9501 109.963165</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>994.276855 261.797058</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>962.13446 418.4465</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>851.265 536.8484</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>699.8249 583.7077</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>547.1147 583.764343</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>392.482483 584.876953</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>235.004059 580.195</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>90.82884 514.1928</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>8.718876 408.958221</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>-17.3975563 252.69928</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>41.2324753 103.713623</Position>
+      </Item>
+      <Item>
+        <Radius>16</Radius>
+        <Position>166.964951 6.147976</Position>
+      </Item>
+    </Obstacles>
+  </Asset>
+</XnaContent>

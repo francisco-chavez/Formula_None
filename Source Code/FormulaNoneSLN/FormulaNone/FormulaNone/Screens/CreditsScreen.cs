@@ -94,7 +94,12 @@ namespace Unv.FormulaNone.Screens
 				m_credits.Clear();
 			m_credits = null;
 
-			m_content.Unload();
+			if (m_content != null)
+			{
+				m_content.Unload();
+				m_content.Dispose();
+				m_content = null;
+			}
 
 			base.UnloadContent();
 		}

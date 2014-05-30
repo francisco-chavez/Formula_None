@@ -48,7 +48,12 @@ namespace Unv.FormulaNone.Screens
 			m_background	= null;
 			m_bButtonImage	= null;
 
-			m_content.Unload();
+			if (m_content != null)
+			{
+				m_content.Unload();
+				m_content.Dispose();
+				m_content = null;
+			}
 
 			base.UnloadContent();
 		}

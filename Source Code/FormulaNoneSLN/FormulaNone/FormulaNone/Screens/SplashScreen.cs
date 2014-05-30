@@ -84,7 +84,11 @@ namespace Unv.FormulaNone.Screens
 			SplashImages.Clear();
 
 			if (m_content != null)
+			{
 				m_content.Unload();
+				m_content.Dispose();
+				m_content = null;
+			}
 			
 			base.UnloadContent();
 		}
