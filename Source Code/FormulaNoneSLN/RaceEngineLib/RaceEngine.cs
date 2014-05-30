@@ -17,6 +17,10 @@ namespace Unv.RaceEngineLib
 		private PhysicsEngine	m_physicsEngine;
 		private List<Tire>		m_obstacles;
 
+
+		public Tire[] Obstacles { get { return m_obstacles.ToArray(); } }
+
+
 		public RaceEngine()
 		{
 			m_physicsEngine = new PhysicsEngine();
