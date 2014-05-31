@@ -89,6 +89,7 @@
     <Compile Include="Screens\SelectionScreen.cs" />
     <Compile Include="Screens\SplashScreen.cs" />
     <Compile Include="Screens\TitleScreen.cs" />
+    <Compile Include="Sprites\CarSprite.cs" />
     <Compile Include="Texture2DExt.cs" />
   </ItemGroup>
   <ItemGroup>

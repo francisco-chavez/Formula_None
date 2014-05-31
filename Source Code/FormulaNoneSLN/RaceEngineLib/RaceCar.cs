@@ -31,7 +31,11 @@ namespace Unv.RaceEngineLib
 		public static readonly Shape CAR_SHAPE = new ConvexPolygon(BORDER_POINTS_BASE);
 
 
-		public Body Body { get; internal set; }
+		public Body		Body				{ get; internal set; }
+		public Vector2	CenterOfMassShift	{ get { return CAR_SHAPE.CenterOfMassShift; } }
+		public Vector2	Position			{ get { return Body.Position; } }
+		public float	Rotation			{ get { return Body.Orientation; } }
+
 
 		public RaceCar()
 		{

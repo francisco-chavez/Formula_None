@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
+using Unv.FormulaNone.Sprites;
 using Unv.RaceEngineLib;
 using Unv.RaceEngineLib.Physics.Shapes;
 using Unv.RaceEngineLib.Storage;
@@ -24,6 +25,8 @@ namespace Unv.FormulaNone.Screens
 		private Texture2D		m_trackImage;
 		private Texture2D		m_background;
 		private Texture2D		m_obstacleImage;
+
+		private List<CarSprite> m_carSprites;
 		#endregion
 
 
@@ -32,6 +35,8 @@ namespace Unv.FormulaNone.Screens
 		{
 			this.TransitionOnTime  = TimeSpan.FromSeconds(0.5);
 			this.TransitionOffTime = TimeSpan.FromSeconds(0.5);
+
+			m_carSprites = new List<CarSprite>(4);
 		}
 
 		public override void LoadContent()
@@ -51,6 +56,13 @@ namespace Unv.FormulaNone.Screens
 
 			m_raceEngine = new RaceEngine();
 			m_raceEngine.AddObstacles(obstacleMap);
+
+
+			CarSprite player = new CarSprite();
+			player.Data = new RaceCar();
+			m_raceEngine.AddCar(player.Data);
+			player.Image = m_content.Load<Texture2D>(string.Format("Images/Cars/{0}", selectedCar));
+			m_carSprites.Add(player);
 
 			base.LoadContent();
 		}
@@ -73,6 +85,11 @@ namespace Unv.FormulaNone.Screens
 		public override void Update(GameTime gameTime, bool otherScreenHasFocus, bool coveredByOtherScreen)
 		{
 			base.Update(gameTime, otherScreenHasFocus, coveredByOtherScreen);
+
+			if (!this.IsActive)
+				return;
+
+			m_raceEngine.StepTime((float) gameTime.ElapsedGameTime.TotalMilliseconds);
 		}
 
 		public override void HandleInput(InputState input)
@@ -102,6 +119,12 @@ namespace Unv.FormulaNone.Screens
 					(int) (radius * 2));
 
 				spriteBatch.Draw(m_obstacleImage, rect, lighting);
+			}
+
+			foreach (var sprite in m_carSprites)
+			{
+				sprite.ImageOffset = raceTrackOffset;
+				sprite.Draw(gameTime, spriteBatch, lighting);
 			}
 
 			spriteBatch.End();
