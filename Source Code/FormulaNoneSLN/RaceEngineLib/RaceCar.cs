@@ -5,6 +5,7 @@ using System.Text;
 
 using Microsoft.Xna.Framework;
 
+using Unv.RaceEngineLib.CarControl;
 using Unv.RaceEngineLib.Physics;
 using Unv.RaceEngineLib.Physics.Shapes;
 
@@ -35,6 +36,8 @@ namespace Unv.RaceEngineLib
 		public Vector2	CenterOfMassShift	{ get { return CAR_SHAPE.CenterOfMassShift; } }
 		public Vector2	Position			{ get { return Body.Position; } }
 		public float	Rotation			{ get { return Body.Orientation; } }
+
+		public ICarController CarControls { get; set; }
 
 
 		public RaceCar()

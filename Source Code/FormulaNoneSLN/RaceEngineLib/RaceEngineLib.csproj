@@ -93,6 +93,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CarControl\ICarController.cs" />
     <Compile Include="FloatExt.cs" />
     <Compile Include="Physics\Body.cs" />
     <Compile Include="Physics\MassData.cs" />
