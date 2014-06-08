@@ -86,5 +86,53 @@ namespace Unv.RaceEngineLib.Physics.Shapes
 
 			m_quickRadius = l.Length() + 1f;
 		}
+
+
+		/// <summary>
+		/// Given a shape with a uniform density, that is in the form of a triangle from overhead 
+		/// (Z-Axix is up), and one point at the point of origin, this will given you the moment
+		/// of inertia in the Z-Axis from the point of origin divided by the mass of the shape.
+		/// All you need to provide are the other two points.
+		/// </summary>
+		/// <returns></returns>
+		private static float MomentOfInertiaTriangleOverMass(Vector2 A, Vector2 B)
+		{
+			// b stands for base length, which happens to be Mag(A - (0, 0))
+			float b = A.Length();
+
+			// N is the unit vector perpendicular to base b
+			Vector2 N = A.NormalVector(false) / b;
+
+			// h is the height of the triangle, which happens to be (B dot N) - ((A dot N) or ((0, 0) dot N)
+			// since both of those points are on the base, they both have the same dot product with N. I just
+			// removed  the minus 0
+			float h = Vector2.Dot(B, N);
+
+			// U is the unit vector parallel to the base pointing to point A
+			Vector2 U = A / b;
+
+			// a is the base length of the far triangle that is created when we split
+			// the main triangle along the height, B dot U gives us the length of the
+			// near triangle's base
+			float a = b - Vector2.Dot(B, U);
+
+			// C is the center of the triangle (which also happens to be the triangle's center of
+			// mass. This is found by averaging all three points. I didn't bother adding (0, 0).
+			Vector2 C = (A + B) / 3;
+
+			// The equation that I found for the moment of inertia for a triangle at the triangle's
+			// center of mass is:
+			// ((b^3)h - (b^2)ha + bh(a^2) + b(h^3)) / 36
+			// I found this online, so I know it's true
+			float iTriOverMass = (b * b * b * h - b * b * h * a + b * h * a * a + b * h * h * h) / 36;
+
+			// We need to transfer the inertia from C to (0, 0), which is distance squared * mass.
+			// The inertia of the triangle is alreay missing the mass, so we can insert that after
+			// combining the two
+			float moment = C.LengthSquared() + iTriOverMass;
+
+			// Since we don't have the actual mass, we'll return what we already have.
+			return moment;
+		}
 	}
 }
