@@ -13,19 +13,47 @@ namespace Unv.RaceEngineLib.Physics.Shapes
 	public class ConvexPolygon
 		: Shape
 	{
+		#region Attributes
 		private readonly Vector2[]	BorderPoints;
-		private readonly Vector2	m_centerOfMass;
 		private readonly float		m_area;
 		private readonly float		m_quickRadius;
 		private readonly Vector2	m_centerOfMassShift;
+		#endregion
 
 
+		#region Attributes
 		public override Vector2 CenterOfMassShift { get { return m_centerOfMassShift; } }
 		public override float	Area			{ get { return m_area; } }
 		public override float	QuickRadius		{ get { return m_quickRadius; } }
 
+		/// <summary>
+		/// Returns (Izz over mass) at the point of origin.
+		/// </summary>
+		public override float InertiaOverMass
+		{
+			get
+			{
+				if (!float.IsNaN(m_inertiaOverMass))
+				{
+					m_inertiaOverMass = 0f;
+
+					for (int i = 0; i < BorderPoints.Length; i++)
+					{
+						Vector2 A = BorderPoints[i];
+						Vector2 B = BorderPoints[(i + 1) % BorderPoints.Length];
+
+						m_inertiaOverMass += Triangle.MomentOfInertiaTriangleOverMass(A, B); 
+					}
+				}
+
+				return m_inertiaOverMass;
+			}
+		}
+		private float m_inertiaOverMass = float.NaN;
+		#endregion
 
 
+		#region Constructors
 		public ConvexPolygon(IEnumerable<Vector2> borderPoints)
 		{
 			if (borderPoints == null)
@@ -91,5 +119,6 @@ namespace Unv.RaceEngineLib.Physics.Shapes
 
 			m_quickRadius = radius.Length() + 1f;
 		}
+		#endregion
 	}
 }

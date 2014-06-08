@@ -29,6 +29,21 @@ namespace Unv.RaceEngineLib.Physics.Shapes
 		}
 
 		public override float QuickRadius { get { return Radius + 0.1f; } }
+
+		/// <summary>
+		/// Returns (Izz over mass) at the point of origin.
+		/// </summary>
+		public override float InertiaOverMass
+		{
+			get
+			{
+				if (float.IsNaN(m_inertiaOverMass))
+					m_inertiaOverMass = 0.5f * Radius * Radius;
+
+				return m_inertiaOverMass;
+			}
+		}
+		private float m_inertiaOverMass = float.NaN;
 		#endregion
 
 

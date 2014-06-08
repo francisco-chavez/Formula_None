@@ -22,6 +22,11 @@ namespace Unv.RaceEngineLib.Physics
 		public Vector2 CenterOfMass { get { return Vector2.Zero; } }
 
 		/// <summary>
+		/// Returns (Izz over mass) at the point of origin.
+		/// </summary>
+		public abstract float InertiaOverMass { get; }
+
+		/// <summary>
 		/// Returns the area of the shape.
 		/// </summary>
 		public abstract float	Area			{ get; }

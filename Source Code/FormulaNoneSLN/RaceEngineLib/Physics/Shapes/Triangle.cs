@@ -13,6 +13,12 @@ namespace Unv.RaceEngineLib.Physics.Shapes
 	public class Triangle
 		: Shape
 	{
+		#region Attributes
+		private readonly Vector2[] m_originalPositions;
+		#endregion
+
+
+		#region Properties
 		public override Vector2 CenterOfMassShift
 		{
 			get { return m_centerOfMassShift; }
@@ -31,9 +37,33 @@ namespace Unv.RaceEngineLib.Physics.Shapes
 		}
 		private readonly float m_quickRadius;
 
+		/// <summary>
+		/// Returns (Izz over mass) at the point of origin.
+		/// </summary>
+		public override float InertiaOverMass
+		{
+			get
+			{
+				if (float.IsNaN(m_inertiaOverMass))
+				{
+					Vector2 a = m_originalPositions[0];
+					Vector2 b = m_originalPositions[1];
+					Vector2 c = m_originalPositions[2];
 
+					m_inertiaOverMass = Triangle.MomentOfInertiaTriangleOverMass(b - a, c - a, true);
+				}
+
+				return m_inertiaOverMass;
+			}
+		}
+		private float m_inertiaOverMass = float.NaN;
+		#endregion
+
+
+		#region Constructors
 		public Triangle(Vector2 a, Vector2 b, Vector2 c)
 		{
+			m_originalPositions = new Vector2[] { a, b, c };
 			m_centerOfMassShift = Vector2.Zero;
 
 			// At first I used Heron's Formula to find the area of the triangle, but this 
@@ -86,8 +116,10 @@ namespace Unv.RaceEngineLib.Physics.Shapes
 
 			m_quickRadius = l.Length() + 1f;
 		}
+		#endregion
 
 
+		#region Methods
 		/// <summary>
 		/// Given a shape with a uniform density, that is in the form of a triangle from overhead 
 		/// (Z-Axix is up), and one point at the point of origin, this will given you the moment
@@ -95,7 +127,7 @@ namespace Unv.RaceEngineLib.Physics.Shapes
 		/// All you need to provide are the other two points.
 		/// </summary>
 		/// <returns></returns>
-		private static float MomentOfInertiaTriangleOverMass(Vector2 A, Vector2 B)
+		public static float MomentOfInertiaTriangleOverMass(Vector2 A, Vector2 B, bool fromCenterOfMass = false)
 		{
 			// b stands for base length, which happens to be Mag(A - (0, 0))
 			float b = A.Length();
@@ -126,6 +158,10 @@ namespace Unv.RaceEngineLib.Physics.Shapes
 			// I found this online, so I know it's true
 			float iTriOverMass = (b * b * b * h - b * b * h * a + b * h * a * a + b * h * h * h) / 36;
 
+			if (fromCenterOfMass)
+				// return the moment from point C, not from point (0, 0)
+				return iTriOverMass;
+
 			// We need to transfer the inertia from C to (0, 0), which is distance squared * mass.
 			// The inertia of the triangle is alreay missing the mass, so we can insert that after
 			// combining the two
@@ -134,5 +170,6 @@ namespace Unv.RaceEngineLib.Physics.Shapes
 			// Since we don't have the actual mass, we'll return what we already have.
 			return moment;
 		}
+		#endregion
 	}
 }
