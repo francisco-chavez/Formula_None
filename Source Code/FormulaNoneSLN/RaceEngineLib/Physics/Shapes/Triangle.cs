@@ -19,6 +19,10 @@ namespace Unv.RaceEngineLib.Physics.Shapes
 
 
 		#region Properties
+		public Vector2 PointA { get; private set; }
+		public Vector2 PointB { get; private set; }
+		public Vector2 PointC { get; private set; }
+
 		public override Vector2 CenterOfMassShift
 		{
 			get { return m_centerOfMassShift; }
@@ -101,18 +105,18 @@ namespace Unv.RaceEngineLib.Physics.Shapes
 			Vector2 centerOfMass = (a + b + c) / 3f;
 			m_centerOfMassShift = -centerOfMass;
 
+			PointA = a + CenterOfMassShift;
+			PointB = b + CenterOfMassShift;
+			PointC = c + CenterOfMassShift;
+
 
 			// Find a radius from the center of mass that contains
 			// all points in the triangle.
-			Vector2 u = a - centerOfMass;
-			Vector2 v = b - centerOfMass;
-			Vector2 w = c - centerOfMass;
-
-			Vector2 l = u;
-			if (l.LengthSquared() < v.LengthSquared())
-				l = v;
-			if (l.LengthSquared() < w.LengthSquared())
-				l = w;
+			Vector2 l = PointA;
+			if (l.LengthSquared() < PointB.LengthSquared())
+				l = PointB;
+			if (l.LengthSquared() < PointC.LengthSquared())
+				l = PointC;
 
 			m_quickRadius = l.Length() + 1f;
 		}
