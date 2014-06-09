@@ -121,5 +121,18 @@ namespace Unv.RaceEngineLib.Physics.Shapes
 			m_quickRadius = radius.Length() + 1f;
 		}
 		#endregion
+
+
+		#region Methods
+		public Vector2[] GetAdjustedPointPositions(Vector2 position, float rotation)
+		{
+			Vector2[] points = new Vector2[BorderPoints.Length];
+
+			for (int i = 0; i < points.Length; i++)
+				points[i] = BorderPoints[i].Rotate(rotation) + position;
+
+			return points;
+		}
+		#endregion
 	}
 }

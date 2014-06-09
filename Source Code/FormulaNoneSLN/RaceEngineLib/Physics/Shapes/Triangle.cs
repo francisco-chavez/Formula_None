@@ -174,6 +174,16 @@ namespace Unv.RaceEngineLib.Physics.Shapes
 			// Since we don't have the actual mass, we'll return what we already have.
 			return moment;
 		}
+
+		public Vector2[] GetAdjustedPointPositions(Vector2 position, float rotation)
+		{
+			Vector2[] points = new Vector2[3];
+			points[0] = PointA.Rotate(rotation) + position;
+			points[1] = PointB.Rotate(rotation) + position;
+			points[2] = PointC.Rotate(rotation) + position;
+
+			return points;
+		}
 		#endregion
 	}
 }

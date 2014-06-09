@@ -76,10 +76,10 @@ namespace Unv.RaceEngineLib.Physics
 		}
 
 		private static bool DoTheyCollide(Circular shapeA, Circular shapeB, Vector2 positionA, 
-										  Vector2 positionB, out Vector2 normal, out float penatration)
+										  Vector2 positionB, out Vector2 normal, out float penetration)
 		{
 			normal = Vector2.Zero;
-			penatration = 0f;
+			penetration = 0f;
 
 			Vector2 positionDelta = positionB - positionA;
 			float minR = shapeA.Radius + shapeB.Radius;
@@ -90,29 +90,20 @@ namespace Unv.RaceEngineLib.Physics
 			{
 				float deltaLength	= positionDelta.Length();
 				normal				= positionDelta / deltaLength;
-				penatration			= minR - deltaLength;
+				penetration			= minR - deltaLength;
 			}
 
 			return collide;
 		}
 
 		private static bool DoTheyCollide(Triangle shapeA, Circular shapeB, Body bodyA, 
-										  Vector2 positionB, out Vector2 impactNormal, out float penatration)
+										  Vector2 positionB, out Vector2 impactNormal, out float penetration)
 		{
 			impactNormal = Vector2.Zero;
-			penatration = 0f;
+			penetration = 0f;
 
-			Vector2[] points = new Vector2[3];
-			points[0] = shapeA.PointA.Rotate(bodyA.Rotation) + bodyA.Position;
-			points[1] = shapeA.PointB.Rotate(bodyA.Rotation) + bodyA.Position;
-			points[2] = shapeA.PointC.Rotate(bodyA.Rotation) + bodyA.Position;
-
-			Vector2[] normals = new Vector2[3];
-			for (int i = 0; i < 3; i++)
-			{
-				normals[i] = points[(i + 1) % 3] - points[i];
-				normals[i] = normals[i].NormalVector();
-			}
+			Vector2[] pointsA = shapeA.GetAdjustedPointPositions(bodyA.Position, bodyA.Rotation);
+			Vector2[] normals = CreateNormalUnitVectors(pointsA);
 
 			float	minPenatration	= float.MaxValue;
 			bool	doTheyCollide	= true;
@@ -122,7 +113,7 @@ namespace Unv.RaceEngineLib.Physics
 			for (int i = 0; i < 3; i++)
 			{
 				Vector2 radiusVector = normals[i] * shapeB.Radius;
-				Range extentRangeA = Range.FindExtent(normals[i], points);
+				Range extentRangeA = Range.FindExtent(normals[i], pointsA);
 				Range extentRangeB = Range.FindExtent(normals[i], positionB - radiusVector, positionB + radiusVector);
 
 				if (extentRangeA.Max < extentRangeB.Min || extentRangeB.Max < extentRangeB.Min)
@@ -146,29 +137,19 @@ namespace Unv.RaceEngineLib.Physics
 			}
 
 			if (doTheyCollide)
-				penatration = minPenatration;
+				penetration = minPenatration;
 
 			return doTheyCollide;
 		}
 
 		private static bool DoTheyCollide(ConvexPolygon shapeA, Circular shapeB, Body bodyA, 
-										  Vector2 positionB, out Vector2 impactNormal, out float penatration)
+										  Vector2 positionB, out Vector2 impactNormal, out float penetration)
 		{
 			impactNormal = Vector2.Zero;
-			penatration  = 0f;
+			penetration  = 0f;
 
-			Vector2[] pointsA = new Vector2[shapeA.BorderPoints.Length];
-
-			for (int i = 0; i < pointsA.Length; i++)
-				pointsA[i] = shapeA.BorderPoints[i].Rotate(bodyA.Rotation) + bodyA.Position;
-
-			Vector2[] normals = new Vector2[pointsA.Length];
-
-			for (int i = 0; i < normals.Length; i++)
-			{
-				normals[i] = pointsA[(i + 1) % normals.Length] - pointsA[i];
-				normals[i] = normals[i].NormalVector();
-			}
+			Vector2[] pointsA = shapeA.GetAdjustedPointPositions(bodyA.Position, bodyA.Rotation);
+			Vector2[] normals = CreateNormalUnitVectors(pointsA);
 
 			float	minPenatration	= float.MaxValue;
 			bool	doTheyCollide	= true;
@@ -202,9 +183,39 @@ namespace Unv.RaceEngineLib.Physics
 			}
 
 			if (doTheyCollide)
-				penatration = minPenatration;
+				penetration = minPenatration;
 
 			return doTheyCollide;
+		}
+
+		private static bool DoTheyCollide(Triangle shapeA, ConvexPolygon shapeB, Body bodyA, 
+										  Body bodyB, out Vector2 impactNormal, out float penetration)
+		{
+			impactNormal = Vector2.Zero;
+			penetration  = 0f;
+
+			Vector2[] pointsA = shapeA.GetAdjustedPointPositions(bodyA.Position, bodyA.Rotation);
+			Vector2[] pointsB = shapeB.GetAdjustedPointPositions(bodyB.Position, bodyB.Rotation);
+
+			Vector2[] normalsA = CreateNormalUnitVectors(pointsA);
+			Vector2[] normalsB = CreateNormalUnitVectors(pointsB);
+
+			throw new NotImplementedException();
+
+			return false;
+		}
+
+		private static Vector2[] CreateNormalUnitVectors(Vector2[] positions)
+		{
+			Vector2[] normals = new Vector2[positions.Length];
+
+			for (int i = 0; i < normals.Length; i++)
+			{
+				normals[i] = positions[(i + 1) % normals.Length] - positions[i];
+				normals[i] = normals[i].NormalVector();
+			}
+
+			return normals;
 		}
 		#endregion
 	}
