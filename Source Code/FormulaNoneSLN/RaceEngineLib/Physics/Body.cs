@@ -113,7 +113,7 @@ namespace Unv.RaceEngineLib.Physics
 			}
 
 			float	minPenatration	= float.MaxValue;
-			bool	doTheyCollide	= false;
+			bool	doTheyCollide	= true;
 
 			Vector2 positionDelta = positionB - bodyA.Position;
 
@@ -124,9 +124,10 @@ namespace Unv.RaceEngineLib.Physics
 				Range extentRangeB = Range.FindExtent(normals[i], positionB - radiusVector, positionB + radiusVector);
 
 				if (extentRangeA.Max < extentRangeB.Min || extentRangeB.Max < extentRangeB.Min)
-					continue;
-
-				doTheyCollide = true;
+				{
+					doTheyCollide = false;
+					break;
+				}
 
 				float halfExtentLengthA = extentRangeA.Length / 2f;
 				float halfExtentLengthB = extentRangeB.Length / 2f;
