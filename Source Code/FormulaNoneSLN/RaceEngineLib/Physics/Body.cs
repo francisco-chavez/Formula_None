@@ -115,6 +115,8 @@ namespace Unv.RaceEngineLib.Physics
 			float	minPenatration	= float.MaxValue;
 			bool	doTheyCollide	= false;
 
+			Vector2 positionDelta = positionB - bodyA.Position;
+
 			for (int i = 0; i < 3; i++)
 			{
 				Vector2 radiusVector = normals[i] * shapeB.Radius;
@@ -126,18 +128,17 @@ namespace Unv.RaceEngineLib.Physics
 
 				doTheyCollide = true;
 
-				Vector2 positionDelta = positionB - bodyA.Position;
+				float halfExtentLengthA = extentRangeA.Length / 2f;
+				float halfExtentLengthB = extentRangeB.Length / 2f;
 
-				float positionExtentA = Vector2.Dot(bodyA.Position, normals[i]);
-				float positionExtentB = Vector2.Dot(positionB, normals[i]);
+				float positionDeltaExtent = Vector2.Dot(positionDelta, normals[i]);
 
-				throw new NotImplementedException();
+				float overlap = halfExtentLengthA + halfExtentLengthB - Math.Abs(positionDeltaExtent);
 				
-				float pen = 0f;
-				if (pen < minPenatration)
+				if (overlap < minPenatration)
 				{
-					minPenatration = pen;
-					impactNormal = Vector2.Zero;
+					minPenatration = overlap;
+					impactNormal = normals[i];
 				}
 			}
 
