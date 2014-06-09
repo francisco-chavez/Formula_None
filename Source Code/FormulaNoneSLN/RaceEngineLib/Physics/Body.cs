@@ -75,7 +75,8 @@ namespace Unv.RaceEngineLib.Physics
 			return false;
 		}
 
-		private static bool DoTheyCollide(Circular shapeA, Circular shapeB, Vector2 positionA, Vector2 positionB, out Vector2 normal, out float penatration)
+		private static bool DoTheyCollide(Circular shapeA, Circular shapeB, Vector2 positionA, 
+										  Vector2 positionB, out Vector2 normal, out float penatration)
 		{
 			normal = Vector2.Zero;
 			penatration = 0f;
@@ -95,7 +96,8 @@ namespace Unv.RaceEngineLib.Physics
 			return collide;
 		}
 
-		private static bool DoTheyCollide(Triangle shapeA, Circular shapeB, Body bodyA, Vector2 positionB, out Vector2 impactNormal, out float penatration)
+		private static bool DoTheyCollide(Triangle shapeA, Circular shapeB, Body bodyA, 
+										  Vector2 positionB, out Vector2 impactNormal, out float penatration)
 		{
 			impactNormal = Vector2.Zero;
 			penatration = 0f;
@@ -136,6 +138,62 @@ namespace Unv.RaceEngineLib.Physics
 
 				float overlap = halfExtentLengthA + halfExtentLengthB - Math.Abs(positionDeltaExtent);
 				
+				if (overlap < minPenatration)
+				{
+					minPenatration = overlap;
+					impactNormal = normals[i];
+				}
+			}
+
+			if (doTheyCollide)
+				penatration = minPenatration;
+
+			return doTheyCollide;
+		}
+
+		private static bool DoTheyCollide(ConvexPolygon shapeA, Circular shapeB, Body bodyA, 
+										  Vector2 positionB, out Vector2 impactNormal, out float penatration)
+		{
+			impactNormal = Vector2.Zero;
+			penatration  = 0f;
+
+			Vector2[] pointsA = new Vector2[shapeA.BorderPoints.Length];
+
+			for (int i = 0; i < pointsA.Length; i++)
+				pointsA[i] = shapeA.BorderPoints[i].Rotate(bodyA.Rotation) + bodyA.Position;
+
+			Vector2[] normals = new Vector2[pointsA.Length];
+
+			for (int i = 0; i < normals.Length; i++)
+			{
+				normals[i] = pointsA[(i + 1) % normals.Length] - pointsA[i];
+				normals[i] = normals[i].NormalVector();
+			}
+
+			float	minPenatration	= float.MaxValue;
+			bool	doTheyCollide	= true;
+
+			Vector2 positionDelta = positionB - bodyA.Position;
+
+			for (int i = 0; i < 3; i++)
+			{
+				Vector2 radiusVector = normals[i] * shapeB.Radius;
+				Range extentRangeA = Range.FindExtent(normals[i], pointsA);
+				Range extentRangeB = Range.FindExtent(normals[i], positionB - radiusVector, positionB + radiusVector);
+
+				if (extentRangeA.Max < extentRangeB.Min || extentRangeB.Max < extentRangeB.Min)
+				{
+					doTheyCollide = false;
+					break;
+				}
+
+				float halfExtentLengthA = extentRangeA.Length / 2f;
+				float halfExtentLengthB = extentRangeB.Length / 2f;
+
+				float positionDeltaExtent = Vector2.Dot(positionDelta, normals[i]);
+
+				float overlap = halfExtentLengthA + halfExtentLengthB - Math.Abs(positionDeltaExtent);
+
 				if (overlap < minPenatration)
 				{
 					minPenatration = overlap;

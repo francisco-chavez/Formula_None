@@ -14,7 +14,8 @@ namespace Unv.RaceEngineLib.Physics.Shapes
 		: Shape
 	{
 		#region Attributes
-		private readonly Vector2[]	BorderPoints;
+		public readonly Vector2[]	BorderPoints;
+
 		private readonly float		m_area;
 		private readonly float		m_quickRadius;
 		private readonly Vector2	m_centerOfMassShift;
