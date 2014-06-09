@@ -200,9 +200,77 @@ namespace Unv.RaceEngineLib.Physics
 			Vector2[] normalsA = CreateNormalUnitVectors(pointsA);
 			Vector2[] normalsB = CreateNormalUnitVectors(pointsB);
 
-			throw new NotImplementedException();
+			Vector2 positionDelta = bodyB.Position - bodyA.Position;
 
-			return false;
+			Vector2 impactVector1;
+			float	penetration1;
+			Vector2 impactVector2;
+			float	penetration2;
+
+			bool collisionCheck1 = 
+				DoTheyCollide(pointsA, pointsB, positionDelta, normalsA, out impactVector1, out penetration1);
+
+			if (!collisionCheck1)
+				return false;
+
+			bool collisionCheck2 =
+				DoTheyCollide(pointsA, pointsB, positionDelta, normalsB, out impactVector2, out penetration2);
+
+			if (!collisionCheck2)
+				return false;
+
+			if (penetration1 <= penetration2)
+			{
+				penetration  = penetration1;
+				impactNormal = impactVector1;
+			}
+			else
+			{
+				penetration  = penetration2;
+				impactNormal = impactVector2;
+			}
+
+			return true;
+		}
+
+		private static bool DoTheyCollide(Vector2[] borderPointsA, Vector2[] borderPointsB, 
+										  Vector2 positionDelta, Vector2[] unitNormals, 
+										  out Vector2 impactNormal, out float penetration)
+		{
+			bool	doTheyCollide	= true;
+			float	minPenetration	= float.MaxValue;
+					impactNormal	= Vector2.Zero;
+					penetration		= 0f;
+
+			for (int i = 0; i < unitNormals.Length; i++)
+			{
+				Range extentRangeA = Range.FindExtent(unitNormals[i], borderPointsA);
+				Range extentRangeB = Range.FindExtent(unitNormals[i], borderPointsB);
+
+				if (extentRangeA.Max < extentRangeB.Min || extentRangeB.Max < extentRangeB.Min)
+				{
+					doTheyCollide = false;
+					break;
+				}
+
+				float halfExtentLengthA = extentRangeA.Length / 2f;
+				float halfExtentLengthB = extentRangeB.Length / 2f;
+
+				float positionDeltaExtent = Vector2.Dot(positionDelta, unitNormals[i]);
+
+				float overlap = halfExtentLengthA + halfExtentLengthB - Math.Abs(positionDeltaExtent);
+
+				if (overlap < minPenetration)
+				{
+					minPenetration = overlap;
+					impactNormal = unitNormals[i];
+				}
+			}
+
+			if (doTheyCollide)
+				penetration = minPenetration;
+
+			return doTheyCollide;
 		}
 
 		private static Vector2[] CreateNormalUnitVectors(Vector2[] positions)
