@@ -108,8 +108,6 @@ namespace Unv.RaceEngineLib.Physics
 			float	minPenatration	= float.MaxValue;
 			bool	doTheyCollide	= true;
 
-			Vector2 positionDelta = positionB - bodyA.Position;
-
 			for (int i = 0; i < 3; i++)
 			{
 				Vector2 radiusVector = normals[i] * shapeB.Radius;
@@ -125,9 +123,9 @@ namespace Unv.RaceEngineLib.Physics
 				float halfExtentLengthA = extentRangeA.Length / 2f;
 				float halfExtentLengthB = extentRangeB.Length / 2f;
 
-				float positionDeltaExtent = Vector2.Dot(positionDelta, normals[i]);
+				float extentCenterDelta = (halfExtentLengthB + extentRangeB.Min) - (halfExtentLengthA + extentRangeA.Min);
 
-				float overlap = halfExtentLengthA + halfExtentLengthB - Math.Abs(positionDeltaExtent);
+				float overlap = halfExtentLengthA + halfExtentLengthB - Math.Abs(extentCenterDelta);
 				
 				if (overlap < minPenatration)
 				{
@@ -154,7 +152,6 @@ namespace Unv.RaceEngineLib.Physics
 			float	minPenatration	= float.MaxValue;
 			bool	doTheyCollide	= true;
 
-			Vector2 positionDelta = positionB - bodyA.Position;
 
 			for (int i = 0; i < 3; i++)
 			{
@@ -171,9 +168,9 @@ namespace Unv.RaceEngineLib.Physics
 				float halfExtentLengthA = extentRangeA.Length / 2f;
 				float halfExtentLengthB = extentRangeB.Length / 2f;
 
-				float positionDeltaExtent = Vector2.Dot(positionDelta, normals[i]);
+				float extentCenterDelta = (halfExtentLengthB + extentRangeB.Min) - (halfExtentLengthA + extentRangeA.Min);
 
-				float overlap = halfExtentLengthA + halfExtentLengthB - Math.Abs(positionDeltaExtent);
+				float overlap = halfExtentLengthA + halfExtentLengthB - Math.Abs(extentCenterDelta);
 
 				if (overlap < minPenatration)
 				{
@@ -191,16 +188,29 @@ namespace Unv.RaceEngineLib.Physics
 		private static bool DoTheyCollide(Triangle shapeA, ConvexPolygon shapeB, Body bodyA, 
 										  Body bodyB, out Vector2 impactNormal, out float penetration)
 		{
-			impactNormal = Vector2.Zero;
-			penetration  = 0f;
-
 			Vector2[] pointsA = shapeA.GetAdjustedPointPositions(bodyA.Position, bodyA.Rotation);
 			Vector2[] pointsB = shapeB.GetAdjustedPointPositions(bodyB.Position, bodyB.Rotation);
 
-			Vector2[] normalsA = CreateNormalUnitVectors(pointsA);
-			Vector2[] normalsB = CreateNormalUnitVectors(pointsB);
+			return DoTheyCollide(pointsA, pointsA, out impactNormal, out penetration);
+		}
 
-			Vector2 positionDelta = bodyB.Position - bodyA.Position;
+		private static bool DoTheyCollide(ConvexPolygon shapeA, ConvexPolygon shapeB, Body bodyA, 
+										  Body bodyB, out Vector2 impactNormal, out float penetration)
+		{
+			Vector2[] pointsA = shapeA.GetAdjustedPointPositions(bodyA.Position, bodyA.Rotation);
+			Vector2[] pointsB = shapeB.GetAdjustedPointPositions(bodyB.Position, bodyB.Rotation);
+
+			return DoTheyCollide(pointsA, pointsA, out impactNormal, out penetration);
+		}
+
+		private static bool DoTheyCollide(Vector2[] borderPointsA, Vector2[] borderPointsB, 
+										  out Vector2 impactNormal, out float penetration)
+		{
+			impactNormal = Vector2.Zero;
+			penetration  = 0f;
+
+			Vector2[] normalsA = CreateNormalUnitVectors(borderPointsA);
+			Vector2[] normalsB = CreateNormalUnitVectors(borderPointsB);
 
 			Vector2 impactVector1;
 			float	penetration1;
@@ -208,25 +218,25 @@ namespace Unv.RaceEngineLib.Physics
 			float	penetration2;
 
 			bool collisionCheck1 = 
-				DoTheyCollide(pointsA, pointsB, positionDelta, normalsA, out impactVector1, out penetration1);
+				DoTheyCollide(borderPointsA, borderPointsB, normalsA, out impactVector1, out penetration1);
 
 			if (!collisionCheck1)
 				return false;
 
 			bool collisionCheck2 =
-				DoTheyCollide(pointsA, pointsB, positionDelta, normalsB, out impactVector2, out penetration2);
+				DoTheyCollide(borderPointsA, borderPointsB, normalsB, out impactVector2, out penetration2);
 
 			if (!collisionCheck2)
 				return false;
 
 			if (penetration1 <= penetration2)
 			{
-				penetration  = penetration1;
+				penetration = penetration1;
 				impactNormal = impactVector1;
 			}
 			else
 			{
-				penetration  = penetration2;
+				penetration = penetration2;
 				impactNormal = impactVector2;
 			}
 
@@ -234,8 +244,7 @@ namespace Unv.RaceEngineLib.Physics
 		}
 
 		private static bool DoTheyCollide(Vector2[] borderPointsA, Vector2[] borderPointsB, 
-										  Vector2 positionDelta, Vector2[] unitNormals, 
-										  out Vector2 impactNormal, out float penetration)
+										  Vector2[] unitNormals, out Vector2 impactNormal, out float penetration)
 		{
 			bool	doTheyCollide	= true;
 			float	minPenetration	= float.MaxValue;
@@ -256,9 +265,9 @@ namespace Unv.RaceEngineLib.Physics
 				float halfExtentLengthA = extentRangeA.Length / 2f;
 				float halfExtentLengthB = extentRangeB.Length / 2f;
 
-				float positionDeltaExtent = Vector2.Dot(positionDelta, unitNormals[i]);
+				float extentCentersDelta = (halfExtentLengthB + extentRangeB.Min) - (halfExtentLengthA + extentRangeA.Min);
 
-				float overlap = halfExtentLengthA + halfExtentLengthB - Math.Abs(positionDeltaExtent);
+				float overlap = halfExtentLengthA + halfExtentLengthB - Math.Abs(extentCentersDelta);
 
 				if (overlap < minPenetration)
 				{
@@ -273,13 +282,13 @@ namespace Unv.RaceEngineLib.Physics
 			return doTheyCollide;
 		}
 
-		private static Vector2[] CreateNormalUnitVectors(Vector2[] positions)
+		private static Vector2[] CreateNormalUnitVectors(Vector2[] borderPoints)
 		{
-			Vector2[] normals = new Vector2[positions.Length];
+			Vector2[] normals = new Vector2[borderPoints.Length];
 
 			for (int i = 0; i < normals.Length; i++)
 			{
-				normals[i] = positions[(i + 1) % normals.Length] - positions[i];
+				normals[i] = borderPoints[(i + 1) % normals.Length] - borderPoints[i];
 				normals[i] = normals[i].NormalVector();
 			}
 
