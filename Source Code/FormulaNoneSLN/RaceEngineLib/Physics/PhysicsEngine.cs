@@ -36,18 +36,18 @@ namespace Unv.RaceEngineLib.Physics
 
 
 		#region Methods
-		public Body AddMobileBody(Shape shape, Vector2 position, string materialKey)
+		public Body AddMobileBody(Shape shape, float shapeThickness, Vector2 position, string materialKey)
 		{
 			var material = MaterialSettings.Instance.Materials[materialKey];
 
-			Body b = new Body();
-			b.Shape = shape;
-			b.Resitution = material.Restitution;
+			Body body = new Body();
+			body.CollisionDetectionShape	= shape;
+			body.Resitution					= material.Restitution;
+			body.Mass						= material.Density * shape.Area * shapeThickness;
+			body.Inertia					= shape.InertiaOverMass * body.Mass;
+			body.Position					= position;
 
-			MassData massData = new MassData();
-			massData.Mass = material.Density * shape.Area;
-
-			return b;
+			return body;
 		}
 
 		public Body AddImmobileBody(Shape shape, Vector2 position, string materialKey)
@@ -55,14 +55,11 @@ namespace Unv.RaceEngineLib.Physics
 			var material = MaterialSettings.Instance.Materials[materialKey];
 
 			Body body = new Body();
-			body.Shape			= shape;
-			body.Resitution		= material.Restitution;
-
-			MassData massData = new MassData();
-			massData.Mass		= float.PositiveInfinity;
-			massData.Inertia	= float.PositiveInfinity;
-
-			body.MassData		= massData;
+			body.CollisionDetectionShape	= shape;
+			body.Resitution					= material.Restitution;
+			body.Mass						= float.PositiveInfinity;
+			body.Inertia					= float.PositiveInfinity;
+			body.Position					= position;
 
 			m_immobileBodies.Add(body);
 
@@ -105,7 +102,7 @@ namespace Unv.RaceEngineLib.Physics
 			{
 				for (int j = 0; j < m_mobileBodies.Count; j++)
 				{
-					float r = m_mobileBodies[i].Shape.QuickRadius + m_mobileBodies[j].Shape.QuickRadius;
+					float r = m_mobileBodies[i].CollisionDetectionShape.QuickRadius + m_mobileBodies[j].CollisionDetectionShape.QuickRadius;
 					float r2 = r * r;
 
 					float distance2 = (m_mobileBodies[i].Position - m_mobileBodies[j].Position).LengthSquared();
@@ -125,7 +122,7 @@ namespace Unv.RaceEngineLib.Physics
 			{
 				for (int j = 0; j < m_mobileBodies.Count; j++)
 				{
-					float r = m_immobileBodies[i].Shape.QuickRadius + m_mobileBodies[j].Shape.QuickRadius;
+					float r = m_immobileBodies[i].CollisionDetectionShape.QuickRadius + m_mobileBodies[j].CollisionDetectionShape.QuickRadius;
 					float r2 = r * r;
 
 					float distance2 = (m_immobileBodies[i].Position - m_mobileBodies[j].Position).LengthSquared();

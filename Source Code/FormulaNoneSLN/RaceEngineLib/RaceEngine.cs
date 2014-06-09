@@ -87,7 +87,7 @@ namespace Unv.RaceEngineLib
 			if (car == null)
 				throw new ArgumentNullException();
 
-			car.Body = m_physicsEngine.AddMobileBody(RaceCar.CAR_SHAPE, Vector2.Zero, "Metal");
+			car.Body = m_physicsEngine.AddMobileBody(RaceCar.CAR_SHAPE, 3f, Vector2.Zero, "Metal");
 
 			m_cars.Add(car);
 		}
@@ -99,8 +99,28 @@ namespace Unv.RaceEngineLib
 			m_physicsEngine.Step(timeMS);
 		}
 
-		public void ApplyForces()
+		private void ApplyForces()
 		{
+			foreach (var car in m_cars)
+			{
+				UpdateCar(car);
+			}
+		}
+
+		private void UpdateCar(RaceCar car)
+		{
+			float breaks	= 0f;
+			float gas		= 0f;
+			float steering	= 0f;
+			bool  isReverse	= false;
+
+			if (car.CarControls != null)
+			{
+				breaks		= car.CarControls.BreakPdealPosition;
+				gas			= car.CarControls.GasPedalPosition;
+				steering	= car.CarControls.SteeringPosition;
+				isReverse	= car.CarControls.IsInReverse;
+			}
 		}
 		#endregion
 	}

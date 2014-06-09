@@ -111,7 +111,7 @@ namespace Unv.FormulaNone.Screens
 
 			foreach (var obstacle in m_raceEngine.Obstacles)
 			{
-				var radius = ((Circular) (obstacle.Body.Shape)).Radius;
+				var radius = ((Circular) (obstacle.Body.CollisionDetectionShape)).Radius;
 				Rectangle rect = new Rectangle(
 					(int) (obstacle.Body.Position.X + raceTrackOffset.X - radius),
 					(int) (obstacle.Body.Position.Y + raceTrackOffset.Y - radius),
