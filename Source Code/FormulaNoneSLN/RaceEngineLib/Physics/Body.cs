@@ -5,6 +5,9 @@ using System.Text;
 
 using Microsoft.Xna.Framework;
 
+using Unv.RaceEngineLib.Physics.Measurements;
+using Unv.RaceEngineLib.Physics.Shapes;
+
 
 namespace Unv.RaceEngineLib.Physics
 {
@@ -59,6 +62,37 @@ namespace Unv.RaceEngineLib.Physics
 		#region Constructor
 		public Body()
 		{
+		}
+		#endregion
+
+
+		#region Methods
+		public static bool DoTheyCollide(Body a, Body b, out Impact impactA, out Impact impactB)
+		{
+			impactA = new Impact();
+			impactB = new Impact();
+
+			return false;
+		}
+
+		private static bool DoTheyCollide(Circular shapeA, Circular shapeB, Vector2 positionA, Vector2 positionB, out Vector2 normal, out float penatration)
+		{
+			normal = Vector2.Zero;
+			penatration = 0f;
+
+			Vector2 positionDelta = positionB - positionA;
+			float minR = shapeA.Radius + shapeB.Radius;
+
+			bool collide = positionDelta.LengthSquared() <= minR;
+
+			if (collide)
+			{
+				float deltaLength	= positionDelta.Length();
+				normal				= positionDelta / deltaLength;
+				penatration			= minR - deltaLength;
+			}
+
+			return collide;
 		}
 		#endregion
 	}

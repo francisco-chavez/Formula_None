@@ -79,11 +79,11 @@ namespace Unv.RaceEngineLib.Physics
 		public void Step(float timeMS)
 		{
 			GeneratePairs();
+			GenerateChanges();
 
 			if (UpdateForcesEvent != null)
 				UpdateForcesEvent(this, null);
 
-			GenerateChanges();
 			ApplyChanges();
 		}
 
@@ -137,6 +137,9 @@ namespace Unv.RaceEngineLib.Physics
 
 		private void GenerateChanges()
 		{
+			foreach (var pair in m_pairs)
+			{
+			}
 		}
 
 		private void ApplyChanges()
