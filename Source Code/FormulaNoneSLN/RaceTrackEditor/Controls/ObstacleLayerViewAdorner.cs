@@ -73,15 +73,15 @@ namespace Unv.RaceTrackEditor.Controls
 
 
 		#region Constructors
-		public ObstacleLayerViewAdorner(UIElement adornerElement)
-			: base(adornerElement)
+		public ObstacleLayerViewAdorner(UIElement adornedElement)
+			: base(adornedElement)
 		{
-			if (!(adornerElement is ObstacleLayerView))
+			if (!(adornedElement is ObstacleLayerView))
 				throw new ArgumentException();
 
 			this.IsHitTestVisible = false;
 
-			m_parentView	= (ObstacleLayerView) adornerElement;
+			m_parentView	= (ObstacleLayerView) adornedElement;
 			m_drawArea		= new MeasuredCanvas();
 			m_drawArea.MinWidth = m_parentView.MinWidth;
 			m_drawArea.MinHeight = m_drawArea.MinHeight;
