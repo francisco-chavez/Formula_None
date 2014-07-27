@@ -27,6 +27,9 @@ namespace Unv.RaceEngineLib
 				new Vector2(48f, 12f), new Vector2(36f, 01f), new Vector2(00f, 00f)
 			};
 
+		public const			float ENGINE_HORSEPOWER		= 4.1f;
+		public static readonly	float ENGINE_POWER_WATTS	= WorkConverter.HorsepowerToWatt(ENGINE_HORSEPOWER);
+
 		/// <summary>
 		/// All cars have the same shape, so they'll be sharing the same 
 		/// shape in memory.
