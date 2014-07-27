@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
+﻿
 
 namespace Unv.RaceEngineLib.CarControl
 {
+	/// <summary>
+	/// This interface allows a class to act as an input for controlling a RaceCar instance.
+	/// </summary>
 	public interface ICarController
 	{
 		/// <summary>
