@@ -16,7 +16,8 @@ namespace Unv.RaceEngineLib
 	{
 		/// <summary>
 		/// These points form a convex polynormal shape that is based
-		/// on the images of the race cars.
+		/// on the images of the race cars. This is set in pixels which
+		/// has a 1 to 1 conversion value to inches.
 		/// </summary>
 		private static readonly Vector2[] BORDER_POINTS_BASE = 
 			new Vector2[] 
