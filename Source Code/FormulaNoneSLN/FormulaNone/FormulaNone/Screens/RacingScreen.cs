@@ -64,6 +64,9 @@ namespace Unv.FormulaNone.Screens
 			player.Image = m_content.Load<Texture2D>(string.Format("Images/Cars/{0}", selectedCar));
 			m_carSprites.Add(player);
 
+			player.Data.CarControls = new CarController_Player(this.ScreenManager.InputState, this.ControllingPlayer.Value);
+
+
 			base.LoadContent();
 		}
 

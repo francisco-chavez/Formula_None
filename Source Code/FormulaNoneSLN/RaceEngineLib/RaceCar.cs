@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework;
 
 using Unv.RaceEngineLib.CarControl;
 using Unv.RaceEngineLib.Physics;
+using Unv.RaceEngineLib.Physics.Measurements;
 using Unv.RaceEngineLib.Physics.Shapes;
 
 
@@ -30,12 +31,15 @@ namespace Unv.RaceEngineLib
 		/// All cars have the same shape, so they'll be sharing the same 
 		/// shape in memory.
 		/// </summary>
-		public static readonly Shape CAR_SHAPE = new ConvexPolygon(BORDER_POINTS_BASE);
+		public static readonly Shape CAR_SHAPE;
+
+		private static readonly Vector2 CENTER_OF_MASS_SHIFT_IN_INCHES;
 
 
 		public Body		Body				{ get; internal set; }
 		public Vector2	CenterOfMassShift	{ get { return CAR_SHAPE.CenterOfMassShift; } }
 		public Vector2	Position			{ get { return Body.Position; } }
+		public Vector2	PositionInInches	{ get { return new Vector2(LengthConverter.MeterToInch(Body.Position.X), LengthConverter.MeterToInch(Body.Position.Y)); } }
 		public float	Rotation			{ get { return Body.Rotation; } }
 
 		public ICarController CarControls { get; set; }
@@ -43,6 +47,30 @@ namespace Unv.RaceEngineLib
 
 		public RaceCar()
 		{
+		}
+
+		static RaceCar()
+		{
+			Vector2[] baseBorderPointsInMeters = new Vector2[BORDER_POINTS_BASE.Length];
+			for (int i = 0; i < BORDER_POINTS_BASE.Length; i++)
+			{
+				var point = BORDER_POINTS_BASE[i];
+				var pointPrime = 
+					new Vector2(
+						LengthConverter.InchToMeter(point.X), 
+						LengthConverter.InchToMeter(point.Y));
+
+				baseBorderPointsInMeters[i] = pointPrime;
+			}
+
+			CAR_SHAPE = new ConvexPolygon(baseBorderPointsInMeters);
+
+			var centerOfMassShift = CAR_SHAPE.CenterOfMassShift;
+
+			CENTER_OF_MASS_SHIFT_IN_INCHES =
+				new Vector2(
+					LengthConverter.MeterToInch(centerOfMassShift.X),
+					LengthConverter.MeterToInch(centerOfMassShift.Y));
 		}
 	}
 }

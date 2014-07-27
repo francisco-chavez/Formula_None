@@ -17,7 +17,9 @@ namespace Unv.RaceEngineLib.Physics
 		public abstract Vector2 CenterOfMassShift { get; }
 
 		/// <summary>
-		/// Returns the Center of mass of the shape.
+		/// Returns the Center of mass of the shape. This should always be the point of Origin, if the
+		/// the initial points of the shape don't conform to this, then they will be shifted over during
+		/// the shape's construction.
 		/// </summary>
 		public Vector2 CenterOfMass { get { return Vector2.Zero; } }
 

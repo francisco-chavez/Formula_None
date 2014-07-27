@@ -45,6 +45,10 @@ namespace Unv.FormulaNone
 		#endregion
 
 		#region Properties
+		/// <summary>
+		/// Gets the InputState object that's passed to the GameScreens.
+		/// </summary>
+		public InputState InputState { get { return input; } }
 
 
 		/// <summary>

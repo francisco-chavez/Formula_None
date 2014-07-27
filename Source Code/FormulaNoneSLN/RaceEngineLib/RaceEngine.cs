@@ -95,7 +95,12 @@ namespace Unv.RaceEngineLib
 
 		public void StepTime(float timeMS)
 		{
-			m_currentTimeStep = 0f;
+			// Update the car's input based on what is seen before
+			// we start to make changes to their enviroment.
+			foreach (var car in m_cars)
+				car.CarControls.Update(timeMS);
+
+			m_currentTimeStep += timeMS;
 			m_physicsEngine.Step(timeMS);
 		}
 

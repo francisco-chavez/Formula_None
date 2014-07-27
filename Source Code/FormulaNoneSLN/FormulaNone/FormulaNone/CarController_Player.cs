@@ -89,7 +89,7 @@ namespace Unv.FormulaNone
 			this.BreakPedalPosition = MathHelper.Clamp(gamePadState.Triggers.Left,		 0f, 1f);
 			this.GasPedalPosition	= MathHelper.Clamp(gamePadState.Triggers.Right,		 0f, 1f);
 			this.SteeringPosition	= MathHelper.Clamp(gamePadState.ThumbSticks.Left.X, -1f, 1f);
-			this.IsInReverse		= gamePadState.Buttons.A == ButtonState.Pressed;
+			this.IsInReverse		= gamePadState.Buttons.B == ButtonState.Pressed;
 		}
 		#endregion
 	}
