@@ -105,6 +105,7 @@
     <Compile Include="Physics\Measurements\MaterialSettings.cs" />
     <Compile Include="Physics\Measurements\Pair.cs" />
     <Compile Include="Physics\Measurements\Range.cs" />
+    <Compile Include="Physics\Measurements\WorkConverter.cs" />
     <Compile Include="Physics\PhysicsEngine.cs" />
     <Compile Include="Physics\Shape.cs" />
     <Compile Include="Physics\Shapes\Circular.cs" />

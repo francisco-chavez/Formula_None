@@ -19,6 +19,14 @@ namespace Unv.RaceEngineLib
 		private List<Tire>		m_obstacles;
 		private List<RaceCar>	m_cars;
 
+		/// <summary>
+		/// Some of the things that happen to the cars are nothing more than
+		/// physics going about their way. But, the cars have breaks, tires,
+		/// and engines, which are abble to apply forces of their own to the
+		/// car. When the time comes to calculate these additional forces,
+		/// we'll need to know the amount of time that has passed in order
+		/// to make those calculations.
+		/// </summary>
 		private float			m_currentTimeStep = 0f;
 		#endregion
 
@@ -100,7 +108,7 @@ namespace Unv.RaceEngineLib
 			foreach (var car in m_cars)
 				car.CarControls.Update(timeMS);
 
-			m_currentTimeStep += timeMS;
+			m_currentTimeStep = timeMS;
 			m_physicsEngine.Step(timeMS);
 		}
 
