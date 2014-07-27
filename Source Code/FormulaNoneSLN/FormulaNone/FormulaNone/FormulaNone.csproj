@@ -66,6 +66,7 @@
     <XnaCompressContent>true</XnaCompressContent>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="CarController_Player.cs" />
     <Compile Include="ColorTint.cs" />
     <Compile Include="ControlManager\ControlBase.cs" />
     <Compile Include="ControlManager\ControlManager.cs" />

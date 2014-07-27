@@ -15,7 +15,7 @@ namespace Unv.RaceEngineLib.Physics
 	{
 		#region Properties
 		public Shape	CollisionDetectionShape { get; set; }
-		public float	Resitution			{ get; set; }
+		public float	Resitution				{ get; set; }
 
 
 		//
