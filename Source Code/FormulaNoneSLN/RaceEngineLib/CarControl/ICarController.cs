@@ -10,7 +10,7 @@ namespace Unv.RaceEngineLib.CarControl
 	{
 		float	SteeringPosition	{ get; }
 		float	GasPedalPosition	{ get; }
-		float	BreakPdealPosition	{ get; }
+		float	BreakPedalPosition	{ get; }
 		bool	IsInReverse			{ get; }
 
 		RaceCar		RaceCar		{ get; set; }

@@ -116,7 +116,7 @@ namespace Unv.RaceEngineLib
 
 			if (car.CarControls != null)
 			{
-				breaks		= car.CarControls.BreakPdealPosition;
+				breaks		= car.CarControls.BreakPedalPosition;
 				gas			= car.CarControls.GasPedalPosition;
 				steering	= car.CarControls.SteeringPosition;
 				isReverse	= car.CarControls.IsInReverse;
