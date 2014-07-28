@@ -24,13 +24,25 @@ namespace Unv.RaceEngineLib
 		public const float TIRE_RADIUS_REAR_INCHES		= 10f;
 		public const float TIRE_RADIUS_FRONT_INCHES		= 7f;
 		public const float TIRE_WIDTH_REAR_INCHES		= 8f;
-		public const float TIRE_WIDTH_FONT_INCHES		= 5f;
-		public const float TIRE_RUBBER_THICHNESS_INCHES = 2f;
+		public const float TIRE_WIDTH_FRONT_INCHES		= 5f;
+		public const float TIRE_RUBBER_THICKNESS_INCHES = 2f;
 
-		private static readonly float TIRE_RADIUS_REAR = LengthConverter.InchToMeter(TIRE_RADIUS_REAR_INCHES);
-		private static readonly float TIRE_RADIUS_FRONT = LengthConverter.InchToMeter(TIRE_RADIUS_FRONT_INCHES);
-		private static readonly float TIRE_WIDTH_REAR = LengthConverter.InchToMeter(TIRE_WIDTH_REAR_INCHES);
-		private static readonly float TIRE_WIDTH_FRONT = LengthConverter.InchToMeter(TIRE_WIDTH_FONT_INCHES);
+		private static readonly float TIRE_RADIUS_REAR		= LengthConverter.InchToMeter(TIRE_RADIUS_REAR_INCHES);
+		private static readonly float TIRE_RADIUS_FRONT		= LengthConverter.InchToMeter(TIRE_RADIUS_FRONT_INCHES);
+		private static readonly float TIRE_WIDTH_REAR		= LengthConverter.InchToMeter(TIRE_WIDTH_REAR_INCHES);
+		private static readonly float TIRE_WIDTH_FRONT		= LengthConverter.InchToMeter(TIRE_WIDTH_FRONT_INCHES);
+		private static readonly float TIRE_RUBBER_THICKNESS = LengthConverter.InchToMeter(TIRE_RUBBER_THICKNESS_INCHES);
+
+		/*
+		 * The positions of these tires are offset the same way that the car body shape is initially offset.
+		 * They will need to be moved over so that they that they end up being relative to the car's center
+		 * of gravity.
+		 */
+		public static readonly Vector2 LEFT_REAR_TIRE_POSITION_INCHES	= new Vector2(5f, 4f);
+		public static readonly Vector2 RIGHT_REAR_TIRE_POSITION_INCHES	= new Vector2(5f, 27f);
+		public static readonly Vector2 LEFT_FRONT_TIRE_POSITION_INCHES	= new Vector2(36f, 3.5f);
+		public static readonly Vector2 RIGHT_FRONT_TIRE_POSITION_INCHES = new Vector2(36f, 27.5f);
+
 
 		/// <summary>
 		/// These points form a convex polynormal shape that is based
@@ -54,6 +66,11 @@ namespace Unv.RaceEngineLib
 		public static readonly Shape CAR_SHAPE;
 
 		private static readonly Vector2 CENTER_OF_MASS_SHIFT_IN_INCHES;
+
+		private CarTire m_rearLeftTire;
+		private CarTire m_rearRightTire;
+		private CarTire m_frontLeftTire;
+		private CarTire m_frontRightTire;
 		#endregion
 
 
@@ -95,6 +112,28 @@ namespace Unv.RaceEngineLib
 
 		public RaceCar()
 		{
+			m_frontLeftTire		= new CarTire() { Density = 0.3f, Radius = TIRE_RADIUS_FRONT, RubberThickness = TIRE_RUBBER_THICKNESS, Width = TIRE_WIDTH_FRONT };
+			m_frontRightTire	= new CarTire() { Density = 0.3f, Radius = TIRE_RADIUS_FRONT, RubberThickness = TIRE_RUBBER_THICKNESS, Width = TIRE_WIDTH_FRONT };
+			m_rearLeftTire		= new CarTire() { Density = 0.3f, Radius = TIRE_RADIUS_REAR, RubberThickness = TIRE_RUBBER_THICKNESS, Width = TIRE_WIDTH_REAR };
+			m_rearRightTire		= new CarTire() { Density = 0.3f, Radius = TIRE_RADIUS_REAR, RubberThickness = TIRE_RUBBER_THICKNESS, Width = TIRE_WIDTH_REAR };
+
+
+			m_frontLeftTire.CarCenterOffset		= FindAdjustedTirePositionMetric(LEFT_FRONT_TIRE_POSITION_INCHES);
+			m_frontRightTire.CarCenterOffset	= FindAdjustedTirePositionMetric(RIGHT_FRONT_TIRE_POSITION_INCHES);
+			m_rearLeftTire.CarCenterOffset		= FindAdjustedTirePositionMetric(LEFT_REAR_TIRE_POSITION_INCHES);
+			m_rearRightTire.CarCenterOffset		= FindAdjustedTirePositionMetric(RIGHT_REAR_TIRE_POSITION_INCHES);
+		}
+		#endregion
+
+
+		#region Methods
+		private Vector2 FindAdjustedTirePositionMetric(Vector2 startingPositionInches)
+		{
+			Vector2 position = startingPositionInches * LengthConverter.INCH_TO_METER_SCALE;
+			position += CAR_SHAPE.CenterOfMassShift;
+
+			return position;
+			throw new NotImplementedException();
 		}
 		#endregion
 	}
