@@ -10,12 +10,12 @@ using Unv.RaceEngineLib.Physics;
 
 namespace Unv.RaceEngineLib
 {
-	public class Tire
+	public class TireObstacle
 	{
 		public Body Body { get; private set; }
 
 
-		public Tire(Body body)
+		public TireObstacle(Body body)
 		{
 			Body = body;
 		}

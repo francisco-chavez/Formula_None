@@ -16,7 +16,7 @@ namespace Unv.RaceEngineLib
 	{
 		#region Attributes
 		private PhysicsEngine	m_physicsEngine;
-		private List<Tire>		m_obstacles;
+		private List<TireObstacle>		m_obstacles;
 		private List<RaceCar>	m_cars;
 
 		/// <summary>
@@ -32,7 +32,7 @@ namespace Unv.RaceEngineLib
 
 
 		#region Properties
-		public Tire[]		Obstacles	{ get { return m_obstacles.ToArray(); } }
+		public TireObstacle[]		Obstacles	{ get { return m_obstacles.ToArray(); } }
 		public RaceCar[]	Car			{ get { return m_cars.ToArray(); } }
 		#endregion
 
@@ -41,7 +41,7 @@ namespace Unv.RaceEngineLib
 		public RaceEngine()
 		{
 			m_physicsEngine = new PhysicsEngine();
-			m_obstacles		= new List<Tire>(100);
+			m_obstacles		= new List<TireObstacle>(100);
 			m_cars			= new List<RaceCar>(4);
 
 			m_physicsEngine.UpdateForcesEvent += PhysicsEngine_UpdateForcesEvent;
@@ -71,7 +71,7 @@ namespace Unv.RaceEngineLib
 				Body body = m_physicsEngine.AddImmobileBody(shape, obstacle.Position, "BouncyBall");
 				body.Position = obstacle.Position;
 
-				Tire tire = new Tire(body);
+				TireObstacle tire = new TireObstacle(body);
 				m_obstacles.Add(tire);
 			}
 		}

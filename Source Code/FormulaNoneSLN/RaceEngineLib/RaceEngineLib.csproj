@@ -94,6 +94,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CarControl\ICarController.cs" />
+    <Compile Include="CarTire.cs" />
     <Compile Include="FloatExt.cs" />
     <Compile Include="Physics\Body.cs" />
     <Compile Include="Physics\MassData.cs" />
@@ -114,7 +115,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RaceCar.cs" />
     <Compile Include="RaceEngine.cs" />
-    <Compile Include="Tire.cs" />
+    <Compile Include="TireObstacle.cs" />
     <Compile Include="Vector2Ext.cs" />
   </ItemGroup>
   <ItemGroup>

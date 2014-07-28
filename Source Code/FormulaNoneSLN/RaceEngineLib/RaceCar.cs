@@ -15,6 +15,23 @@ namespace Unv.RaceEngineLib
 {
 	public class RaceCar
 	{
+		#region Attributes
+		/*
+		 * This is the starting info for the tires. I'm going to assume
+		 * that the rims are a really light form of plastic, so I won't
+		 * be estimating their data.
+		 */
+		public const float TIRE_RADIUS_REAR_INCHES		= 10f;
+		public const float TIRE_RADIUS_FRONT_INCHES		= 7f;
+		public const float TIRE_WIDTH_REAR_INCHES		= 8f;
+		public const float TIRE_WIDTH_FONT_INCHES		= 5f;
+		public const float TIRE_RUBBER_THICHNESS_INCHES = 2f;
+
+		private static readonly float TIRE_RADIUS_REAR = LengthConverter.InchToMeter(TIRE_RADIUS_REAR_INCHES);
+		private static readonly float TIRE_RADIUS_FRONT = LengthConverter.InchToMeter(TIRE_RADIUS_FRONT_INCHES);
+		private static readonly float TIRE_WIDTH_REAR = LengthConverter.InchToMeter(TIRE_WIDTH_REAR_INCHES);
+		private static readonly float TIRE_WIDTH_FRONT = LengthConverter.InchToMeter(TIRE_WIDTH_FONT_INCHES);
+
 		/// <summary>
 		/// These points form a convex polynormal shape that is based
 		/// on the images of the race cars. This is set in pixels which
@@ -37,8 +54,10 @@ namespace Unv.RaceEngineLib
 		public static readonly Shape CAR_SHAPE;
 
 		private static readonly Vector2 CENTER_OF_MASS_SHIFT_IN_INCHES;
+		#endregion
 
 
+		#region Properties
 		public Body		Body				{ get; internal set; }
 		public Vector2	CenterOfMassShift	{ get { return CAR_SHAPE.CenterOfMassShift; } }
 		public Vector2	Position			{ get { return Body.Position; } }
@@ -46,12 +65,10 @@ namespace Unv.RaceEngineLib
 		public float	Rotation			{ get { return Body.Rotation; } }
 
 		public ICarController CarControls { get; set; }
+		#endregion
 
 
-		public RaceCar()
-		{
-		}
-
+		#region Constructors
 		static RaceCar()
 		{
 			Vector2[] baseBorderPointsInMeters = new Vector2[BORDER_POINTS_BASE.Length];
@@ -75,5 +92,10 @@ namespace Unv.RaceEngineLib
 					LengthConverter.MeterToInch(centerOfMassShift.X),
 					LengthConverter.MeterToInch(centerOfMassShift.Y));
 		}
+
+		public RaceCar()
+		{
+		}
+		#endregion
 	}
 }
