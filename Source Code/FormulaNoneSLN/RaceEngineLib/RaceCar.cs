@@ -16,6 +16,8 @@ namespace Unv.RaceEngineLib
 	public class RaceCar
 	{
 		#region Attributes
+		private List<ForceOnCar> _forcesOnCar = new List<ForceOnCar>();
+
 		/*
 		 * This is the starting info for the tires. I'm going to assume
 		 * that the rims are a really light form of plastic, so I won't
@@ -114,8 +116,8 @@ namespace Unv.RaceEngineLib
 		{
 			m_frontLeftTire		= new CarTire() { Density = 0.3f, Radius = TIRE_RADIUS_FRONT, RubberThickness = TIRE_RUBBER_THICKNESS, Width = TIRE_WIDTH_FRONT };
 			m_frontRightTire	= new CarTire() { Density = 0.3f, Radius = TIRE_RADIUS_FRONT, RubberThickness = TIRE_RUBBER_THICKNESS, Width = TIRE_WIDTH_FRONT };
-			m_rearLeftTire		= new CarTire() { Density = 0.3f, Radius = TIRE_RADIUS_REAR, RubberThickness = TIRE_RUBBER_THICKNESS, Width = TIRE_WIDTH_REAR };
-			m_rearRightTire		= new CarTire() { Density = 0.3f, Radius = TIRE_RADIUS_REAR, RubberThickness = TIRE_RUBBER_THICKNESS, Width = TIRE_WIDTH_REAR };
+			m_rearLeftTire		= new CarTire() { Density = 0.3f, Radius = TIRE_RADIUS_REAR,  RubberThickness = TIRE_RUBBER_THICKNESS, Width = TIRE_WIDTH_REAR };
+			m_rearRightTire		= new CarTire() { Density = 0.3f, Radius = TIRE_RADIUS_REAR,  RubberThickness = TIRE_RUBBER_THICKNESS, Width = TIRE_WIDTH_REAR };
 
 
 			m_frontLeftTire.CarCenterOffset		= FindAdjustedTirePositionMetric(LEFT_FRONT_TIRE_POSITION_INCHES);
@@ -127,6 +129,10 @@ namespace Unv.RaceEngineLib
 
 
 		#region Methods
+		public void AddForcesToCar(ForceOnCar change)
+		{
+			_forcesOnCar.Add(change);
+		}
 		private Vector2 FindAdjustedTirePositionMetric(Vector2 startingPositionInches)
 		{
 			Vector2 position = startingPositionInches * LengthConverter.INCH_TO_METER_SCALE;

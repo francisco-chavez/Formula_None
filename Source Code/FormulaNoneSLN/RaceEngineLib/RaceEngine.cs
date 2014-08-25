@@ -15,7 +15,8 @@ namespace Unv.RaceEngineLib
 	public class RaceEngine
 	{
 		#region Attributes
-		private PhysicsEngine	m_physicsEngine;
+		private PhysicsEngine		m_physicsEngine;
+		private CollisionEngine		_collisionEngine;
 		private List<TireObstacle>		m_obstacles;
 		private List<RaceCar>	m_cars;
 
@@ -32,14 +33,15 @@ namespace Unv.RaceEngineLib
 
 
 		#region Properties
-		public TireObstacle[]		Obstacles	{ get { return m_obstacles.ToArray(); } }
-		public RaceCar[]	Car			{ get { return m_cars.ToArray(); } }
+		public TireObstacle[]	Obstacles	{ get { return m_obstacles.ToArray(); } }
+		public RaceCar[]		Car			{ get { return m_cars.ToArray(); } }
 		#endregion
 
 
 		#region Constructors
 		public RaceEngine()
 		{
+			_collisionEngine = new CollisionEngine(4, 250);
 			m_physicsEngine = new PhysicsEngine();
 			m_obstacles		= new List<TireObstacle>(100);
 			m_cars			= new List<RaceCar>(4);
@@ -73,6 +75,7 @@ namespace Unv.RaceEngineLib
 
 				TireObstacle tire = new TireObstacle(body);
 				m_obstacles.Add(tire);
+				_collisionEngine.AddImmobileBody(body);
 			}
 		}
 
@@ -85,6 +88,7 @@ namespace Unv.RaceEngineLib
 
 		public void ClearObstacles()
 		{
+			_collisionEngine.ClearImmobileBodies();
 			m_physicsEngine.ClearImmobileBodies();
 			m_obstacles.Clear();
 		}
@@ -98,6 +102,7 @@ namespace Unv.RaceEngineLib
 			car.Body = m_physicsEngine.AddMobileBody(RaceCar.CAR_SHAPE, 3f, Vector2.Zero, "Metal");
 
 			m_cars.Add(car);
+			_collisionEngine.AddMobileBody(car.Body);
 		}
 
 
@@ -110,6 +115,8 @@ namespace Unv.RaceEngineLib
 
 			m_currentTimeStep = timeMS;
 			m_physicsEngine.Step(timeMS);
+
+			_collisionEngine.GenerateInitialCollisionData();
 		}
 
 		private void ApplyForces()
