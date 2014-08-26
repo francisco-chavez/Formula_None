@@ -168,10 +168,10 @@ namespace Unv.RaceEngineLib.Physics
 
 			for (int i = 0; i < bodyAPoints.Length; i++)
 			{
-				Vector2 point1 = bodyAPoints[i];
-				Vector2 point2 = bodyAPoints[(i + 1) % bodyAPoints.Length];
-				Vector2 normalAxis = point2 - point1;
-				normalAxis.Normalize();
+				Vector2 point1		= bodyAPoints[i];
+				Vector2 point2		= bodyAPoints[(i + 1) % bodyAPoints.Length];
+				Vector2 line		= point2 - point2;
+				Vector2 normalAxis	= line.NormalVector();
 
 				float bExtentCenter = Vector2.Dot(normalAxis, bodyB.Position);
 
@@ -195,8 +195,17 @@ namespace Unv.RaceEngineLib.Physics
 
 				float penAlongThisAxis = ((aMax - aMin) / 2f) + ((bMax - bMin) / 2f) - Math.Abs(bExtentCenter - aExtentCenter);
 
-				throw new NotImplementedException();
+				if (penAlongThisAxis <= 0)
+					return false;
+
+				if (penAlongThisAxis < minPen)
+				{
+					axisNorm = normalAxis;
+					minPen = penAlongThisAxis;
+				}
 			}
+
+			// We now have both the axis of minimum penatration and the amount of penatration along that axis.
 
 			throw new NotImplementedException();
 		}
